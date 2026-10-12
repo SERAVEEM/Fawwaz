@@ -3,8 +3,8 @@ import placeholdersData from '../data/placeholders.json';
 
 const PLACEHOLDERS = placeholdersData as Record<string, string>;
 
-// Clean base URL from environment
-const rawBase = import.meta.env.PUBLIC_ASSETS_URL || '';
+// Clean base URL from environment (falls back to R2 CDN)
+const rawBase = import.meta.env.PUBLIC_ASSETS_URL || 'https://pub-f2c6b9ebd0204e4ab7f918bf404e647a.r2.dev';
 const BASE_URL = rawBase.replace(/\/+$/, '');
 
 /**
