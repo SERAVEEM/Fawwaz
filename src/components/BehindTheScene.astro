@@ -1,5 +1,6 @@
 ---
 import { r2, getPlaceholder } from '../utils/assets';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 interface GridItem {
   id: string;
@@ -26,7 +27,7 @@ const ROWS: GridItem[][] = [
       alt: "Architectural work showcase",
       size: "large",
       colDesktop: "1 / span 3",
-      colMobile: "1 / span 3",
+      colMobile: "1 / span 2",
       itemClasses: "offset-neg-ml",
       opacity: 1.0,
       hideMobile: false,
@@ -38,7 +39,7 @@ const ROWS: GridItem[][] = [
       size: "medium",
       aspectRatio: "9 / 14",
       colDesktop: "4 / span 2",
-      colMobile: "4 / span 2",
+      colMobile: "4 / span 3",
       colClasses: "align-center",
       itemClasses: "offset-down-quarter",
       opacity: 1.0,
@@ -51,8 +52,9 @@ const ROWS: GridItem[][] = [
       size: "medium",
       aspectRatio: "16 / 9",
       colDesktop: "7 / span 2",
-      colMobile: "5 / span 2",
+      colMobile: "2 / span 3",
       colClasses: "align-center",
+      itemClasses: "offset-down-quarter",
       opacity: 1.0,
       hideMobile: true,
     },
@@ -62,7 +64,7 @@ const ROWS: GridItem[][] = [
       alt: "Modern design showcase",
       size: "medium",
       colDesktop: "9 / span 2",
-      colMobile: "2 / span 3",
+      colMobile: "4 / span 3",
       itemClasses: "offset-up-half",
       opacity: 1.0,
       hideMobile: true,
@@ -74,11 +76,11 @@ const ROWS: GridItem[][] = [
       size: "small",
       aspectRatio: "16 / 9",
       colDesktop: "11 / span 2",
-      colMobile: "5 / span 2",
+      colMobile: "3 / span 2",
       colClasses: "align-center",
-      itemClasses: "offset-up-half",
+      itemClasses: "offset-up-quarter",
       opacity: 0.9,
-      hideMobile: true,
+      hideMobile: false,
     },
   ],
   // Row 2
@@ -101,11 +103,11 @@ const ROWS: GridItem[][] = [
       alt: "Hall Saturnus Hotel architectural project",
       size: "small",
       colDesktop: "3 / span 1",
-      colMobile: "3 / span 1",
+      colMobile: "5 / span 2",
       colClasses: "align-end",
       itemClasses: "offset-down-half",
-      opacity: 0.8,
-      hideMobile: true,
+      opacity: 0.85,
+      hideMobile: false,
     },
     {
       id: "r2-3",
@@ -126,7 +128,7 @@ const ROWS: GridItem[][] = [
       size: "medium",
       aspectRatio: "9 / 14",
       colDesktop: "8 / span 2",
-      colMobile: "6 / span 2",
+      colMobile: "4 / span 3",
       itemClasses: "offset-up-quarter",
       opacity: 1.0,
       hideMobile: true,
@@ -151,7 +153,7 @@ const ROWS: GridItem[][] = [
       alt: "Living space ambient lighting",
       size: "large",
       colDesktop: "1 / span 3",
-      colMobile: "1 / span 3",
+      colMobile: "1 / span 2",
       itemClasses: "offset-neg-ml",
       opacity: 1.0,
       hideMobile: false,
@@ -162,11 +164,11 @@ const ROWS: GridItem[][] = [
       alt: "Linear Design identity logo",
       size: "small",
       colDesktop: "4 / span 1",
-      colMobile: "4 / span 1",
+      colMobile: "3 / span 2",
       colClasses: "align-end",
       itemClasses: "offset-down-half",
       opacity: 0.9,
-      hideMobile: true,
+      hideMobile: false,
     },
     {
       id: "r3-3",
@@ -174,8 +176,9 @@ const ROWS: GridItem[][] = [
       alt: "Linear All Work showcase gallery",
       size: "medium",
       colDesktop: "9 / span 2",
-      colMobile: "5 / span 2",
+      colMobile: "4 / span 3",
       colClasses: "align-center",
+      itemClasses: "offset-up-quarter",
       opacity: 1.0,
       hideMobile: false,
     },
@@ -187,6 +190,7 @@ const ROWS: GridItem[][] = [
       aspectRatio: "16 / 9",
       colDesktop: "11 / span 2",
       colMobile: "1 / span 3",
+      itemClasses: "offset-down-quarter",
       opacity: 0.95,
       hideMobile: true,
     },
@@ -213,11 +217,11 @@ const ROWS: GridItem[][] = [
       size: "small",
       aspectRatio: "16 / 9",
       colDesktop: "4 / span 2",
-      colMobile: "4 / span 2",
+      colMobile: "2 / span 2",
       colClasses: "align-end",
       itemClasses: "offset-down-half",
       opacity: 0.9,
-      hideMobile: true,
+      hideMobile: false,
     },
     {
       id: "r4-3",
@@ -228,7 +232,7 @@ const ROWS: GridItem[][] = [
       objectFit: "cover",
       objectPosition: "center top",
       colDesktop: "7 / span 2",
-      colMobile: "2 / span 2",
+      colMobile: "4 / span 3",
       colClasses: "align-center",
       opacity: 1.0,
       hideMobile: false,
@@ -239,10 +243,10 @@ const ROWS: GridItem[][] = [
       alt: "Reception hall stone counter",
       size: "large",
       colDesktop: "10 / span 3",
-      colMobile: "2 / span 4",
+      colMobile: "3 / span 4",
       colClasses: "align-center padding-bottom-large",
       opacity: 1.0,
-      hideMobile: true,
+      hideMobile: false,
     },
   ],
 ];
@@ -251,7 +255,7 @@ const ROWS: GridItem[][] = [
 <section class="telha-all-work-section" id="all-work" aria-label="All Work">
   <!-- Sticky Center Title (Exactly mirrors Telha Clarke's .works-grid-button) -->
   <div class="works-grid-button">
-    <a href="/archive" class="works-grid-link" aria-label="View All Work">
+    <a href={`${base}/archive`} class="works-grid-link" aria-label="View All Work">
       <span class="title-text">Archive</span>
       <sup class="title-count">(9)</sup>
     </a>
@@ -342,9 +346,9 @@ const ROWS: GridItem[][] = [
     let targetScale = 0.6;
     const windowWidth = window.innerWidth;
     if (windowWidth <= 1024 && windowWidth >= 768) {
-      targetScale = 0.66;
+      targetScale = 0.7;
     } else if (windowWidth < 768) {
-      targetScale = 0.5;
+      targetScale = 0.65;
     }
 
     const buttonTimeline = gsap.timeline();
@@ -390,16 +394,17 @@ const ROWS: GridItem[][] = [
       }
     });
 
-    // 4. Scroll Parallax Scrubbing (calibrated: gentler on compact screens to prevent collision)
+    // 4. Scroll Parallax Scrubbing (calibrated for organic vertical drift on mobile)
     const isCompact = window.innerWidth < 1024;
-    const smallFactor = isCompact ? 0.05 : 0.25;
-    const mediumFactor = isCompact ? 0.03 : 0.15;
+    const smallFactor = isCompact ? 0.13 : 0.25;
+    const mediumFactor = isCompact ? 0.08 : 0.15;
+    const largeFactor = isCompact ? 0.05 : 0.10;
     scrollImages.forEach((img) => {
       const size = img.getAttribute("data-size");
       const parentItem = img.closest(".works-grid-item");
       if (!parentItem) return;
 
-      const factor = size === "small" ? smallFactor : mediumFactor;
+      const factor = size === "large" ? largeFactor : size === "small" ? smallFactor : mediumFactor;
       gsap.fromTo(
         img,
         { y: () => -window.innerHeight * factor },
@@ -608,8 +613,9 @@ const ROWS: GridItem[][] = [
   .works-grid-row {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    column-gap: clamp(1rem, 2vw, 2.5rem);
-    padding: 0 clamp(1rem, 3.5vw, 3.5rem);
+    column-gap: clamp(0.75rem, 2.5vw, 1.5rem);
+    row-gap: clamp(1.5rem, 4vw, 3rem);
+    padding: 0 clamp(0.75rem, 3.5vw, 3.5rem);
     width: 100%;
     content-visibility: auto;
     contain-intrinsic-size: 0 450px;
@@ -618,6 +624,8 @@ const ROWS: GridItem[][] = [
   @media (min-width: 1200px) {
     .works-grid-row {
       grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: clamp(1rem, 2vw, 2.5rem);
+      row-gap: 0;
     }
   }
 
@@ -647,9 +655,9 @@ const ROWS: GridItem[][] = [
     transition: opacity 0.4s ease;
   }
 
-  /* Spatial offsets mimicking Telha Clarke */
+  /* Spatial offsets mirroring Telha Clarke's organic composition */
   .offset-neg-ml {
-    margin-left: 0;
+    margin-left: -3vw;
   }
   @media (min-width: 1200px) {
     .offset-neg-ml {
@@ -658,19 +666,48 @@ const ROWS: GridItem[][] = [
   }
 
   .offset-down-half {
-    transform: translateY(35%);
+    transform: translateY(18%);
+  }
+  @media (min-width: 1200px) {
+    .offset-down-half {
+      transform: translateY(35%);
+    }
   }
 
   .offset-up-half {
-    transform: translateY(-35%);
+    transform: translateY(-18%);
+  }
+  @media (min-width: 1200px) {
+    .offset-up-half {
+      transform: translateY(-35%);
+    }
   }
 
   .offset-up-quarter {
-    transform: translateY(-15%);
+    transform: translateY(-10%);
+  }
+  @media (min-width: 1200px) {
+    .offset-up-quarter {
+      transform: translateY(-15%);
+    }
+  }
+
+  .offset-down-quarter {
+    transform: translateY(10%);
+  }
+  @media (min-width: 1200px) {
+    .offset-down-quarter {
+      transform: translateY(15%);
+    }
   }
 
   .padding-bottom-large {
-    padding-bottom: 5rem;
+    padding-bottom: 2.5rem;
+  }
+  @media (min-width: 1200px) {
+    .padding-bottom-large {
+      padding-bottom: 5rem;
+    }
   }
 
   @media (max-width: 1023px) {
@@ -680,69 +717,36 @@ const ROWS: GridItem[][] = [
 
     .telha-all-work-section {
       margin-top: 0;
-      padding-bottom: 12rem;
+      padding-bottom: 14rem;
     }
 
     .works-grid-container {
-      padding-top: 15vh;
-      gap: clamp(4rem, 10vh, 7rem);
-    }
-
-    .works-grid-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 clamp(1rem, 4vw, 3rem);
-      width: 100%;
-      content-visibility: auto;
-      contain-intrinsic-size: 0 450px;
-    }
-
-    .works-col {
-      grid-column: auto !important;
-      width: clamp(130px, 34%, 280px);
-      flex: 0 0 clamp(130px, 34%, 280px);
-    }
-
-    /* Stagger the right image slightly for organic rhythm */
-    .works-col:nth-child(even) {
-      margin-top: clamp(2rem, 6vw, 4.5rem);
-    }
-
-    .offset-down-half,
-    .offset-up-half,
-    .offset-up-quarter,
-    .offset-down-quarter,
-    .offset-neg-ml {
-      transform: none !important;
-      margin-left: 0 !important;
-    }
-
-    .padding-bottom-large {
-      padding-bottom: 0;
+      padding-top: 18vh;
+      gap: clamp(5rem, 12vh, 8rem);
     }
 
     .title-text {
-      font-size: clamp(2rem, 5.5vw, 3.5rem);
+      font-size: clamp(3rem, 10vw, 4.5rem);
     }
 
     .title-count {
-      font-size: clamp(0.9rem, 2vw, 1.35rem);
+      font-size: clamp(1.25rem, 3.5vw, 1.85rem);
     }
   }
 
   @media (max-width: 480px) {
     .title-text {
-      font-size: clamp(1.75rem, 6.5vw, 2.25rem);
+      font-size: clamp(2.65rem, 9vw, 3.5rem);
     }
 
-    .works-col {
-      width: 33%;
-      flex: 0 0 33%;
+    .title-count {
+      font-size: clamp(1.15rem, 3.5vw, 1.5rem);
     }
 
     .works-grid-row {
-      padding: 0 0.85rem;
+      column-gap: 0.65rem;
+      row-gap: 1.25rem;
+      padding: 0 0.75rem;
     }
   }
 

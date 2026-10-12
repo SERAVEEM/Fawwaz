@@ -6,24 +6,25 @@ interface Props {
 }
 
 const { theme = 'light', showLogo = true } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isArchive = currentPath === '/archive' || currentPath.startsWith('/archive/') || currentPath === '/work';
-const isStudio = currentPath === '/studio';
-const isJourney = currentPath === '/journey';
+const isArchive = currentPath === `${base}/archive` || currentPath.startsWith(`${base}/archive/`) || currentPath === `${base}/work`;
+const isStudio = currentPath === `${base}/studio`;
+const isJourney = currentPath === `${base}/journey`;
 ---
 
 <header class={`site-header theme-${theme} ${!showLogo ? 'no-logo' : ''}`} transition:name="site-header" aria-label="Main Navigation">
 	{showLogo ? (
-		<a href="/" class="brand-logo" aria-label="Fawwaz Home">FAWWAZ.</a>
+		<a href={base || '/'} class="brand-logo" aria-label="Fawwaz Home">FAWWAZ.</a>
 	) : (
 		<span class="nav-spacer" aria-hidden="true"></span>
 	)}
 
 	<nav class="desktop-nav" aria-label="Main Navigation">
-		<a href="/archive" class:list={['nav-link', { active: isArchive }]}>Archive</a>
-		<a href="/studio" class:list={['nav-link', { active: isStudio }]}>Studio</a>
-		<a href="/journey" class:list={['nav-link', { active: isJourney }]}>Journey</a>
+		<a href={`${base}/archive`} class:list={['nav-link', { active: isArchive }]}>Archive</a>
+		<a href={`${base}/studio`} class:list={['nav-link', { active: isStudio }]}>Studio</a>
+		<a href={`${base}/journey`} class:list={['nav-link', { active: isJourney }]}>Journey</a>
 		<a href="#contact" class="nav-link contact-pill" data-open-contact-modal="true">
 			<span class="status-dot" aria-hidden="true"></span>
 			<span>Let’s Talk</span>
@@ -64,9 +65,9 @@ const isJourney = currentPath === '/journey';
 	</div>
 
 	<nav class="mobile-nav-links">
-		<a href="/archive" class:list={['mobile-nav-link', { active: isArchive }]}>Archive</a>
-		<a href="/studio" class:list={['mobile-nav-link', { active: isStudio }]}>Studio</a>
-		<a href="/journey" class:list={['mobile-nav-link', { active: isJourney }]}>Journey</a>
+		<a href={`${base}/archive`} class:list={['mobile-nav-link', { active: isArchive }]}>Archive</a>
+		<a href={`${base}/studio`} class:list={['mobile-nav-link', { active: isStudio }]}>Studio</a>
+		<a href={`${base}/journey`} class:list={['mobile-nav-link', { active: isJourney }]}>Journey</a>
 		<a href="#contact" class="mobile-nav-link contact-pill" data-open-contact-modal="true">
 			<span class="status-dot" aria-hidden="true"></span>
 			<span>Let’s Talk</span>

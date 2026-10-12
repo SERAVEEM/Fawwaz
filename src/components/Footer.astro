@@ -1,6 +1,7 @@
 ---
 // ponytail: 1:1 architectural footer customized for Fawwaz portfolio
 const currentYear = new Date().getFullYear();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <footer class="telha-footer" aria-label="Site Footer">
@@ -40,9 +41,9 @@ const currentYear = new Date().getFullYear();
 			<!-- Col 2: Navigation & Back to Top (Matching Navbar) -->
 			<div class="footer-col col-nav">
 				<nav class="nav-links" aria-label="Footer Navigation">
-					<a href="/archive" class="nav-item">Archive</a>
-					<a href="/#studio" class="nav-item">Studio</a>
-					<a href="/#works" class="nav-item">Journey</a>
+					<a href={`${base}/archive`} class="nav-item">Archive</a>
+					<a href={`${base}/#studio`} class="nav-item">Studio</a>
+					<a href={`${base}/#works`} class="nav-item">Journey</a>
 					<a href="#contact" class="nav-item" data-open-contact-modal="true">Let’s Talk</a>
 				</nav>
 

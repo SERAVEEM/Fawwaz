@@ -1,5 +1,6 @@
 ---
 import { r2, getPlaceholder } from '../utils/assets';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 interface WorkItem {
 	title: string;
@@ -61,7 +62,7 @@ const projects: WorkItem[] = [
 		{
 			projects.map((project, index) => (
 				<article class="works-item" data-index={index}>
-					<a href={`/archive?project=${project.slug}`} class="works-item-link" aria-label={`View ${project.title}`}>
+					<a href={`${base}/archive?project=${project.slug}`} class="works-item-link" aria-label={`View ${project.title}`}>
 						<!-- Massive Bracketed Title Row -->
 						<div class="works-title-row">
 							<!-- Left Edge Tick Mark -->
