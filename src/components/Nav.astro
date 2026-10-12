@@ -1,0 +1,328 @@
+---
+// ponytail: unified responsive Fawwaz navbar across all pages with light/dark theming
+interface Props {
+	theme?: 'light' | 'dark';
+	showLogo?: boolean;
+}
+
+const { theme = 'light', showLogo = true } = Astro.props;
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isArchive = currentPath === '/archive' || currentPath.startsWith('/archive/') || currentPath === '/work';
+const isStudio = currentPath === '/studio';
+const isJourney = currentPath === '/journey';
+---
+
+<header class={`site-header theme-${theme} ${!showLogo ? 'no-logo' : ''}`} transition:name="site-header" aria-label="Main Navigation">
+	{showLogo ? (
+		<a href="/" class="brand-logo" aria-label="Fawwaz Home">FAWWAZ.</a>
+	) : (
+		<span class="nav-spacer" aria-hidden="true"></span>
+	)}
+
+	<nav class="desktop-nav" aria-label="Main Navigation">
+		<a href="/archive" class:list={['nav-link', { active: isArchive }]}>Archive</a>
+		<a href="/studio" class:list={['nav-link', { active: isStudio }]}>Studio</a>
+		<a href="/journey" class:list={['nav-link', { active: isJourney }]}>Journey</a>
+		<a href="#contact" class="nav-link contact-pill" data-open-contact-modal="true">
+			<span class="status-dot" aria-hidden="true"></span>
+			<span>Let’s Talk</span>
+		</a>
+	</nav>
+	<button
+		type="button"
+		class="mobile-menu-btn"
+		id="siteMobileMenuBtn"
+		aria-label="Open navigation menu"
+		aria-expanded="false"
+		aria-controls="siteMobileMenuOverlay"
+	>
+		<span class="hamburger-bar"></span>
+		<span class="hamburger-bar"></span>
+		<span class="hamburger-bar"></span>
+	</button>
+</header>
+
+<!-- Mobile Fullscreen Drawer Overlay -->
+<div
+	class={`mobile-menu-overlay theme-${theme}`}
+	id="siteMobileMenuOverlay"
+	role="dialog"
+	aria-modal="true"
+	aria-label="Navigation Menu"
+>
+	<div class="mobile-menu-header">
+		<span class="mobile-logo">FAWWAZ.</span>
+		<button
+			type="button"
+			class="mobile-close-btn"
+			id="siteMobileMenuCloseBtn"
+			aria-label="Close navigation menu"
+		>
+			&times;
+		</button>
+	</div>
+
+	<nav class="mobile-nav-links">
+		<a href="/archive" class:list={['mobile-nav-link', { active: isArchive }]}>Archive</a>
+		<a href="/studio" class:list={['mobile-nav-link', { active: isStudio }]}>Studio</a>
+		<a href="/journey" class:list={['mobile-nav-link', { active: isJourney }]}>Journey</a>
+		<a href="#contact" class="mobile-nav-link contact-pill" data-open-contact-modal="true">
+			<span class="status-dot" aria-hidden="true"></span>
+			<span>Let’s Talk</span>
+		</a>
+	</nav>
+</div>
+
+<script>
+	function setupNav() {
+		const menuBtn = document.getElementById('siteMobileMenuBtn');
+		const closeBtn = document.getElementById('siteMobileMenuCloseBtn');
+		const overlay = document.getElementById('siteMobileMenuOverlay');
+		if (!menuBtn || !overlay) return;
+
+		const mobileLinks = overlay.querySelectorAll('.mobile-nav-link');
+
+		const openMenu = () => {
+			overlay.classList.add('is-open');
+			menuBtn.setAttribute('aria-expanded', 'true');
+			document.body.style.overflow = 'hidden';
+		};
+
+		const closeMenu = () => {
+			overlay.classList.remove('is-open');
+			menuBtn.setAttribute('aria-expanded', 'false');
+			document.body.style.overflow = '';
+		};
+
+		menuBtn.onclick = openMenu;
+		if (closeBtn) closeBtn.onclick = closeMenu;
+
+		mobileLinks.forEach((link) => {
+			link.addEventListener('click', closeMenu);
+		});
+
+		window.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+				closeMenu();
+			}
+		});
+	}
+
+	setupNav();
+	document.addEventListener('astro:page-load', setupNav);
+</script>
+
+<style>
+	.site-header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 900;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		box-sizing: border-box;
+		padding: clamp(0.75rem, 1.2vw, 1.5rem) clamp(1.5rem, 2.5vw, 3rem);
+		background: transparent;
+		pointer-events: none;
+		transition: padding 0.3s ease;
+	}
+
+	.site-header * {
+		pointer-events: auto;
+	}
+
+	.brand-logo {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-weight: 900;
+		font-size: clamp(2rem, 4.72vw, 90.5px);
+		letter-spacing: -0.04em;
+		text-decoration: none;
+		line-height: 0.95;
+		transition: opacity 0.2s ease;
+	}
+
+	.brand-logo:hover {
+		opacity: 0.8;
+	}
+
+	.desktop-nav {
+		display: flex;
+		align-items: center;
+		gap: clamp(1.25rem, 2.2vw, 3rem);
+	}
+
+	.nav-link {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-weight: 700;
+		font-size: clamp(1rem, 1.25vw, 24px);
+		text-decoration: none;
+		position: relative;
+		transition: opacity 0.2s ease, color 0.2s ease;
+	}
+
+	.nav-link:hover {
+		opacity: 0.7;
+	}
+
+	.nav-link.active::after {
+		content: '';
+		position: absolute;
+		bottom: -4px;
+		left: 0;
+		width: 100%;
+		height: 1.5px;
+		background-color: currentColor;
+	}
+
+	.contact-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.status-dot {
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+		background-color: #fb4242;
+		display: inline-block;
+		flex-shrink: 0;
+	}
+
+	/* Mobile Hamburger Button */
+	.mobile-menu-btn {
+		display: none;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0.5rem;
+		flex-direction: column;
+		gap: 6px;
+		z-index: 10;
+	}
+
+	.hamburger-bar {
+		display: block;
+		width: 26px;
+		height: 2.5px;
+		border-radius: 2px;
+		background-color: currentColor;
+		transition: transform 0.2s ease;
+	}
+
+	/* Mobile Fullscreen Drawer Overlay */
+	.mobile-menu-overlay {
+		position: fixed;
+		inset: 0;
+		z-index: 999;
+		display: flex;
+		flex-direction: column;
+		padding: 1.5rem 16px;
+		transform: translateY(-100%);
+		opacity: 0;
+		pointer-events: none;
+		transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+	}
+
+	.mobile-menu-overlay.is-open {
+		transform: translateY(0);
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.mobile-menu-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 3rem;
+	}
+
+	.mobile-logo {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-weight: 900;
+		font-size: 2.5rem;
+		letter-spacing: -0.04em;
+	}
+
+	.mobile-close-btn {
+		background: none;
+		border: none;
+		font-size: 3rem;
+		line-height: 1;
+		cursor: pointer;
+		padding: 0;
+	}
+
+	.mobile-nav-links {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		align-items: flex-start;
+	}
+
+	.mobile-nav-link {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-weight: 700;
+		font-size: 1.75rem;
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	/* Light Theme Styles */
+	.theme-light {
+		color: #000000;
+	}
+	.theme-light .brand-logo,
+	.theme-light .nav-link,
+	.theme-light .mobile-logo,
+	.theme-light .mobile-close-btn,
+	.theme-light .mobile-nav-link {
+		color: #000000;
+	}
+	.mobile-menu-overlay.theme-light {
+		background-color: #ffffff;
+	}
+
+	/* Dark Theme Styles */
+	.theme-dark {
+		color: #ffffff;
+	}
+	.theme-dark .brand-logo,
+	.theme-dark .mobile-logo,
+	.theme-dark .mobile-close-btn {
+		color: #ffffff;
+	}
+	.theme-dark .nav-link {
+		color: rgba(255, 255, 255, 0.75);
+	}
+	.theme-dark .nav-link:hover,
+	.theme-dark .nav-link.active {
+		color: #ffffff;
+	}
+	.mobile-menu-overlay.theme-dark {
+		background-color: #0a0a0a;
+	}
+	.theme-dark .mobile-nav-link {
+		color: rgba(255, 255, 255, 0.85);
+	}
+	.theme-dark .mobile-nav-link.active,
+	.theme-dark .mobile-nav-link:hover {
+		color: #ffffff;
+	}
+
+	/* Responsive Breakpoint */
+	@media (max-width: 900px) {
+		.desktop-nav {
+			display: none;
+		}
+		.mobile-menu-btn {
+			display: flex;
+		}
+	}
+</style>

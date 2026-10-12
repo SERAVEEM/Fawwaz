@@ -1,0 +1,136 @@
+---
+// ponytail: hero section matching Figma node 131:324
+import { r2, getPlaceholder } from '../utils/assets';
+
+interface Props {
+	portraitImage?: string;
+}
+
+const { portraitImage = '/assets/hero/image-137.webp' } = Astro.props;
+const finalSrc = r2(portraitImage);
+const placeholder = getPlaceholder(portraitImage);
+---
+
+<section class="fawwaz-hero" aria-label="Hero Introduction">
+	<div class="hero-container">
+		<!-- Central Portrait Photo -->
+		<div class="portrait-card" style={placeholder ? `background-image: url("${placeholder}"); background-size: cover;` : undefined}>
+			<img
+				src={finalSrc}
+				alt="Fawwaz - Product Engineer"
+				class="portrait-img"
+				loading="eager"
+				decoding="async"
+			/>
+		</div>
+
+		<!-- Tagline Block -->
+		<div class="tagline-block">
+			<div class="tagline-header">
+				<span class="status-dot" aria-hidden="true"></span>
+				<span class="tagline-role">Product Engineer for</span>
+			</div>
+			<div class="tagline-company-wrap">
+				<span class="tagline-company">Perspective std.</span>
+				<div class="tagline-underline" aria-hidden="true"></div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.fawwaz-hero {
+		width: 100%;
+		min-height: 100vh;
+		min-height: 100dvh;
+		background-color: #ffffff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		padding: clamp(6rem, 10vw, 8.5rem) 1.5rem clamp(3.5rem, 6vw, 5rem);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.hero-container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		max-width: 100%;
+	}
+
+	/* Central Portrait */
+	.portrait-card {
+		width: clamp(200px, 14.84vw, 285px);
+		aspect-ratio: 285 / 508.08;
+		background-color: #f0f0f0;
+		overflow: hidden;
+		flex-shrink: 0;
+	}
+
+	.portrait-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	/* Tagline */
+	.tagline-block {
+		margin-top: clamp(0.75rem, 1.2vw, 1.25rem);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		color: #000000;
+	}
+
+	.tagline-header {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	.status-dot {
+		width: 12px;
+		height: 12px;
+		border-radius: 50%;
+		background-color: #fb4242;
+		display: inline-block;
+		flex-shrink: 0;
+	}
+
+	.tagline-role {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-weight: 200;
+		font-size: clamp(1.1rem, 1.25vw, 24px);
+		line-height: 1.2;
+		color: #000000;
+		letter-spacing: -0.01em;
+	}
+
+	.tagline-company-wrap {
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 2px;
+	}
+
+	.tagline-company {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-weight: 600;
+		font-size: clamp(1.1rem, 1.25vw, 24px);
+		line-height: 1.2;
+		color: #000000;
+		letter-spacing: -0.01em;
+	}
+
+	.tagline-underline {
+		width: 100%;
+		height: 1px;
+		background-color: #000000;
+		margin-top: 1px;
+	}
+</style>

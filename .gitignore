@@ -1,0 +1,42 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# temporary files
+.temp*
+scratch/
+
+# Cloudflare R2 assets (media served via CDN)
+public/assets/
+public/webp/
+webp/
+project/
+*.mp4
+*.webm
+*.mov
+*.avi
+
+# Keep essential site assets
+!public/favicon.svg
+!public/favicon.ico

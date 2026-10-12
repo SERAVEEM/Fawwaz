@@ -1,0 +1,801 @@
+---
+import { r2, getPlaceholder } from '../utils/assets';
+
+interface GridItem {
+  id: string;
+  src: string;
+  alt: string;
+  size: "large" | "medium" | "small";
+  aspectRatio?: string;
+  objectFit?: "cover" | "contain";
+  objectPosition?: string;
+  colDesktop: string;
+  colMobile?: string;
+  colClasses?: string;
+  itemClasses?: string;
+  opacity?: number;
+  hideMobile?: boolean;
+}
+
+const ROWS: GridItem[][] = [
+  // Row 1
+  [
+    {
+      id: "r1-1",
+      src: "/webp/1187fb3b-6ac4-4193-97bb-314cbe5d6450.webp?v=2",
+      alt: "Architectural work showcase",
+      size: "large",
+      colDesktop: "1 / span 3",
+      colMobile: "1 / span 3",
+      itemClasses: "offset-neg-ml",
+      opacity: 1.0,
+      hideMobile: false,
+    },
+    {
+      id: "r1-2",
+      src: "/webp/linear-projects-grid.webp",
+      alt: "Linear Design curated architectural projects grid",
+      size: "medium",
+      aspectRatio: "9 / 14",
+      colDesktop: "4 / span 2",
+      colMobile: "4 / span 2",
+      colClasses: "align-center",
+      itemClasses: "offset-down-quarter",
+      opacity: 1.0,
+      hideMobile: false,
+    },
+    {
+      id: "r1-3",
+      src: "/webp/larasana-about.webp",
+      alt: "Larasana cultural heritage about showcase",
+      size: "medium",
+      aspectRatio: "16 / 9",
+      colDesktop: "7 / span 2",
+      colMobile: "5 / span 2",
+      colClasses: "align-center",
+      opacity: 1.0,
+      hideMobile: true,
+    },
+    {
+      id: "r1-4",
+      src: "/webp/97bf5071-64a0-4870-990d-02776bcd7b37.webp?v=2",
+      alt: "Modern design showcase",
+      size: "medium",
+      colDesktop: "9 / span 2",
+      colMobile: "2 / span 3",
+      itemClasses: "offset-up-half",
+      opacity: 1.0,
+      hideMobile: true,
+    },
+    {
+      id: "r1-5",
+      src: "/webp/linear-pinkthaican-hero.webp",
+      alt: "Pinkthaican architectural work hero",
+      size: "small",
+      aspectRatio: "16 / 9",
+      colDesktop: "11 / span 2",
+      colMobile: "5 / span 2",
+      colClasses: "align-center",
+      itemClasses: "offset-up-half",
+      opacity: 0.9,
+      hideMobile: true,
+    },
+  ],
+  // Row 2
+  [
+    {
+      id: "r2-1",
+      src: "/webp/ab955c8e-e239-4db4-8b47-c69fcb497faa.webp?v=2",
+      alt: "Modern facade framing",
+      size: "medium",
+      colDesktop: "1 / span 2",
+      colMobile: "1 / span 2",
+      colClasses: "align-center",
+      itemClasses: "offset-neg-ml offset-up-quarter",
+      opacity: 1.0,
+      hideMobile: false,
+    },
+    {
+      id: "r2-2",
+      src: "/assets/linear/linear-saturnus.webp",
+      alt: "Hall Saturnus Hotel architectural project",
+      size: "small",
+      colDesktop: "3 / span 1",
+      colMobile: "3 / span 1",
+      colClasses: "align-end",
+      itemClasses: "offset-down-half",
+      opacity: 0.8,
+      hideMobile: true,
+    },
+    {
+      id: "r2-3",
+      src: "/webp/larasana-education.webp",
+      alt: "Larasana educational art initiative",
+      size: "medium",
+      aspectRatio: "2 / 1",
+      colDesktop: "5 / span 3",
+      colMobile: "4 / span 2",
+      colClasses: "align-center",
+      opacity: 1.0,
+      hideMobile: true,
+    },
+    {
+      id: "r2-4",
+      src: "/webp/linear-projects-list.webp",
+      alt: "Linear Design projects directory overview",
+      size: "medium",
+      aspectRatio: "9 / 14",
+      colDesktop: "8 / span 2",
+      colMobile: "6 / span 2",
+      itemClasses: "offset-up-quarter",
+      opacity: 1.0,
+      hideMobile: true,
+    },
+    {
+      id: "r2-5",
+      src: "/webp/bc331c29-f84e-4dc5-9d02-10525c501740 (1).webp",
+      alt: "Sunlit concrete pillar",
+      size: "large",
+      colDesktop: "10 / span 3",
+      colMobile: "2 / span 4",
+      colClasses: "align-center padding-bottom-large",
+      opacity: 1.0,
+      hideMobile: false,
+    },
+  ],
+  // Row 3
+  [
+    {
+      id: "r3-1",
+      src: "/webp/c3bfc43e-0a06-4bef-ac58-8e91dfeb46e7.webp",
+      alt: "Living space ambient lighting",
+      size: "large",
+      colDesktop: "1 / span 3",
+      colMobile: "1 / span 3",
+      itemClasses: "offset-neg-ml",
+      opacity: 1.0,
+      hideMobile: false,
+    },
+    {
+      id: "r3-2",
+      src: "/assets/linear/linear-logo-dark.webp",
+      alt: "Linear Design identity logo",
+      size: "small",
+      colDesktop: "4 / span 1",
+      colMobile: "4 / span 1",
+      colClasses: "align-end",
+      itemClasses: "offset-down-half",
+      opacity: 0.9,
+      hideMobile: true,
+    },
+    {
+      id: "r3-3",
+      src: "/assets/linear/linear-allwork-8.webp",
+      alt: "Linear All Work showcase gallery",
+      size: "medium",
+      colDesktop: "9 / span 2",
+      colMobile: "5 / span 2",
+      colClasses: "align-center",
+      opacity: 1.0,
+      hideMobile: false,
+    },
+    {
+      id: "r3-4",
+      src: "/webp/linear-archived-table.webp",
+      alt: "Linearchived project directory index",
+      size: "medium",
+      aspectRatio: "16 / 9",
+      colDesktop: "11 / span 2",
+      colMobile: "1 / span 3",
+      opacity: 0.95,
+      hideMobile: true,
+    },
+  ],
+  // Row 4
+  [
+    {
+      id: "r4-1",
+      src: "/webp/linear-pinkthaican-about.webp",
+      alt: "Pinkthaican architectural geometry and dual perspective",
+      size: "medium",
+      aspectRatio: "2 / 1",
+      colDesktop: "1 / span 3",
+      colMobile: "1 / span 3",
+      colClasses: "align-center",
+      itemClasses: "offset-neg-ml",
+      opacity: 1.0,
+      hideMobile: false,
+    },
+    {
+      id: "r4-2",
+      src: "/webp/linear-allwork-overview.webp",
+      alt: "Linear All Work curated spatial gallery",
+      size: "small",
+      aspectRatio: "16 / 9",
+      colDesktop: "4 / span 2",
+      colMobile: "4 / span 2",
+      colClasses: "align-end",
+      itemClasses: "offset-down-half",
+      opacity: 0.9,
+      hideMobile: true,
+    },
+    {
+      id: "r4-3",
+      src: "/webp/fawwaz-orange-portrait.webp",
+      alt: "Fawwaz — Studio portrait in ambient orange light",
+      size: "medium",
+      aspectRatio: "9 / 16",
+      objectFit: "cover",
+      objectPosition: "center top",
+      colDesktop: "7 / span 2",
+      colMobile: "2 / span 2",
+      colClasses: "align-center",
+      opacity: 1.0,
+      hideMobile: false,
+    },
+    {
+      id: "r4-5",
+      src: "/webp/de1fb4ab-703f-4db0-91f1-faf2921e2436.webp",
+      alt: "Reception hall stone counter",
+      size: "large",
+      colDesktop: "10 / span 3",
+      colMobile: "2 / span 4",
+      colClasses: "align-center padding-bottom-large",
+      opacity: 1.0,
+      hideMobile: true,
+    },
+  ],
+];
+---
+
+<section class="telha-all-work-section" id="all-work" aria-label="All Work">
+  <!-- Sticky Center Title (Exactly mirrors Telha Clarke's .works-grid-button) -->
+  <div class="works-grid-button">
+    <a href="/archive" class="works-grid-link" aria-label="View All Work">
+      <span class="title-text">Archive</span>
+      <sup class="title-count">(9)</sup>
+    </a>
+  </div>
+
+  <!-- Floating Parallax Image Grid -->
+  <div class="works-grid-container">
+    {
+      ROWS.map((row, rowIndex) => (
+        <div class="works-grid-row">
+          {row.map((item, itemIndex) => (
+            <div
+              class:list={["works-col", item.colClasses, item.hideMobile ? "hide-on-compact" : ""]}
+              style={`--col-desktop: ${item.colDesktop}; --col-mobile: ${item.colMobile || 'auto'};`}
+            >
+              <div
+                class:list={["works-grid-item", item.itemClasses]}
+                data-size={item.size}
+                data-index={rowIndex * 5 + itemIndex}
+                style={`opacity: ${item.opacity ?? 1};`}
+              >
+                <!-- Scroll Parallax Wrapper -->
+                <div
+                  class="works-grid-image js-scroll-parallax"
+                  data-size={item.size}
+                  style={item.aspectRatio ? `aspect-ratio: ${item.aspectRatio} !important;` : undefined}
+                >
+                  <!-- Interactive Mouse Parallax Inner -->
+                  <div
+                    class="image-inner js-mouse-parallax"
+                    style={getPlaceholder(item.src) ? `background-image: url("${getPlaceholder(item.src)}"); background-size: cover;` : undefined}
+                  >
+                    <img
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMSIgaGVpZ2h0PSIxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InRyYW5zcGFyZW50Ii8+PC9zdmc+"
+                      data-src={r2(item.src.replace(/\.(png|jpg|jpeg)$/i, '.webp'))}
+                      alt={item.alt}
+                      loading="lazy"
+                      decoding="async"
+                      class="grid-img"
+                      style={[
+                        item.objectFit ? `object-fit: ${item.objectFit};` : '',
+                        item.objectPosition ? `object-position: ${item.objectPosition};` : ''
+                      ].filter(Boolean).join(' ') || undefined}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initTelhaWorksGrid() {
+    const section = document.getElementById("all-work");
+    const button = document.querySelector(".works-grid-button");
+    const items = document.querySelectorAll(".works-grid-item");
+    const scrollImages = document.querySelectorAll(".js-scroll-parallax");
+
+    if (!section || !button || scrollImages.length === 0) return;
+
+    let isInView = false;
+    const mouse = {
+      target: { x: 0, y: 0 },
+      current: { x: 0, y: 0 }
+    };
+
+    // 1. InView Trigger to optimize RAF ticker
+    ScrollTrigger.create({
+      trigger: section,
+      start: "top bottom",
+      end: "bottom top",
+      onEnter: () => { isInView = true; },
+      onEnterBack: () => { isInView = true; },
+      onLeave: () => { isInView = false; },
+      onLeaveBack: () => { isInView = false; }
+    });
+
+    // 2. Sticky Button Scrub Animation (Scales down smoothly on scroll)
+    let targetScale = 0.6;
+    const windowWidth = window.innerWidth;
+    if (windowWidth <= 1024 && windowWidth >= 768) {
+      targetScale = 0.66;
+    } else if (windowWidth < 768) {
+      targetScale = 0.5;
+    }
+
+    const buttonTimeline = gsap.timeline();
+    buttonTimeline.to(button, { scale: targetScale, ease: "none" });
+
+    ScrollTrigger.create({
+      trigger: section,
+      start: () => `top-=${0.35 * window.innerHeight}px top`,
+      end: () => `top+=${0.1 * window.innerHeight}px top`,
+      scrub: 0.4,
+      animation: buttonTimeline
+    });
+
+    // Fade out button when reaching end of section
+    ScrollTrigger.create({
+      trigger: section,
+      start: "bottom-=35% top",
+      end: "bottom-=15% top",
+      scrub: 0.4,
+      animation: gsap.fromTo(button, { autoAlpha: 1 }, { autoAlpha: 0, ease: "none" })
+    });
+
+    // 3. Entrance Fade reveal for first items
+    items.forEach((item, index) => {
+      if (index < 5) {
+        const scrollImg = item.querySelector(".js-scroll-parallax");
+        if (scrollImg) {
+          gsap.fromTo(
+            scrollImg,
+            { opacity: 0 },
+            {
+              opacity: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: item,
+                start: () => `top-=${gsap.utils.random(10, 45)}% bottom`,
+                end: () => `top+=${gsap.utils.random(0, 10)}% top`,
+                scrub: 0.4
+              }
+            }
+          );
+        }
+      }
+    });
+
+    // 4. Scroll Parallax Scrubbing (calibrated: gentler on compact screens to prevent collision)
+    const isCompact = window.innerWidth < 1024;
+    const smallFactor = isCompact ? 0.05 : 0.25;
+    const mediumFactor = isCompact ? 0.03 : 0.15;
+    scrollImages.forEach((img) => {
+      const size = img.getAttribute("data-size");
+      const parentItem = img.closest(".works-grid-item");
+      if (!parentItem) return;
+
+      const factor = size === "small" ? smallFactor : mediumFactor;
+      gsap.fromTo(
+        img,
+        { y: () => -window.innerHeight * factor },
+        {
+          y: () => window.innerHeight * factor,
+          ease: "none",
+          scrollTrigger: {
+            trigger: parentItem,
+            start: () => `top-=${window.innerHeight * factor}px bottom`,
+            end: () => `bottom+=${window.innerHeight * factor}px top`,
+            scrub: true
+          }
+        }
+      );
+    });
+
+    // 5. Interactive Mouse Parallax (Window-wide Normalized Cursor Tracking on fine pointer devices)
+    const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    if (isFinePointer) {
+      activeMouseMove = (e: MouseEvent) => {
+        mouse.target.x = gsap.utils.mapRange(0, window.innerWidth, 1, -1, e.clientX);
+        mouse.target.y = gsap.utils.mapRange(0, window.innerHeight, 1, -1, e.clientY);
+      };
+
+      window.addEventListener("mousemove", activeMouseMove, { passive: true });
+
+      // ponytail: single container CSS variable update instead of 31 inline style DOM mutations
+      activeTicker = () => {
+        if (!isInView) return;
+
+        const dx = mouse.target.x - mouse.current.x;
+        const dy = mouse.target.y - mouse.current.y;
+        if (Math.abs(dx) < 0.0005 && Math.abs(dy) < 0.0005) return;
+
+        mouse.current.x += dx * 0.09;
+        mouse.current.y += dy * 0.09;
+
+        section.style.setProperty('--mouse-x', mouse.current.x.toFixed(4));
+        section.style.setProperty('--mouse-y', mouse.current.y.toFixed(4));
+      };
+
+      gsap.ticker.add(activeTicker);
+    }
+  }
+
+  let activeTicker: (() => void) | null = null;
+  let activeMouseMove: ((e: MouseEvent) => void) | null = null;
+  let rowObserver: IntersectionObserver | null = null;
+
+  function initProgressiveRowLoading() {
+    if (rowObserver) {
+      rowObserver.disconnect();
+      rowObserver = null;
+    }
+
+    rowObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const row = entry.target as HTMLElement;
+            observer.unobserve(row);
+            const lazyImgs = row.querySelectorAll<HTMLImageElement>('img[data-src]');
+            lazyImgs.forEach((img) => {
+              const dataSrc = img.getAttribute('data-src');
+              if (dataSrc) {
+                const preloader = new Image();
+                preloader.src = dataSrc;
+                preloader.decode().then(() => {
+                  img.src = dataSrc;
+                  img.removeAttribute('data-src');
+                }).catch(() => {
+                  img.src = dataSrc;
+                  img.removeAttribute('data-src');
+                });
+              }
+            });
+          }
+        });
+      },
+      { rootMargin: '600px 0px' }
+    );
+
+    document.querySelectorAll('#all-work .works-grid-row').forEach((row) => {
+      rowObserver?.observe(row);
+    });
+  }
+
+  function setupTelhaGrid() {
+    if (document.getElementById("all-work")) {
+      initTelhaWorksGrid();
+      initProgressiveRowLoading();
+    }
+  }
+
+  // Initialize on load and Astro page transitions
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupTelhaGrid);
+  } else {
+    setupTelhaGrid();
+  }
+
+  document.addEventListener("astro:page-load", setupTelhaGrid);
+  document.addEventListener("astro:before-swap", () => {
+    if (activeTicker) {
+      gsap.ticker.remove(activeTicker);
+      activeTicker = null;
+    }
+    if (activeMouseMove) {
+      window.removeEventListener("mousemove", activeMouseMove);
+      activeMouseMove = null;
+    }
+    if (rowObserver) {
+      rowObserver.disconnect();
+      rowObserver = null;
+    }
+    ScrollTrigger.getAll().forEach((st) => {
+      const triggerEl = st.trigger as HTMLElement | null;
+      if (triggerEl && triggerEl.closest("#all-work")) {
+        st.kill();
+      }
+    });
+  });
+</script>
+
+<style>
+  .telha-all-work-section {
+    position: relative;
+    width: 100%;
+    background-color: #fff;
+    color: #000;
+    margin-top: 0;
+    padding-bottom: 20rem;
+    overflow: clip;
+  }
+
+  @media (min-width: 1200px) {
+    .telha-all-work-section {
+      margin-top: 0;
+      padding-bottom: 28rem;
+    }
+  }
+
+  /* Sticky Center Headline mirroring Telha Clarke .works-grid-button */
+  .works-grid-button {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -100vh;
+    z-index: 20;
+    pointer-events: none;
+    transform-origin: center center;
+    will-change: transform, opacity;
+  }
+
+  .works-grid-link {
+    pointer-events: auto;
+    display: inline-flex;
+    align-items: baseline;
+    gap: clamp(0.25rem, 1vw, 0.75rem);
+    text-decoration: none;
+    color: #000;
+    transition: opacity 0.3s ease;
+  }
+
+  .works-grid-link:hover {
+    opacity: 0.6;
+  }
+
+  .title-text {
+    font-size: clamp(3rem, 7.5vw, 6.75rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .title-count {
+    font-size: clamp(1.25rem, 2.5vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    vertical-align: top;
+    line-height: 1;
+  }
+
+  /* Grid Layout */
+  .works-grid-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: 25vh;
+    gap: 8rem;
+  }
+
+  @media (min-width: 1200px) {
+    .works-grid-container {
+      padding-top: 35vh;
+      gap: 12rem;
+    }
+  }
+
+  .works-grid-row {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: clamp(1rem, 2vw, 2.5rem);
+    padding: 0 clamp(1rem, 3.5vw, 3.5rem);
+    width: 100%;
+    content-visibility: auto;
+    contain-intrinsic-size: 0 450px;
+  }
+
+  @media (min-width: 1200px) {
+    .works-grid-row {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+  }
+
+  .works-col {
+    display: flex;
+    flex-direction: column;
+    grid-column: var(--col-mobile, auto);
+  }
+
+  @media (min-width: 1200px) {
+    .works-col {
+      grid-column: var(--col-desktop, auto);
+    }
+  }
+
+  .works-col.align-end {
+    justify-content: flex-end;
+  }
+
+  .works-col.align-center {
+    justify-content: center;
+  }
+
+  .works-grid-item {
+    position: relative;
+    width: 100%;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Spatial offsets mimicking Telha Clarke */
+  .offset-neg-ml {
+    margin-left: 0;
+  }
+  @media (min-width: 1200px) {
+    .offset-neg-ml {
+      margin-left: -5vw;
+    }
+  }
+
+  .offset-down-half {
+    transform: translateY(35%);
+  }
+
+  .offset-up-half {
+    transform: translateY(-35%);
+  }
+
+  .offset-up-quarter {
+    transform: translateY(-15%);
+  }
+
+  .padding-bottom-large {
+    padding-bottom: 5rem;
+  }
+
+  @media (max-width: 1023px) {
+    .hide-on-compact {
+      display: none !important;
+    }
+
+    .telha-all-work-section {
+      margin-top: 0;
+      padding-bottom: 12rem;
+    }
+
+    .works-grid-container {
+      padding-top: 15vh;
+      gap: clamp(4rem, 10vh, 7rem);
+    }
+
+    .works-grid-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 clamp(1rem, 4vw, 3rem);
+      width: 100%;
+      content-visibility: auto;
+      contain-intrinsic-size: 0 450px;
+    }
+
+    .works-col {
+      grid-column: auto !important;
+      width: clamp(130px, 34%, 280px);
+      flex: 0 0 clamp(130px, 34%, 280px);
+    }
+
+    /* Stagger the right image slightly for organic rhythm */
+    .works-col:nth-child(even) {
+      margin-top: clamp(2rem, 6vw, 4.5rem);
+    }
+
+    .offset-down-half,
+    .offset-up-half,
+    .offset-up-quarter,
+    .offset-down-quarter,
+    .offset-neg-ml {
+      transform: none !important;
+      margin-left: 0 !important;
+    }
+
+    .padding-bottom-large {
+      padding-bottom: 0;
+    }
+
+    .title-text {
+      font-size: clamp(2rem, 5.5vw, 3.5rem);
+    }
+
+    .title-count {
+      font-size: clamp(0.9rem, 2vw, 1.35rem);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .title-text {
+      font-size: clamp(1.75rem, 6.5vw, 2.25rem);
+    }
+
+    .works-col {
+      width: 33%;
+      flex: 0 0 33%;
+    }
+
+    .works-grid-row {
+      padding: 0 0.85rem;
+    }
+  }
+
+  /* Parallax and Image Containers */
+  .works-grid-image {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    will-change: transform;
+  }
+
+  .works-grid-item[data-size="large"] .works-grid-image {
+    aspect-ratio: 4 / 5;
+  }
+
+  .works-grid-item[data-size="medium"] .works-grid-image {
+    aspect-ratio: 3 / 4;
+  }
+
+  .works-grid-item[data-size="small"] .works-grid-image {
+    aspect-ratio: 1 / 1;
+  }
+
+  .image-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    will-change: transform;
+    transform: translate3d(calc(var(--mouse-x, 0) * var(--mouse-factor, 20px)), calc(var(--mouse-y, 0) * var(--mouse-factor, 20px)), 0);
+  }
+
+  .works-grid-item[data-size="large"] .image-inner {
+    --mouse-factor: 60px;
+  }
+
+  .works-grid-item[data-size="medium"] .image-inner {
+    --mouse-factor: 30px;
+  }
+
+  .works-grid-item[data-size="small"] .image-inner {
+    --mouse-factor: 20px;
+  }
+
+  .grid-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background-color: #f0f0f0;
+    transition: filter 0.4s ease;
+  }
+
+  .grid-img:hover {
+    filter: brightness(0.95);
+  }
+</style>

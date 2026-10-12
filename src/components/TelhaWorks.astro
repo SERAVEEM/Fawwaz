@@ -1,0 +1,684 @@
+---
+import { r2, getPlaceholder } from '../utils/assets';
+
+interface WorkItem {
+	title: string;
+	category: string;
+	date: string;
+	slug?: string;
+	image?: string;
+	video?: string;
+	placeholder?: string;
+}
+
+const projects: WorkItem[] = [
+	{
+		title: 'Linear Design',
+		category: 'Linear Studio',
+		date: "26'",
+		slug: 'linear-design',
+		image: r2('/assets/linear/linear-logo-dark.webp'),
+		video: r2('/assets/linear/linear-walkthrough-full.webm'),
+		placeholder: getPlaceholder('/assets/linear/linear-logo-dark.webp'),
+	},
+	{
+		title: 'Larasana',
+		category: 'Larasana Corp',
+		date: "26'",
+		slug: 'larasana',
+		image: r2('/webp/larasana-pics.webp'),
+		video: r2('/webp/larasana-walkthrough.webm'),
+		placeholder: getPlaceholder('/webp/larasana-pics.webp'),
+	},
+	{
+		title: 'GPL Yuk!',
+		category: 'GPL YUK!',
+		date: '2026',
+		slug: 'gpl-yuk',
+		image: r2('/webp/gpl-yuk-logo.svg'),
+		placeholder: getPlaceholder('/webp/gpl-yuk-logo.svg'),
+	},
+];
+---
+
+<section class="telha-works-section" id="works" aria-label="Selected Works">
+	<!-- Section Header Bar (01 Selected Works / 26') -->
+	<div class="works-header-bar">
+		<div class="header-left">
+			<span class="header-num-mobile">01</span>
+			<h2 class="header-title">Selected Works</h2>
+		</div>
+		<div class="header-center">
+			<span class="header-num-desktop">01</span>
+		</div>
+		<div class="header-right">
+			<span class="header-timeline">26'</span>
+		</div>
+	</div>
+
+	<!-- Works List -->
+	<div class="works-list">
+		{
+			projects.map((project, index) => (
+				<article class="works-item" data-index={index}>
+					<a href={`/archive?project=${project.slug}`} class="works-item-link" aria-label={`View ${project.title}`}>
+						<!-- Massive Bracketed Title Row -->
+						<div class="works-title-row">
+							<!-- Left Edge Tick Mark -->
+							<span class="edge-tick edge-tick-left" aria-hidden="true" />
+
+							<!-- Left Bracket (scrubs outward from center to edge on scroll) -->
+							<div class="works-item-bracket-left bracket bracket-left" aria-hidden="true">[</div>
+
+							<!-- Main Display Title (scrubs letter-spacing on scroll) -->
+							<h3 class="works-item-title project-title">{project.title}</h3>
+
+							<!-- Right Bracket (scrubs outward from center to edge on scroll) -->
+							<div class="works-item-bracket-right bracket bracket-right" aria-hidden="true">]</div>
+
+							<!-- Right Edge Tick Mark -->
+							<span class="edge-tick edge-tick-right" aria-hidden="true" />
+						</div>
+
+						<!-- Center Display Image Wrapper (6 cols on desktop / 8 on tablet / full on mobile) -->
+						<div class="works-item-image-wrapper works-image-wrapper">
+							<div class="works-item-image works-image-container" style={project.placeholder ? `background-image: url("${project.placeholder}"); background-size: cover;` : undefined}>
+								{project.video ? (
+									<>
+										<img
+											src={project.image}
+											alt={project.title}
+											class="project-img video-poster-img"
+											loading="lazy"
+											decoding="async"
+										/>
+										<video
+											src={project.video}
+											preload="none"
+											muted
+											loop
+											playsinline
+											class="project-img project-video"
+											onerror="this.style.display='none';"
+										/>
+									</>
+								) : project.image ? (
+									<img
+										src={project.image}
+										alt={project.title}
+										class="project-img"
+										loading="lazy"
+									/>
+								) : (
+									<div class="skeleton-image" aria-hidden="true">
+										<div class="skeleton-shimmer" />
+										<span class="skeleton-label">Placeholder</span>
+									</div>
+								)}
+							</div>
+
+							<!-- Metadata Info Row (Category left, Date right) -->
+							<div class="works-meta-row">
+								<span class="works-item-category meta-category">{project.category}</span>
+								<span class="works-item-date meta-date">{project.date}</span>
+							</div>
+						</div>
+					</a>
+				</article>
+			))
+		}
+	</div>
+</section>
+
+<script>
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	function initTelhaWorksAnimations() {
+		// Header fade reveal
+		const headerBar = document.querySelector('.works-header-bar');
+		if (headerBar) {
+			gsap.fromTo(
+				headerBar,
+				{ y: 30, opacity: 0 },
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.9,
+					ease: 'power3.out',
+					scrollTrigger: {
+						trigger: headerBar,
+						start: 'top 92%',
+						toggleActions: 'play none none none',
+					},
+				}
+			);
+		}
+
+		// Responsive check: full scrub animation on desktop/tablet, clean static layout on small mobile
+		const isMobile = window.innerWidth <= 768;
+		const workItems = document.querySelectorAll('.works-item');
+
+		workItems.forEach((item) => {
+			const bracketLeft = item.querySelector('.bracket-left');
+			const bracketRight = item.querySelector('.bracket-right');
+			const title = item.querySelector('.project-title');
+			const imgContainer = item.querySelector('.works-image-container');
+			const imgWrapper = item.querySelector('.works-image-wrapper');
+			const innerImg = item.querySelectorAll('.skeleton-image, .project-img');
+			const category = item.querySelector('.meta-category');
+			const date = item.querySelector('.meta-date');
+
+			if (isMobile) {
+				gsap.set([bracketLeft, bracketRight, title, innerImg, imgContainer, imgWrapper, category, date], {
+					clearProps: 'all',
+				});
+				gsap.fromTo(
+					item,
+					{ y: 20, opacity: 0.9 },
+					{
+						y: 0,
+						opacity: 1,
+						duration: 0.7,
+						ease: 'power2.out',
+						scrollTrigger: {
+							trigger: item,
+							start: 'top 90%',
+							toggleActions: 'play none none none',
+						},
+					}
+				);
+			} else if (bracketLeft && bracketRight && title && imgContainer && innerImg.length > 0) {
+				// Clear any previous props
+				gsap.set([bracketLeft, bracketRight, title, innerImg, imgContainer, imgWrapper, category, date], {
+					clearProps: 'all',
+				});
+
+				// =========================================================================
+				// 1. ENTER TIMELINE: Scrubs as project scrolls into viewport (top bottom -> top 12%)
+				// - Brackets scrub outward from center towards screen edges (-85% / +85%)
+				// - Image container scales up from 0.45 to 1.0
+				// - Inner image un-zooms from extreme 1.75x focus down to 1.0x
+				// =========================================================================
+				const enterTL = gsap.timeline({ defaults: { ease: 'none' } });
+				// ponytail: bracket scrub & GPU transforms drive the kinetic reveal; skip letter-spacing layout reflows
+				enterTL
+					.fromTo(bracketLeft, { xPercent: 0 }, { xPercent: -85 }, 0)
+					.fromTo(bracketRight, { xPercent: 0 }, { xPercent: 85 }, 0)
+					.fromTo(innerImg, { scale: 1.75 }, { scale: 1 }, 0)
+					.fromTo(imgContainer, { scale: 0.45 }, { scale: 1 }, 0);
+
+				ScrollTrigger.create({
+					trigger: item,
+					start: 'top bottom',
+					end: 'top 12%',
+					scrub: 0.15,
+					animation: enterTL,
+				});
+
+				const video = item.querySelector('video') as HTMLVideoElement | null;
+				const linkEl = item.querySelector('.works-item-link');
+				if (video && linkEl) {
+					linkEl.addEventListener('pointerenter', () => {
+						video.play().catch(() => {});
+					});
+					linkEl.addEventListener('pointerleave', () => {
+						video.pause();
+					});
+				}
+
+				// =========================================================================
+				// 2. LEAVE TIMELINE: Scrubs as project exits past top (top top -> bottom top)
+				// - Brackets contract inward from edges back towards center
+				// - Image container scales down to 0.3
+				// - Image wrapper parallaxes upward with -35% offset
+				// =========================================================================
+				const leaveTL = gsap.timeline({ defaults: { ease: 'none' } });
+				leaveTL
+					.fromTo(bracketLeft, { xPercent: -85 }, { xPercent: 0 }, 0)
+					.fromTo(bracketRight, { xPercent: 85 }, { xPercent: 0 }, 0)
+					.fromTo(innerImg, { scale: 1 }, { scale: 1.75 }, 0)
+					.fromTo(imgContainer, { scale: 1 }, { scale: 0.3 }, 0)
+					.fromTo(imgWrapper, { yPercent: 0 }, { yPercent: -35 }, 0);
+
+				ScrollTrigger.create({
+					trigger: item,
+					start: 'top top',
+					end: 'bottom top',
+					scrub: 0.15,
+					animation: leaveTL,
+				});
+			}
+		});
+
+		ScrollTrigger.refresh();
+	}
+
+	let worksTriggersMounted = false;
+	function setupTelhaWorks() {
+		if (document.getElementById('works')) {
+			initTelhaWorksAnimations();
+			worksTriggersMounted = true;
+		}
+	}
+
+	if (document.readyState === 'complete' || document.readyState === 'interactive') {
+		setupTelhaWorks();
+	} else {
+		window.addEventListener('DOMContentLoaded', setupTelhaWorks);
+	}
+
+	document.addEventListener('astro:page-load', setupTelhaWorks);
+	document.addEventListener('astro:before-swap', () => {
+		if (worksTriggersMounted) {
+			ScrollTrigger.getAll().forEach((st) => {
+				const triggerEl = st.trigger as HTMLElement | null;
+				if (triggerEl && triggerEl.closest('.telha-works-section')) {
+					st.kill();
+				}
+			});
+			worksTriggersMounted = false;
+		}
+	});
+
+	window.addEventListener('resize', () => {
+		ScrollTrigger.refresh();
+	});
+</script>
+
+<style>
+	/* ==========================================================================
+	   Telha Clarke 1:1 Selected Works Section (Full-bleed fluid layout)
+	   ========================================================================== */
+	.telha-works-section {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		background-color: #ffffff;
+		color: #000000;
+		box-sizing: border-box;
+		padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 1.4vw, 1.666rem) clamp(6rem, 12vw, 12rem);
+		overflow: hidden;
+	}
+
+	/* Section Header Bar: 3-column flex layout matching Telha Clarke */
+	.works-header-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		width: 100%;
+		padding-bottom: clamp(3rem, 7vw, 7rem);
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-size: clamp(0.875rem, 0.95vw, 1rem);
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		box-sizing: border-box;
+	}
+
+	.header-left {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		flex: 1;
+	}
+
+	.header-title {
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: 500;
+		margin: 0;
+		text-transform: uppercase;
+		letter-spacing: inherit;
+		color: #000000;
+	}
+
+	.header-num-mobile {
+		display: none;
+		color: #8e8e8e;
+	}
+
+	.header-center {
+		flex: 1;
+		display: flex;
+		justify-content: center;
+	}
+
+	.header-num-desktop {
+		color: #8e8e8e;
+		font-weight: 400;
+	}
+
+	.header-right {
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+		font-weight: 400;
+		color: #000000;
+	}
+
+	/* Works List */
+	.works-list {
+		display: flex;
+		flex-direction: column;
+		gap: clamp(4rem, 9vw, 9rem);
+		width: 100%;
+	}
+
+	.works-item {
+		width: 100%;
+		position: relative;
+	}
+
+	.works-item-link {
+		display: flex;
+		flex-direction: column;
+		gap: clamp(1.25rem, 2.5vw, 2.75rem);
+		width: 100%;
+		text-decoration: none;
+		color: inherit;
+		cursor: pointer;
+	}
+
+	/* Title Row: Full-width bracketed title row spanning edge to edge */
+	.works-title-row {
+		position: relative;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-sizing: border-box;
+		padding: 0;
+	}
+
+	/* Horizontal Edge Ticks: Compact & short hairline accents at edges */
+	.edge-tick {
+		position: absolute;
+		top: 50%;
+		width: clamp(10px, 1vw, 16px);
+		height: 1px;
+		background-color: #000000;
+		transform: translateY(-50%);
+		pointer-events: none;
+		z-index: 1;
+		opacity: 0.75;
+	}
+
+	.edge-tick-left {
+		left: 0;
+	}
+
+	.edge-tick-right {
+		right: 0;
+	}
+
+
+	/* Left and Right Framing Brackets:
+	   At rest (xPercent: 0), snug next to title.
+	   On scroll scrub, bracket-left glides to -85% (beside left tick)
+	   and bracket-right glides to +85% (beside right tick) */
+	.bracket {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-weight: 300;
+		font-size: clamp(3rem, 7vw, 7.5rem);
+		line-height: 0.95;
+		color: #000000;
+		user-select: none;
+		will-change: transform;
+		flex: 1;
+	}
+
+	.bracket-left {
+		display: flex;
+		justify-content: flex-end;
+		padding-right: clamp(1rem, 2.2vw, 3.5rem);
+	}
+
+	.bracket-right {
+		display: flex;
+		justify-content: flex-start;
+		padding-left: clamp(1rem, 2.2vw, 3.5rem);
+	}
+
+	/* Centered Display Title */
+	.project-title {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-weight: 400;
+		font-size: clamp(2.5rem, 6.2vw, 7rem);
+		line-height: 1;
+		letter-spacing: -0.038em;
+		color: #000000;
+		margin: 0;
+		text-align: center;
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	/* Center Image Wrapper: 12-column grid layout with negative top margin */
+	.works-image-wrapper {
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		column-gap: clamp(1rem, 1.5vw, 1.5rem);
+		width: 100%;
+		box-sizing: border-box;
+		margin-top: clamp(-1rem, -1.8vw, -2.5rem); /* Snugs image right beneath large title */
+		will-change: transform;
+	}
+
+	.works-image-container,
+	.works-meta-row {
+		/* Grid positioning: Columns 4 to 10 (centered 6 columns / 50% width on desktop) */
+		grid-column: 4 / 10;
+		width: 100%;
+	}
+
+	/* Image Container: 16:9 ratio fixed/fluid box */
+	.works-image-container {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		background-color: #ececec;
+		will-change: transform;
+		transform-origin: center center;
+	}
+
+	.project-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		will-change: transform;
+		transform-origin: center center;
+	}
+
+	.project-video {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.35s ease;
+		transform: translateZ(0);
+		backface-visibility: hidden;
+	}
+
+	.works-item:hover .project-video,
+	.works-item-link:hover .project-video,
+	.works-item-link:focus-visible .project-video {
+		opacity: 1;
+	}
+
+	/* Skeleton Placeholder with Shimmer Animation */
+	.skeleton-image {
+		width: 100%;
+		height: 100%;
+		background: #eeeeee;
+		position: relative;
+		overflow: hidden;
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-end;
+		padding: clamp(0.75rem, 1.2vw, 1.25rem);
+		box-sizing: border-box;
+		will-change: transform;
+		transform-origin: center center;
+	}
+
+	.skeleton-shimmer {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			90deg,
+			rgba(255, 255, 255, 0) 0%,
+			rgba(255, 255, 255, 0.65) 50%,
+			rgba(255, 255, 255) 100%
+		);
+		transform: translateX(-100%);
+		animation: shimmer-sweep 2.4s infinite ease-in-out;
+	}
+
+	@keyframes shimmer-sweep {
+		0% {
+			transform: translateX(-100%);
+		}
+		100% {
+			transform: translateX(100%);
+		}
+	}
+
+	.skeleton-label {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: #888888;
+		background: rgba(255, 255, 255, 0.9);
+		padding: 0.25rem 0.5rem;
+		z-index: 2;
+	}
+
+	/* Metadata Row */
+	.works-meta-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: clamp(0.85rem, 1.2vw, 1.25rem);
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-size: clamp(0.875rem, 0.95vw, 1rem);
+		font-weight: 400;
+		color: #000000;
+		letter-spacing: -0.01em;
+		overflow: visible;
+	}
+
+	.meta-category,
+	.meta-date {
+		display: inline-block;
+		will-change: transform, opacity;
+	}
+
+	/* ==========================================================================
+	   Hover Interactions (Subtle secondary micro-zoom on cursor hover)
+	   ========================================================================== */
+	@media (hover: hover) and (pointer: fine) {
+		.works-item-link:hover .project-img,
+		.works-item-link:hover .skeleton-image {
+			filter: brightness(0.98);
+		}
+	}
+
+	/* ==========================================================================
+	   Responsive Breakpoints
+	   ========================================================================== */
+	@media (max-width: 1200px) {
+		.works-image-container,
+		.works-meta-row {
+			grid-column: 3 / 11; /* 8 columns out of 12 on tablet */
+		}
+	}
+
+	@media (max-width: 768px) {
+		.telha-works-section {
+			padding: clamp(2.5rem, 5vw, 4rem) clamp(1rem, 4vw, 1.5rem) clamp(4rem, 8vw, 6rem);
+		}
+
+		.works-header-bar {
+			padding-bottom: 2rem;
+		}
+
+		.header-num-mobile {
+			display: inline-block;
+		}
+
+		.header-center {
+			display: none;
+		}
+
+		.works-list {
+			gap: clamp(3rem, 7vw, 5.5rem);
+		}
+
+		.works-title-row {
+			justify-content: center;
+			gap: 0.35rem;
+		}
+
+		.bracket {
+			flex: 0 0 auto;
+			font-size: clamp(2rem, 6.5vw, 2.75rem);
+			line-height: 1;
+		}
+
+		.bracket-left {
+			padding-right: 0;
+			justify-content: flex-end;
+		}
+
+		.bracket-right {
+			padding-left: 0;
+			justify-content: flex-start;
+		}
+
+		.project-title {
+			flex: 0 1 auto;
+			font-size: clamp(1.75rem, 6.5vw, 2.75rem);
+			white-space: normal;
+			text-align: center;
+			letter-spacing: -0.02em;
+		}
+
+		.works-image-wrapper {
+			grid-template-columns: 1fr;
+			margin-top: 0.5rem;
+		}
+
+		.works-image-container,
+		.works-meta-row {
+			grid-column: 1 / -1;
+		}
+
+		.works-image-container {
+			aspect-ratio: 16 / 9;
+			transform: none !important;
+		}
+
+		.project-img,
+		.skeleton-image {
+			transform: none !important;
+		}
+
+		.works-meta-row {
+			margin-top: 0.75rem;
+			font-size: 0.875rem;
+		}
+
+		.edge-tick {
+			display: none;
+		}
+	}
+</style>

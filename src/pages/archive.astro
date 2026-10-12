@@ -1,0 +1,1253 @@
+---
+// ponytail: 1:1 pixel-to-pixel reproduction of Podium.global work grid layout, native Inter typography, and compact centered detail modal
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { r2 } from '../utils/assets';
+
+export interface ArchiveProject {
+	id: string;
+	title: string;
+	client: string;
+	role?: string;
+	year: string;
+	index: string;
+	image: string;
+	modalImage?: string;
+	video?: string;
+	type: 'project' | 'skill';
+	description: string;
+	tags?: string[];
+	github?: string;
+	live?: string;
+	liveNote?: string;
+	objectPosition?: string;
+	objectFit?: 'cover' | 'contain';
+	aspectRatio?: string;
+	modalAspectRatio?: string;
+}
+
+// Clean, easily editable TypeScript data array for Fawwaz's archive & future experiences
+export const archiveProjects: ArchiveProject[] = [
+	{
+		id: 'linear-design',
+		title: 'LINEAR DESIGN',
+		client: 'LINEAR STUDIO',
+		role: 'PM, Product Engineer',
+		year: '2026',
+		index: '/001',
+		image: r2('/assets/linear/linear-logo-dark.webp'),
+		video: r2('/assets/linear/linear-walkthrough-full.webm'),
+		type: 'project',
+		aspectRatio: '16 / 10',
+		description:
+			'Digital architecture platform engineered in collaboration with Linear Studio (halolinear.com), digitalizing portfolio archives from multi-megabyte PDFs into a visual narrative web experience. Led a 3-person team implementing Static Site Generation (SSG) in Next.js & TypeScript, decoupled Cloudflare R2 edge media streaming for sub-second FCP, typology-based spatial navigation, and dynamic architectural drawing viewers. Achieved 99 Google Lighthouse Performance and 100 SEO.',
+		tags: ['Next.js SSG', 'TypeScript', 'Cloudflare R2', 'Lighthouse 99', 'Editorial Motion'],
+		live: 'https://halolinear.com',
+	},
+	{
+		id: 'larasana',
+		title: 'LARASANA',
+		client: 'LARASANA / BINUS',
+		role: 'PM, Product Engineer',
+		year: '2026',
+		index: '/002',
+		image: r2('/webp/larasana-pics.webp'),
+		video: r2('/webp/larasana-walkthrough.webm'),
+		type: 'project',
+		aspectRatio: '16 / 10',
+		description:
+			'Direct-to-Customer (D2C) luxury fashion platform uplifting 15,000+ Sasak weavers in Lombok into the global luxury market while eliminating predatory middlemen. Engineered as a decoupled NestJS microservices monorepo communicating via native TCP transport (3–7ms internal latency, 170–225MB RAM). Implements physical-to-digital QR Story Passports, MySQL ACID transaction isolation guaranteeing 60% artisan royalties, a Strategy Pattern Dynamic Shipping Resolver (Biteship, RajaOngkir, EasyPost), real-time SSE payment streaming via Midtrans, and 60 FPS editorial motion powered by React 19 and Lenis.',
+		tags: ['Microservices', 'React 19 & NestJS', 'ACID Transactions', 'Midtrans SSE', 'Lenis Physics'],
+		github: 'https://github.com/SERAVEEM/Larasana-React-nest',
+		live: 'https://larasana-iota.vercel.app/',
+		liveNote: 'Note: The backend is currently offline as backend hosting has concluded.',
+	},
+	{
+		id: 'gpl-yuk',
+		title: 'GPL YUK!',
+		client: 'GPL YUK!',
+		role: 'PM, Product Engineer',
+		year: '2026',
+		index: '/003',
+		image: r2('/webp/gpl-yuk-logo.svg'),
+		modalImage: r2('/webp/gpl-yuk-showcase.webp'),
+		type: 'project',
+		aspectRatio: '4 / 3',
+		description:
+			'Pro bono digital ecosystem engineered for social and environmental NGO GPL Yuk! to centralize volunteer management, field documentation, and public donation workflows. Features a responsive React.js and TypeScript volunteer portal for event registration and attendance tracking, backed by a structured Laravel & MySQL backend. Integrates automated Midtrans payment processing (QRIS & Virtual Account) eliminating manual bank checks, and zero-egress Cloudflare R2 object storage archiving thousands of high-resolution field photos and videos.',
+		tags: ['React.js', 'Laravel & MySQL', 'Midtrans API', 'Cloudflare R2', 'Non-Profit Ecosystem'],
+		live: 'https://www.instagram.com/gplyuk.id/',
+		liveNote: 'Note: This project is currently in active development.',
+	},
+	{
+		id: 'hypen',
+		title: 'HYPEN.',
+		client: 'HYPEN. / BINUS',
+		role: 'PM, Frontend',
+		year: '2026',
+		index: '/004',
+		image: r2('/webp/hypen-showcase.webp'),
+		type: 'project',
+		aspectRatio: '4 / 5',
+		description:
+			'Mobile C2C marketplace engineered for preloved fashion to combat textile waste and accelerate circular economy adoption in Indonesia (supporting SDGs 12, 13, and 8). Developed at BINUS University utilizing Flutter (Android & iOS) with declarative widget trees, backed by a layered Node.js & Express.js v5 REST API and a 15-table relational MySQL schema. Features contextual per-product WebSocket chat rooms with live price bargaining ("Tawar Harga"), JWT and email OTP verification, automated Midtrans QRIS/VA payments, RajaOngkir shipping calculation, and an admin verification queue.',
+		tags: ['Flutter Mobile', 'Node.js & Express v5', 'WebSocket Chat', 'MySQL (15 Tables)', 'Midtrans & RajaOngkir', 'SDG 12 & 13'],
+		github: 'https://github.com/seraveem/hypen-marketplace',
+		live: 'https://drive.google.com/drive/folders/1qxWcadfINbDECvF6k4x7PYR4j0v8CHMw?usp=sharing',
+	},
+	{
+		id: 'bsc-1',
+		title: 'BSC 1.0',
+		client: 'BNCC',
+		role: 'HRD Program Director & Workshop Lead',
+		year: '2026',
+		index: '/005',
+		image: r2('/webp/bncc-skill-class-1.png'),
+		type: 'project',
+		aspectRatio: '16 / 10',
+		description:
+			'BNCC Skill Class 1.0 internal talent development program and interactive workshop series, designed to accelerate technical readiness, core engineering fundamentals, and peer-to-peer knowledge transfer across active members.',
+		tags: ['Talent Enablement', 'Technical Workshop', 'People Operations', 'Curriculum Design'],
+	},
+	{
+		id: 'bsc-2',
+		title: 'BSC 2.0',
+		client: 'BNCC',
+		role: 'HRD Program Director & Workshop Lead',
+		year: '2026',
+		index: '/006',
+		image: r2('/webp/bncc-skill-class-2.png'),
+		type: 'project',
+		aspectRatio: '16 / 10',
+		description:
+			'Advanced BNCC Skill Class 2.0 cohort focused on career acceleration, professional branding, and specialized tech competencies with structured feedback loops and cross-division collaboration.',
+		tags: ['Career Acceleration', 'Professional Branding', 'Talent Ops', 'Cohort Mentorship'],
+	},
+	{
+		id: 'hrd-manager',
+		title: 'HRD MANAGER',
+		client: 'BNCC',
+		role: 'Human Resources Development Manager',
+		year: '2025',
+		index: '/007',
+		image: r2('/webp/fawwaz-bncc-portrait.webp'),
+		modalImage: r2('/webp/bncc-synergy-camp.jpg'),
+		objectPosition: 'center 20%',
+		type: 'project',
+		aspectRatio: '4 / 5',
+		description:
+			'As HRD Manager at BNCC, I treated team operations like product engineering: diagnosing bottlenecks, defining measurable KPIs, and designing a structured 2-stage talent funnel. By replacing loose tracking with data-driven feedback loops, our team turned an 80%+ historical disengagement rate into 95% sustained activist retention across 40 core members.',
+		tags: ['Talent Funnel', 'KPI Architecture', 'Data-Driven Ops', 'People Operations', 'Retention Strategy'],
+	},
+	{
+		id: 'gramedia-collaboration',
+		title: 'GRAMEDIA COLLABORATION',
+		client: 'GRAMEDIA',
+		role: 'Partnership Liaison',
+		year: '2025',
+		index: '/008',
+		image: r2('/webp/gramedia-pesta-literasi.webp'),
+		modalImage: r2('/webp/gramedia-pesta-literasi.webp'),
+		type: 'skill',
+		aspectRatio: '16 / 9',
+		description:
+			'Represented the NGO Duduk Baca as the primary cross-functional liaison with Gramedia for Pesta Literasi Indonesia, leading partner alignment, stage operations, and on-site event execution.\n\nStrategic Partner Alignment: Spearheaded direct, face-to-face coordination with Gramedia’s event division to synchronize program rundowns, technical expectations, and cross-organizational deliverables.\n\nStage & Spatial Design: Coordinated stage requirements, audience seating layout, and crowd traffic flow to optimize attendee engagement and venue capacity.\n\nTalent & Logistics Management: Handled speaker hospitality and technical requirements, oversaw on-time program pacing, and directed backstage logistics, including catering and essential event supplies.',
+		tags: ['Strategic Alignment', 'Stage & Spatial Design', 'Talent Hospitality', 'Logistics Management', 'Partner Liaison'],
+	},
+];
+---
+
+<BaseLayout
+	title="Archive — FAWWAZ | Product Engineer & Creative Developer"
+	description="Curated archive of engineering architectures, spatial design systems, and digital productions."
+	fullBleed={true}
+	navTheme="dark"
+	hideFooter={false}
+>
+	<main class="podium-archive-main" id="archiveContainer">
+		<!-- Podium 1:1 Staggered Column Drift Grid -->
+		<section class="podium-grid" id="podiumGrid" aria-label="Project Archive">
+			{
+				archiveProjects.map((project, index) => (
+					<article
+						class="project-card group"
+						data-index={index}
+						data-id={project.id}
+					>
+						<button
+							type="button"
+							class="card-button"
+							data-project-index={index}
+							aria-haspopup="dialog"
+							aria-label={`Open details for ${project.title}`}
+						>
+							<!-- Media Viewport (Podium 1:1 348/259 Aspect Ratio + Hover Video) -->
+							<div class="card-media-box">
+								<img
+									src={project.image}
+									alt={project.title}
+									class="card-media"
+									style={[
+										project.objectPosition ? `object-position: ${project.objectPosition};` : '',
+										project.objectFit ? `object-fit: ${project.objectFit};` : ''
+									].filter(Boolean).join(' ') || undefined}
+									loading={index < 4 ? 'eager' : 'lazy'}
+									decoding="async"
+								/>
+								{project.video && (
+									<video
+										src={project.video}
+										preload="none"
+										muted
+										loop
+										playsinline
+										class="card-media card-video"
+										aria-hidden="true"
+									/>
+								)}
+								<div class="card-halo" aria-hidden="true" />
+								{project.type === 'skill' && (
+									<span class="card-skill-tag">[SKILL]</span>
+								)}
+							</div>
+
+							<!-- Typography & Meta Information Row -->
+							<div class="card-meta">
+								<h2 class="card-title">{project.title}</h2>
+								<div class="card-info">
+									<span class="card-year">{project.year}</span>
+									<span class="card-client">{project.client}</span>
+								</div>
+							</div>
+						</button>
+					</article>
+				))
+			}
+		</section>
+	</main>
+
+	<!-- Compact Centered Detail Modal (Bounded Dialog, Not Fullscreen) -->
+	<div
+		class="archive-modal-backdrop"
+		id="archiveModal"
+		role="dialog"
+		aria-modal="true"
+		aria-hidden="true"
+		tabindex="-1"
+		data-lenis-prevent
+	>
+		<div class="archive-modal-card" id="archiveModalCard" data-lenis-prevent>
+			<!-- Modal Top Bar -->
+			<div class="modal-top-bar">
+				<div class="modal-badge-wrap">
+					<span class="modal-type-badge" id="modalTypeBadge">[PROJECT]</span>
+					<span class="modal-index-badge" id="modalIndexBadge">/001</span>
+				</div>
+				<button
+					type="button"
+					class="modal-close-btn"
+					id="modalCloseBtn"
+					aria-label="Close project modal"
+				>
+					<span class="close-label">CLOSE</span>
+					<span class="close-cross" aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<!-- Modal Body (Internal Smooth Scroll) -->
+			<div class="modal-body-scroll" data-lenis-prevent>
+				<!-- High-Res Media Viewport -->
+				<div class="modal-media-frame" id="modalMediaFrame">
+					<img
+						id="modalImg"
+						src=""
+						alt="Project Preview"
+						class="modal-media-elem"
+					/>
+					<video
+						id="modalVid"
+						src=""
+						playsinline
+						loop
+						muted
+						autoplay
+						class="modal-media-elem"
+						style="display: none;"
+					></video>
+				</div>
+
+				<!-- Content Section -->
+				<div class="modal-content-area">
+					<div class="modal-header-row">
+						<div class="modal-title-group">
+							<h3 class="modal-title" id="modalTitle">TITLE</h3>
+							<p class="modal-client" id="modalClient">CLIENT / CONTEXT</p>
+							<p class="modal-role" id="modalRole" style="display: none;">ROLE</p>
+						</div>
+						<span class="modal-year" id="modalYear">2026</span>
+					</div>
+
+					<!-- Detailed Explanation -->
+					<div class="modal-section">
+						<span class="modal-label">OVERVIEW</span>
+						<p class="modal-description" id="modalDescription">Overview text...</p>
+					</div>
+
+					<!-- Tags / Highlights -->
+					<div class="modal-section" id="modalTagsSection">
+						<span class="modal-label">HIGHLIGHTS & STACK</span>
+						<div class="modal-tags-grid" id="modalTagsList"></div>
+					</div>
+
+					<!-- Action Buttons (Only shown for projects with links) -->
+					<div class="modal-actions-wrap" id="modalActionsWrap">
+						<p class="modal-live-note" id="modalLiveNote" style="display: none;"></p>
+						<div class="modal-actions-row" id="modalActionsRow">
+							<a
+								href="#"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="modal-action-btn btn-github"
+								id="modalGithubBtn"
+							>
+								<svg class="action-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+									<path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+								</svg>
+								<span>GITHUB</span>
+								<span class="action-glyph">↗</span>
+							</a>
+
+							<a
+								href="#"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="modal-action-btn btn-visit"
+								id="modalVisitBtn"
+							>
+								<span>VISIT PROJECT</span>
+								<span class="action-glyph">↗</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script id="projects-data" type="application/json" set:html={JSON.stringify(archiveProjects)} />
+</BaseLayout>
+
+<script>
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	// Client-side dataset matching server array
+	const projectsData = JSON.parse(document.getElementById('projects-data')?.textContent || '[]');
+
+	let mm: gsap.MatchMedia | null = null;
+
+	function initPodiumScrollDrift() {
+		const grid = document.getElementById('podiumGrid');
+		if (!grid) return;
+
+		if (mm) mm.revert();
+		mm = gsap.matchMedia();
+
+		const cards = gsap.utils.toArray<HTMLElement>('.project-card', grid);
+		if (cards.length === 0) return;
+
+		// 1. Desktop 4-Column Drift: Opposing kinetic wave matching Podium 1:1
+		mm.add('(min-width: 1280px)', () => {
+			const colProfiles = [
+				{ initial: -98, target: -233 }, // Col 1: UP (-135px drift)
+				{ initial: 78,  target: 186 },  // Col 2: DOWN (+108px drift)
+				{ initial: -58, target: -140 }, // Col 3: UP (-82px drift)
+				{ initial: 51,  target: 121 },  // Col 4: DOWN (+70px drift)
+			];
+
+			cards.forEach((card, idx) => {
+				const col = idx % 4;
+				const profile = colProfiles[col];
+
+				gsap.fromTo(
+					card,
+					{ y: profile.initial },
+					{
+						y: profile.target,
+						ease: 'none',
+						scrollTrigger: {
+							trigger: grid,
+							start: 'top top',
+							end: 'bottom bottom',
+							scrub: 1.2,
+							invalidateOnRefresh: true,
+						},
+					}
+				);
+			});
+		});
+
+		// 2. Tablet 3-Column Drift
+		mm.add('(min-width: 768px) and (max-width: 1279px)', () => {
+			const colProfilesTablet = [
+				{ initial: -60, target: -150 },
+				{ initial: 60,  target: 140 },
+				{ initial: -30, target: -90 },
+			];
+
+			cards.forEach((card, idx) => {
+				const col = idx % 3;
+				const profile = colProfilesTablet[col];
+
+				gsap.fromTo(
+					card,
+					{ y: profile.initial },
+					{
+						y: profile.target,
+						ease: 'none',
+						scrollTrigger: {
+							trigger: grid,
+							start: 'top top',
+							end: 'bottom bottom',
+							scrub: 1.2,
+							invalidateOnRefresh: true,
+						},
+					}
+				);
+			});
+		});
+
+		// 3. Mobile (< 768px): Natural 1-column stack without drift
+		mm.add('(max-width: 767px)', () => {
+			cards.forEach((card) => {
+				gsap.set(card, { y: 0, clearProps: 'transform' });
+			});
+		});
+
+
+		ScrollTrigger.refresh();
+	}
+
+	// =========================================================================
+	// COMPACT MODAL INTERACTION LOGIC
+	// =========================================================================
+	function initModalInteractions() {
+		const modal = document.getElementById('archiveModal');
+		const closeBtn = document.getElementById('modalCloseBtn');
+		const typeBadge = document.getElementById('modalTypeBadge');
+		const indexBadge = document.getElementById('modalIndexBadge');
+		const titleEl = document.getElementById('modalTitle');
+		const clientEl = document.getElementById('modalClient');
+		const roleEl = document.getElementById('modalRole');
+		const yearEl = document.getElementById('modalYear');
+		const descEl = document.getElementById('modalDescription');
+		const tagsList = document.getElementById('modalTagsList');
+		const tagsSection = document.getElementById('modalTagsSection');
+		const imgEl = document.getElementById('modalImg') as HTMLImageElement | null;
+		const vidEl = document.getElementById('modalVid') as HTMLVideoElement | null;
+		const actionsWrap = document.getElementById('modalActionsWrap');
+		const liveNoteEl = document.getElementById('modalLiveNote');
+		const actionsRow = document.getElementById('modalActionsRow');
+		const githubBtn = document.getElementById('modalGithubBtn') as HTMLAnchorElement | null;
+		const visitBtn = document.getElementById('modalVisitBtn') as HTMLAnchorElement | null;
+
+		if (!modal) return;
+
+		const openModal = (index: number) => {
+			const item = projectsData[index];
+			if (!item) return;
+
+			// Set Badges & Typography
+			if (typeBadge) {
+				typeBadge.textContent = item.type === 'skill' ? '[SOFT SKILL]' : '[PROJECT]';
+				typeBadge.className = `modal-type-badge ${item.type === 'skill' ? 'type-skill' : 'type-project'}`;
+			}
+			if (indexBadge) indexBadge.textContent = item.index;
+			if (titleEl) titleEl.textContent = item.title;
+			if (clientEl) clientEl.textContent = item.client;
+			if (roleEl) {
+				if (item.role) {
+					roleEl.textContent = `ROLE: ${item.role.toUpperCase()}`;
+					roleEl.style.display = 'block';
+				} else {
+					roleEl.style.display = 'none';
+				}
+			}
+			if (yearEl) yearEl.textContent = item.year;
+			if (descEl) descEl.textContent = item.description;
+
+			// Render Tags
+			if (tagsList && tagsSection) {
+				tagsList.innerHTML = '';
+				if (item.tags && item.tags.length > 0) {
+					tagsSection.style.display = 'block';
+					item.tags.forEach((tag) => {
+						const pill = document.createElement('span');
+						pill.className = 'modal-tag-pill';
+						pill.textContent = tag;
+						tagsList.appendChild(pill);
+					});
+				} else {
+					tagsSection.style.display = 'none';
+				}
+			}
+
+			const mediaFrame = document.getElementById('modalMediaFrame');
+			if (mediaFrame) {
+				mediaFrame.style.aspectRatio = (item as any).modalAspectRatio || '16 / 9';
+			}
+
+			// Render Media (Video or Image)
+			const displayImg = item.modalImage || item.image;
+			if (item.video && vidEl && imgEl) {
+				vidEl.src = item.video;
+				vidEl.poster = displayImg;
+				vidEl.style.display = 'block';
+				imgEl.style.display = 'none';
+				vidEl.play().catch(() => {});
+			} else if (imgEl && vidEl) {
+				imgEl.src = displayImg;
+				imgEl.alt = `${item.title} Preview`;
+				imgEl.style.objectPosition = item.modalImage ? 'center' : ((item as any).objectPosition || 'center');
+				imgEl.style.objectFit = (item as any).objectFit || 'cover';
+				imgEl.style.display = 'block';
+				vidEl.style.display = 'none';
+				vidEl.pause();
+			}
+
+			// Action Buttons Row & Live Note
+			const hasGithub = Boolean(item.github);
+			const hasLive = Boolean(item.live);
+			const hasNote = Boolean(item.liveNote);
+
+			if (liveNoteEl) {
+				if (hasNote) {
+					liveNoteEl.textContent = item.liveNote!;
+					liveNoteEl.style.display = 'block';
+				} else {
+					liveNoteEl.style.display = 'none';
+				}
+			}
+
+			if (actionsWrap && actionsRow) {
+				if (!hasGithub && !hasLive && !hasNote) {
+					actionsWrap.style.display = 'none';
+				} else {
+					actionsWrap.style.display = 'flex';
+					if (actionsRow) {
+						actionsRow.style.display = (!hasGithub && !hasLive) ? 'none' : 'flex';
+					}
+					if (githubBtn) {
+						if (hasGithub) {
+							githubBtn.href = item.github!;
+							githubBtn.style.display = 'inline-flex';
+						} else {
+							githubBtn.style.display = 'none';
+						}
+					}
+					if (visitBtn) {
+						if (hasLive) {
+							visitBtn.href = item.live!;
+							visitBtn.style.display = 'inline-flex';
+						} else {
+							visitBtn.style.display = 'none';
+						}
+					}
+				}
+			}
+
+			// Show Modal
+			modal.classList.add('active');
+			modal.setAttribute('aria-hidden', 'false');
+
+			// Pause Lenis smooth scroll while dialog is open
+			if ((window as any).lenis) {
+				(window as any).lenis.stop();
+			}
+			document.body.style.overflow = 'hidden';
+		};
+
+		const closeModal = () => {
+			if (!modal) return;
+			modal.classList.remove('active');
+			modal.setAttribute('aria-hidden', 'true');
+
+			// Pause video
+			if (vidEl) vidEl.pause();
+			if (imgEl) {
+				imgEl.style.objectPosition = 'center';
+				imgEl.style.objectFit = 'cover';
+			}
+
+			const mediaFrame = document.getElementById('modalMediaFrame');
+			if (mediaFrame) {
+				mediaFrame.style.aspectRatio = '16 / 9';
+			}
+
+			// Resume Lenis smooth scroll
+			if ((window as any).lenis) {
+				(window as any).lenis.start();
+			}
+			document.body.style.overflow = '';
+		};
+
+		// Event delegation on grid: avoids duplicate listeners and gesture blocking
+		const gridEl = document.getElementById('podiumGrid');
+		gridEl?.addEventListener('click', (e) => {
+			const btn = (e.target as HTMLElement).closest('[data-project-index]');
+			if (!btn) return;
+			e.preventDefault();
+			const idx = parseInt(btn.getAttribute('data-project-index') || '0', 10);
+			openModal(idx);
+		});
+
+		closeBtn?.addEventListener('click', closeModal);
+
+		// Backdrop click to close
+		modal.addEventListener('click', (e) => {
+			if (e.target === modal) closeModal();
+		});
+
+		// ESC key listener
+		window.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && modal.classList.contains('active')) {
+				closeModal();
+			}
+		});
+
+		// Auto-open modal if URL specifies a project via query (?project=...) or hash (#...)
+		const searchParams = new URLSearchParams(window.location.search);
+		const requestedProject = searchParams.get('project') || window.location.hash.replace('#', '');
+		if (requestedProject) {
+			const projectIdx = projectsData.findIndex((p) => p.id === requestedProject);
+			if (projectIdx !== -1) {
+				setTimeout(() => openModal(projectIdx), 150);
+			}
+		}
+	}
+
+	// Clean up triggers on Astro page transitions
+	document.addEventListener('astro:before-swap', () => {
+		if (mm) {
+			mm.revert();
+			mm = null;
+		}
+		ScrollTrigger.getAll().forEach((st) => st.kill());
+	});
+
+	function initHoverVideoPreviews() {
+		const cards = document.querySelectorAll('.project-card');
+		cards.forEach((card) => {
+			const video = card.querySelector('video.card-video') as HTMLVideoElement | null;
+			if (video) {
+				card.addEventListener('pointerenter', () => {
+					video.play().catch(() => {});
+				});
+				card.addEventListener('pointerleave', () => {
+					video.pause();
+				});
+			}
+		});
+	}
+
+	function setupPage() {
+		initPodiumScrollDrift();
+		initModalInteractions();
+		initHoverVideoPreviews();
+		requestAnimationFrame(() => {
+			ScrollTrigger.refresh();
+		});
+	}
+
+	if (document.readyState === 'complete' || document.readyState === 'interactive') {
+		setupPage();
+	} else {
+		window.addEventListener('DOMContentLoaded', setupPage);
+	}
+
+	document.addEventListener('astro:page-load', setupPage);
+	window.addEventListener('resize', () => {
+		ScrollTrigger.refresh();
+	});
+</script>
+
+<style>
+	/* ==========================================================================
+	   PODIUM 1:1 DESIGN TOKENS & NATIVE INTER TYPOGRAPHY
+	   ========================================================================== */
+	:root {
+		--podium-bg: #000000;
+		--podium-fg: #ffffff;
+		--podium-muted: #9c9c9c;
+		--podium-border: rgba(255, 255, 255, 0.12);
+		--podium-gutter: clamp(16px, 2.2vw, 32px);
+		--podium-row-gap: clamp(72px, 8vw, 120px);
+		--podium-pad-top: clamp(240px, 28vh, 300px);
+		--podium-pad-bottom: clamp(340px, 40vh, 440px);
+	}
+
+	:global(html) {
+		background-color: var(--podium-bg) !important;
+		color: var(--podium-fg);
+	}
+
+	:global(body) {
+		background-color: var(--podium-bg) !important;
+		color: var(--podium-fg);
+		margin: 0;
+		padding: 0;
+		overflow-x: hidden;
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	.podium-archive-main {
+		position: relative;
+		width: 100%;
+		min-height: 100vh;
+		background-color: var(--podium-bg);
+		color: var(--podium-fg);
+		box-sizing: border-box;
+	}
+
+	/* ==========================================================================
+	   GRID CONTAINER (1-col mobile, 3-col tablet, 4-col desktop)
+	   ========================================================================== */
+	.podium-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		row-gap: var(--podium-row-gap);
+		column-gap: var(--podium-gutter);
+		align-items: start;
+		padding-left: var(--podium-gutter);
+		padding-right: var(--podium-gutter);
+		padding-top: var(--podium-pad-top);
+		padding-bottom: var(--podium-pad-bottom);
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	@media (min-width: 768px) {
+		.podium-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 768px) and (max-width: 1279px) {
+		.project-card:nth-child(3n + 1) {
+			transform: translate3d(0, -60px, 0);
+		}
+		.project-card:nth-child(3n + 2) {
+			transform: translate3d(0, 60px, 0);
+		}
+		.project-card:nth-child(3n + 3) {
+			transform: translate3d(0, -30px, 0);
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.podium-grid {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+
+		.project-card:nth-child(4n + 1) {
+			transform: translate3d(0, -98px, 0);
+		}
+		.project-card:nth-child(4n + 2) {
+			transform: translate3d(0, 78px, 0);
+		}
+		.project-card:nth-child(4n + 3) {
+			transform: translate3d(0, -58px, 0);
+		}
+		.project-card:nth-child(4n + 4) {
+			transform: translate3d(0, 51px, 0);
+		}
+	}
+
+	/* ==========================================================================
+	   PROJECT CARD (1:1 Podium styling + Interactive Trigger)
+	   ========================================================================== */
+	.project-card {
+		display: block;
+		position: relative;
+		width: 100%;
+		will-change: transform;
+	}
+
+	.card-button {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		background: transparent;
+		border: none;
+		padding: 0;
+		margin: 0;
+		text-align: left;
+		cursor: pointer;
+		color: inherit;
+		outline: none;
+		font-family: inherit;
+		touch-action: pan-y;
+	}
+
+	.card-button:focus-visible .card-media-box {
+		outline: 2px solid #ffffff;
+		outline-offset: 4px;
+	}
+
+	/* Exact 348 / 259 Podium aspect ratio container */
+	.card-media-box {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 348 / 259 !important;
+		overflow: hidden;
+		background-color: #0c0c0c;
+		border-radius: 0px;
+	}
+
+	.card-media {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		pointer-events: none;
+		user-select: none;
+		-webkit-user-drag: none;
+		transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+		will-change: transform;
+		transform: scale(1);
+	}
+
+	.card-video {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.4s ease;
+		transform: translateZ(0);
+		backface-visibility: hidden;
+	}
+
+	.project-card:hover .card-video,
+	.card-button:focus-visible .card-video {
+		opacity: 1;
+		transform: translateZ(0);
+	}
+
+	.project-card:hover img.card-media {
+		transform: scale(1.05);
+	}
+
+	/* Ambient halo vignette on hover */
+	.card-halo {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		z-index: 10;
+		opacity: 0;
+		transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+		background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+	}
+
+	.project-card:hover .card-halo {
+		opacity: 1;
+	}
+
+	/* Skill badge on card */
+	.card-skill-tag {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		z-index: 20;
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		background-color: rgba(0, 0, 0, 0.75);
+		color: #ffffff;
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		padding: 3px 7px;
+		backdrop-filter: blur(8px);
+	}
+
+	/* ==========================================================================
+	   CARD TYPOGRAPHY & METADATA (Portfolio Native Inter Typography Style)
+	   ========================================================================== */
+	.card-meta {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 16px;
+		align-items: start;
+		margin-top: 14px;
+		padding-top: 2px;
+	}
+
+	@media (min-width: 768px) {
+		.card-meta {
+			margin-top: 16px;
+		}
+	}
+
+	.card-title {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-size: clamp(1.2rem, 1.55vw, 1.7rem);
+		font-weight: 600;
+		text-transform: uppercase;
+		line-height: 1.1;
+		letter-spacing: -0.025em;
+		color: #ffffff;
+		margin: 0;
+		padding: 0;
+		word-break: break-word;
+	}
+
+	.card-info {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		text-align: right;
+		gap: 2px;
+		flex-shrink: 0;
+	}
+
+	.card-year {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-size: clamp(0.78rem, 0.85vw, 0.88rem);
+		font-weight: 400;
+		color: var(--podium-muted);
+		text-transform: uppercase;
+		line-height: 1.2;
+		letter-spacing: -0.01em;
+	}
+
+	.card-client {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-size: clamp(0.8rem, 0.9vw, 0.92rem);
+		font-weight: 600;
+		color: #ffffff;
+		text-transform: uppercase;
+		line-height: 1.2;
+		letter-spacing: -0.01em;
+	}
+
+	/* ==========================================================================
+	   COMPACT CENTERED MODAL CARD (Bounded Dialog)
+	   ========================================================================== */
+	.archive-modal-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 999;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: clamp(16px, 3.5vw, 40px);
+		box-sizing: border-box;
+		background-color: rgba(0, 0, 0, 0.82);
+		backdrop-filter: blur(14px);
+		-webkit-backdrop-filter: blur(14px);
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.archive-modal-backdrop.active {
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+	}
+
+	.archive-modal-card {
+		width: 100%;
+		max-width: 680px;
+		max-height: min(88vh, 860px);
+		background-color: #0d0d0d;
+		border: 1px solid var(--podium-border);
+		box-shadow: 0 32px 90px rgba(0, 0, 0, 0.9);
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		transform: scale(0.95) translateY(12px);
+		transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+		border-radius: 2px;
+	}
+
+	.archive-modal-backdrop.active .archive-modal-card {
+		transform: scale(1) translateY(0);
+	}
+
+	/* Modal Top Bar */
+	.modal-top-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 14px 20px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		background-color: #0d0d0d;
+		flex-shrink: 0;
+		z-index: 10;
+	}
+
+	.modal-badge-wrap {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
+
+	.modal-type-badge {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		color: #ffffff;
+	}
+
+	.modal-type-badge.type-skill {
+		color: #e5a93c;
+	}
+
+	.modal-index-badge {
+		font-size: 0.75rem;
+		color: var(--podium-muted);
+	}
+
+	.modal-close-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		background: transparent;
+		border: none;
+		color: #c4c4c4;
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-size: 0.78rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		cursor: pointer;
+		padding: 4px 8px;
+		transition: color 0.2s ease;
+	}
+
+	.modal-close-btn:hover {
+		color: #ffffff;
+	}
+
+	.close-cross {
+		font-size: 1.1rem;
+		line-height: 1;
+	}
+
+	/* Modal Body Internal Scroll */
+	.modal-body-scroll {
+		overflow-y: auto;
+		overflow-x: hidden;
+		overscroll-behavior: contain;
+		-webkit-overflow-scrolling: touch;
+		touch-action: pan-y;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+
+	/* High-Res Media Frame inside Dialog */
+	.modal-media-frame {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 16 / 9;
+		background-color: #050505;
+		overflow: hidden;
+		flex-shrink: 0;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.modal-media-elem {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	/* Content Area */
+	.modal-content-area {
+		padding: clamp(20px, 3.5vw, 32px);
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+
+	.modal-header-row {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 20px;
+	}
+
+	.modal-title-group {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	.modal-title {
+		font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+		font-weight: 600;
+		letter-spacing: -0.03em;
+		text-transform: uppercase;
+		color: #ffffff;
+		margin: 0;
+		line-height: 1.1;
+	}
+
+	.modal-client {
+		font-size: 0.88rem;
+		font-weight: 500;
+		color: #ffffff;
+		text-transform: uppercase;
+		margin: 0;
+		letter-spacing: -0.01em;
+	}
+
+	.modal-role {
+		font-size: 0.74rem;
+		font-weight: 600;
+		color: var(--podium-muted);
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		margin: 2px 0 0 0;
+	}
+
+	.modal-year {
+		font-size: 0.88rem;
+		font-weight: 400;
+		color: var(--podium-muted);
+		text-transform: uppercase;
+		flex-shrink: 0;
+	}
+
+	.modal-section {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.modal-label {
+		font-size: 0.72rem;
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		color: var(--podium-muted);
+		text-transform: uppercase;
+	}
+
+	.modal-description {
+		font-size: clamp(0.92rem, 1.05vw, 1rem);
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.88);
+		margin: 0;
+		letter-spacing: -0.01em;
+	}
+
+	/* Highlights / Tags */
+	.modal-tags-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-top: 4px;
+	}
+
+	:global(.modal-tag-pill) {
+		font-size: 0.78rem;
+		font-weight: 500;
+		letter-spacing: 0.01em;
+		padding: 5px 11px;
+		background-color: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		color: #e0e0e0;
+	}
+
+	/* Action Buttons Row */
+	.modal-actions-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		padding-top: 10px;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.modal-live-note {
+		margin: 0;
+		font-size: 0.78rem;
+		line-height: 1.5;
+		color: #f59e0b;
+		background: rgba(245, 158, 11, 0.08);
+		border-left: 2px solid #f59e0b;
+		padding: 6px 10px;
+		letter-spacing: 0.01em;
+	}
+
+	.modal-actions-row {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.modal-action-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		padding: 10px 18px;
+		font-size: 0.82rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		text-decoration: none;
+		border: 1px solid transparent;
+		transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+		cursor: pointer;
+	}
+
+	.btn-github {
+		background-color: transparent;
+		color: #ffffff;
+		border: 1px solid rgba(255, 255, 255, 0.22);
+	}
+
+	.btn-github:hover {
+		background-color: rgba(255, 255, 255, 0.08);
+		border-color: rgba(255, 255, 255, 0.4);
+	}
+
+	.btn-visit {
+		background-color: #ffffff;
+		color: #000000;
+		border-color: #ffffff;
+	}
+
+	.btn-visit:hover {
+		background-color: #e5e5e5;
+		border-color: #e5e5e5;
+	}
+
+	.action-icon {
+		flex-shrink: 0;
+	}
+
+	.action-glyph {
+		font-size: 0.95rem;
+		line-height: 1;
+	}
+
+	/* Motion preferences */
+	@media (prefers-reduced-motion: reduce) {
+		.card-media,
+		.archive-modal-card,
+		.archive-modal-backdrop {
+			transition: none !important;
+		}
+		.project-card:hover .card-media {
+			transform: none !important;
+		}
+	}
+</style>

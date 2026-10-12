@@ -1,0 +1,538 @@
+---
+import { r2 } from '../utils/assets';
+// ponytail: 1:1 exact reproduction of Telha Clarke Studio section sticky parallax & picture reveal
+---
+
+<section class="telha-statement-section" id="studio" aria-label="About Fawwaz & Perspective Studio">
+	<!-- Top Architectural Corner Crosshairs (Matching Telha Clarke .about corner marks) -->
+	<div class="corner-cross left-top" aria-hidden="true">
+		<div class="tick-h"></div>
+		<div class="tick-v"></div>
+	</div>
+	<div class="corner-cross right-top" aria-hidden="true">
+		<div class="tick-h"></div>
+		<div class="tick-v"></div>
+	</div>
+
+	<div class="telha-grid">
+		<!-- Left Column: Sticky Parallax Track for the Picture -->
+		<div class="image-col">
+			<div class="sticky-track">
+				<div class="sticky-target js-sticky-target">
+					<div class="picture-reveal-mask js-picture-mask">
+						<div class="picture-inner-media js-picture-inner">
+							<img
+								src={r2('/webp/fawwaz-bncc-portrait.webp')}
+								alt="Fawwaz — Product Engineer & HRD Manager"
+								class="studio-image js-studio-image"
+								loading="eager"
+								decoding="async"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Right Column: Business & Product Strategy -->
+		<div class="meta-col">
+			<div class="acknowledgment-wrapper scroll-fade-in">
+				<p class="acknowledgment-text">
+					Translating business goals and complex user journeys into high-conversion digital products,
+					balancing user empathy, market feasibility, and scalable execution.
+				</p>
+			</div>
+		</div>
+
+		<!-- Headline Row: Full-width spanning with 25% offset spacer indenting Line 1 -->
+		<div class="statement-col">
+			<div class="c-title">
+				<span class="offset-spacer" aria-hidden="true"></span>
+				<h2 class="offset-title">
+					<span class="line-w"><span class="line">Fawwaz is a Founder & Product</span></span>
+					<span class="line-w"><span class="line">Engineer at Perspective Studio, bridging UI/UX</span></span>
+					<span class="line-w"><span class="line">craft with high-performance web engineering</span></span>
+					<span class="line-w"><span class="line">and modular architectures.</span></span>
+				</h2>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	function initTelhaStatement() {
+		const section = document.getElementById('studio');
+		if (!section) return;
+
+		const pictureMask = section.querySelector('.js-picture-mask');
+		const pictureInner = section.querySelector('.js-picture-inner');
+		const studioImage = section.querySelector('.js-studio-image');
+		const lines = section.querySelectorAll('.offset-title .line');
+		const fadeElements = section.querySelectorAll('.scroll-fade-in');
+
+		// 1. Picture Entrance Curtain Reveal & Scale Settle (Telha Clarke signature reveal)
+		if (pictureMask && pictureInner) {
+			gsap.fromTo(
+				pictureMask,
+				{
+					clipPath: 'inset(100% 0% 0% 0%)',
+					autoAlpha: 0,
+				},
+				{
+					clipPath: 'inset(0% 0% 0% 0%)',
+					autoAlpha: 1,
+					duration: 1.25,
+					ease: 'power3.inOut',
+					scrollTrigger: {
+						trigger: section,
+						start: 'top 85%',
+						toggleActions: 'play none none reverse',
+					},
+				}
+			);
+
+			if (studioImage) {
+				gsap.fromTo(
+					studioImage,
+					{
+						scale: 1.12,
+					},
+					{
+						scale: 1,
+						duration: 1.5,
+						ease: 'power2.out',
+						scrollTrigger: {
+							trigger: section,
+							start: 'top 85%',
+							toggleActions: 'play none none reverse',
+						},
+					}
+				);
+			}
+
+			// 2. Scroll Parallax Scrubbing on inner image media (buffered with 112% height & top: -6%)
+			gsap.fromTo(
+				pictureInner,
+				{
+					yPercent: -4,
+				},
+				{
+					yPercent: 4,
+					ease: 'none',
+					scrollTrigger: {
+						trigger: '.image-col',
+						start: 'top bottom',
+						end: 'bottom top',
+						scrub: true,
+					},
+				}
+			);
+		}
+
+		// 3. Statement headline reveal (staggered lines on desktop, smooth fade-up on mobile)
+		const isMobile = window.innerWidth <= 768;
+		if (isMobile) {
+			const titleEl = section.querySelector('.offset-title');
+			if (titleEl) {
+				gsap.fromTo(
+					titleEl,
+					{ y: 24, opacity: 0 },
+					{
+						y: 0,
+						opacity: 1,
+						duration: 0.9,
+						ease: 'power2.out',
+						scrollTrigger: {
+							trigger: '.statement-col',
+							start: 'top 85%',
+							toggleActions: 'play none none none',
+						},
+					}
+				);
+			}
+		} else if (lines.length > 0) {
+			gsap.fromTo(
+				lines,
+				{
+					y: '105%',
+					opacity: 0,
+				},
+				{
+					y: '0%',
+					opacity: 1,
+					duration: 1.1,
+					ease: 'power3.out',
+					stagger: 0.1,
+					scrollTrigger: {
+						trigger: '.statement-col',
+						start: 'top 82%',
+						toggleActions: 'play none none none',
+					},
+				}
+			);
+		}
+
+		// 4. Staggered fade and slide for metadata text elements (triggered reliably with section)
+		if (fadeElements.length > 0) {
+			gsap.fromTo(
+				fadeElements,
+				{
+					y: 20,
+					opacity: 0,
+				},
+				{
+					y: 0,
+					opacity: 1,
+					duration: 0.85,
+					ease: 'power2.out',
+					scrollTrigger: {
+						trigger: section,
+						start: 'top 85%',
+						toggleActions: 'play none none none',
+					},
+				}
+			);
+		}
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initTelhaStatement);
+	} else {
+		initTelhaStatement();
+	}
+
+	// Recalculate ScrollTrigger markers after external hero images settle
+	window.addEventListener('load', () => {
+		ScrollTrigger.refresh();
+	});
+</script>
+
+<style>
+	/* ==========================================================================
+	   Telha Clarke 1:1 Studio Statement Section (Sticky Parallax & Corner Marks)
+	   ========================================================================== */
+	.telha-statement-section {
+		position: relative;
+		width: 100%;
+		background-color: #ffffff;
+		color: #000000;
+		box-sizing: border-box;
+		padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.5rem, 2.5vw, 3rem) clamp(6rem, 12vw, 12rem);
+		overflow: visible;
+	}
+
+	/* Corner Architectural Crosshair Ticks */
+	.corner-cross {
+		position: absolute;
+		width: clamp(1.2rem, 1.6vw, 1.6rem);
+		height: clamp(1.2rem, 1.6vw, 1.6rem);
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	.corner-cross.left-top {
+		top: clamp(1.5rem, 2.5vw, 2.5rem);
+		left: clamp(1.5rem, 2.5vw, 3rem);
+	}
+
+	.corner-cross.right-top {
+		top: clamp(1.5rem, 2.5vw, 2.5rem);
+		right: clamp(1.5rem, 2.5vw, 3rem);
+	}
+
+	.tick-h {
+		position: absolute;
+		height: 1px;
+		background-color: #000000;
+	}
+
+	.tick-v {
+		position: absolute;
+		width: 1px;
+		background-color: #000000;
+	}
+
+	.left-top .tick-h {
+		width: 0.85rem;
+		left: 0.35rem;
+		bottom: 0;
+	}
+
+	.left-top .tick-v {
+		height: 0.85rem;
+		right: 0;
+		top: 0.35rem;
+	}
+
+	.right-top .tick-h {
+		width: 0.85rem;
+		right: 0.35rem;
+		bottom: 0;
+	}
+
+	.right-top .tick-v {
+		height: 0.85rem;
+		left: 0;
+		top: 0.35rem;
+	}
+
+	/* 12-Column Grid Layout: image-col spans Row 1 and Row 2 */
+	.telha-grid {
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		grid-template-rows: auto auto;
+		column-gap: clamp(1rem, 1.5vw, 1.5rem);
+		box-sizing: border-box;
+		position: relative;
+	}
+
+	/* Left Column: Height calibrated so picture stops right beside Line 1 and leaves space for 'beyond tech' above Line 2 */
+	.image-col {
+		grid-column: 1 / span 3;
+		grid-row: 1;
+		position: relative;
+		height: calc(100% + clamp(8rem, 12vw, 14rem) + 4.5rem);
+		padding-top: clamp(0.5rem, 1vw, 1.5rem);
+		z-index: 5;
+	}
+
+	@media (min-width: 1280px) {
+		.image-col {
+			grid-column: 1 / span 2;
+		}
+	}
+
+	.sticky-track {
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
+
+	/* The Sticky Element: Pins comfortably below fixed header line */
+	.sticky-target {
+		position: sticky;
+		top: clamp(6.5rem, 8vw, 8.5rem);
+		left: 0;
+		width: 100%;
+		will-change: transform;
+	}
+
+	/* Picture Reveal Mask with smooth overflow clipping */
+	.picture-reveal-mask {
+		width: 100%;
+		aspect-ratio: 1 / 1.45;
+		overflow: hidden;
+		position: relative;
+		background-color: transparent;
+	}
+
+	.picture-inner-media {
+		width: 100%;
+		height: 112%;
+		top: -6%;
+		position: relative;
+		will-change: transform;
+	}
+
+	.studio-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center top;
+		display: block;
+		will-change: transform;
+	}
+
+	/* Top Right Meta Column: First Nations Acknowledgment */
+	.meta-col {
+		grid-column: 5 / span 7;
+		grid-row: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		min-height: clamp(140px, 16vw, 220px);
+		margin-bottom: clamp(6rem, 12vw, 15rem);
+	}
+
+	@media (min-width: 1280px) {
+		.meta-col {
+			grid-column: 7 / span 5;
+		}
+	}
+
+	.acknowledgment-wrapper {
+		width: 100%;
+		max-width: 580px;
+	}
+
+	.acknowledgment-text {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-size: clamp(0.95rem, 1.1vw, 1.35rem);
+		font-weight: 400;
+		line-height: 1.18;
+		color: #000000;
+		margin: 0;
+		letter-spacing: -0.012em;
+	}
+
+	/* Statement Column: Positioned so Line 1 is right beside the picture and Line 2 starts right below 'beyond tech' */
+	.statement-col {
+		grid-column: 1 / -1;
+		grid-row: 2;
+		width: 100%;
+		position: relative;
+		margin-top: clamp(8rem, 12vw, 14rem);
+		margin-bottom: clamp(3rem, 6vw, 6rem);
+	}
+
+	.c-title {
+		display: block;
+		width: 100%;
+	}
+
+	/* Exact column-matched offset spacer indenting Line 1 */
+	.offset-spacer {
+		display: inline-block;
+		width: calc(25% + clamp(1rem, 1.5vw, 1.5rem));
+		height: 0;
+		vertical-align: top;
+	}
+
+	@media (min-width: 1280px) {
+		.offset-spacer {
+			width: calc(16.666% + clamp(1rem, 1.5vw, 1.5rem));
+		}
+	}
+
+	@media (max-width: 1024px) {
+		.offset-spacer {
+			width: calc(33.333% + clamp(1rem, 1.5vw, 1.5rem));
+		}
+	}
+
+	@media (max-width: 768px) {
+		.offset-spacer {
+			display: none;
+		}
+	}
+
+	/* Big fluid statement title */
+	.offset-title {
+		display: inline;
+		width: 100%;
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-weight: 600;
+		font-size: clamp(2.25rem, 4.6vw, 5.4rem);
+		line-height: 1.08;
+		letter-spacing: -0.038em;
+		color: #000000;
+		margin: 0;
+	}
+
+	.offset-title .line-w {
+		display: inline-block;
+		max-width: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		vertical-align: top;
+		padding-block: 0.08em;
+		margin-block: -0.08em;
+		margin-right: 0.22em;
+	}
+
+	@media (max-width: 1200px) {
+		.offset-title .line-w {
+			white-space: normal;
+		}
+	}
+
+	.offset-title .line-w:last-child {
+		margin-right: 0;
+	}
+
+	.offset-title .line {
+		display: block;
+		will-change: transform;
+	}
+
+	/* Responsive Tablet & Mobile Adjustments */
+	@media (max-width: 768px) {
+		.telha-statement-section {
+			padding: clamp(4.5rem, 8vw, 6rem) clamp(1rem, 4vw, 1.5rem) clamp(4rem, 8vw, 6rem);
+		}
+
+		.telha-grid {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.corner-cross {
+			display: none;
+		}
+
+		.meta-col {
+			order: 1;
+			margin-bottom: 2rem;
+			min-height: auto;
+		}
+
+		.acknowledgment-text {
+			font-size: clamp(0.95rem, 3.5vw, 1.15rem);
+			line-height: 1.35;
+		}
+
+		.image-col {
+			order: 2;
+			width: 100%;
+			max-width: 280px;
+			margin-bottom: 2.5rem;
+			height: auto;
+			padding-top: 0;
+		}
+
+		.sticky-track {
+			height: auto;
+		}
+
+		.sticky-target {
+			position: static;
+		}
+
+		.statement-col {
+			order: 3;
+			margin-top: 0;
+			margin-bottom: 1.5rem;
+		}
+
+		.offset-spacer {
+			display: none;
+		}
+
+		.offset-title {
+			font-size: clamp(1.85rem, 6.5vw, 2.75rem);
+			line-height: 1.15;
+			letter-spacing: -0.03em;
+		}
+
+		.offset-title .line-w {
+			display: inline;
+			white-space: normal;
+			overflow: visible;
+			margin-right: 0.18em;
+			padding-block: 0;
+			margin-block: 0;
+		}
+
+		.offset-title .line {
+			display: inline;
+			will-change: auto;
+		}
+	}
+</style>
+

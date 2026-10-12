@@ -1,0 +1,197 @@
+---
+// Learn about using Astro layouts:
+// https://docs.astro.build/en/basics/layouts/
+
+import 'lenis/dist/lenis.css';
+import Footer from '../components/Footer.astro';
+// Component Imports
+import MainHead from '../components/MainHead.astro';
+import Nav from '../components/Nav.astro';
+import ContactModal from '../components/ContactModal.astro';
+import { ClientRouter } from 'astro:transitions';
+
+interface Props {
+	title?: string | undefined;
+	description?: string | undefined;
+	hideNav?: boolean;
+	hideFooter?: boolean;
+	navTheme?: 'light' | 'dark';
+	fullBleed?: boolean;
+	showNavLogo?: boolean;
+}
+
+const {
+	title,
+	description,
+	hideNav = false,
+	hideFooter = false,
+	navTheme = 'light',
+	fullBleed = false,
+	showNavLogo = true,
+} = Astro.props;
+
+import { r2 } from '../utils/assets';
+
+const bgUrls = {
+	mainLight800: `url('${r2('/assets/backgrounds/bg-main-light-800w.webp')}')`,
+	mainCurvesLight: `url('${r2('/assets/backgrounds/bg-main-light.svg')}')`,
+	mainDark800: `url('${r2('/assets/backgrounds/bg-main-dark-800w.webp')}')`,
+	mainCurvesDark: `url('${r2('/assets/backgrounds/bg-main-dark.svg')}')`,
+	mainLight1440: `url('${r2('/assets/backgrounds/bg-main-light-1440w.webp')}')`,
+	mainDark1440: `url('${r2('/assets/backgrounds/bg-main-dark-1440w.webp')}')`,
+	subtle1Light800: `url('${r2('/assets/backgrounds/bg-subtle-1-light-800w.webp')}')`,
+	subtle2Light800: `url('${r2('/assets/backgrounds/bg-subtle-2-light-800w.webp')}')`,
+	footerLight800: `url('${r2('/assets/backgrounds/bg-footer-light-800w.webp')}')`,
+	subtle1Dark800: `url('${r2('/assets/backgrounds/bg-subtle-1-dark-800w.webp')}')`,
+	subtle2Dark800: `url('${r2('/assets/backgrounds/bg-subtle-2-dark-800w.webp')}')`,
+	footerDark800: `url('${r2('/assets/backgrounds/bg-footer-dark-800w.webp')}')`,
+	subtle1Light1440: `url('${r2('/assets/backgrounds/bg-subtle-1-light-1440w.webp')}')`,
+	subtle2Light1440: `url('${r2('/assets/backgrounds/bg-subtle-2-light-1440w.webp')}')`,
+	footerLight1440: `url('${r2('/assets/backgrounds/bg-footer-light-1440w.webp')}')`,
+	subtle1Dark1440: `url('${r2('/assets/backgrounds/bg-subtle-1-dark-1440w.webp')}')`,
+	subtle2Dark1440: `url('${r2('/assets/backgrounds/bg-subtle-2-dark-1440w.webp')}')`,
+	footerDark1440: `url('${r2('/assets/backgrounds/bg-footer-dark-1440w.webp')}')`,
+};
+---
+
+<html lang="en">
+	<head>
+		<ClientRouter />
+		<MainHead title={title} description={description} />
+	</head>
+	<body>
+		<div class:list={['stack backgrounds', { 'has-nav-offset': !hideNav && !fullBleed }]}>
+			{!hideNav && <Nav theme={navTheme} showLogo={showNavLogo} />}
+			<slot />
+			{!hideFooter && <Footer />}
+		</div>
+		<ContactModal />
+
+		<script>
+			import Lenis from 'lenis';
+			import { gsap } from 'gsap';
+			import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+			gsap.registerPlugin(ScrollTrigger);
+
+			// Add “loaded” class once the document has completely loaded.
+			addEventListener('load', () => document.documentElement.classList.add('loaded'));
+
+			// Reset scroll position before new page view-transition snapshot begins
+			document.addEventListener('astro:after-swap', () => {
+				window.scrollTo(0, 0);
+				const l = (window as any).lenis;
+				if (l) l.scrollTo(0, { immediate: true });
+			});
+
+			document.addEventListener('astro:page-load', () => {
+				document.documentElement.classList.add('loaded');
+				const l = (window as any).lenis;
+				if (l) l.scrollTo(0, { immediate: true });
+				ScrollTrigger.refresh();
+			});
+
+			// ponytail: respectReducedMotion: false is required because OS has reduced motion active
+			let lenis = (window as any).lenis;
+			if (!lenis) {
+				lenis = new Lenis({
+					lerp: 0.11,
+					wheelMultiplier: 1.0,
+					smoothWheel: true,
+					respectReducedMotion: false,
+					orientation: 'vertical',
+					gestureOrientation: 'vertical',
+					touchMultiplier: 1.2,
+					autoRaf: false,
+				});
+
+				(window as any).lenis = lenis;
+
+				// Synchronize Lenis scroll events with GSAP ScrollTrigger
+				lenis.on('scroll', ScrollTrigger.update);
+
+				// Synchronize RAF loop via GSAP ticker for 60/120fps fluid frames
+				gsap.ticker.add((time) => {
+					lenis.raf(time * 1000);
+				});
+
+				// Gracefully absorb frame drops without jarring visual skips
+				gsap.ticker.lagSmoothing(500, 33);
+			}
+		</script>
+		<style define:vars={{ ...bgUrls }}>
+			:root {
+				--_placeholder-bg: linear-gradient(transparent, transparent);
+				--bg-image-main: var(--mainLight800);
+				--bg-image-main-curves: var(--mainCurvesLight);
+				--bg-image-subtle-1: var(--_placeholder-bg);
+				--bg-image-subtle-2: var(--_placeholder-bg);
+				--bg-image-footer: var(--_placeholder-bg);
+				--bg-svg-blend-mode: overlay;
+				--bg-blend-mode: darken;
+				--bg-image-aspect-ratio: 2.25;
+				--bg-scale: 1.68;
+				--bg-aspect-ratio: calc(var(--bg-image-aspect-ratio) / var(--bg-scale));
+				--bg-gradient-size: calc(var(--bg-scale) * 100%);
+			}
+
+			:root.theme-dark {
+				--bg-image-main: var(--mainDark800);
+				--bg-image-main-curves: var(--mainCurvesDark);
+				--bg-svg-blend-mode: darken;
+				--bg-blend-mode: lighten;
+			}
+
+			/* These backgrounds are displayed below the fold, so we lazy load them
+			   once the `.loaded` class has been set.  */
+			:root.loaded {
+				--bg-image-subtle-1: var(--subtle1Light800);
+				--bg-image-subtle-2: var(--subtle2Light800);
+				--bg-image-footer: var(--footerLight800);
+			}
+			:root.loaded.theme-dark {
+				--bg-image-subtle-1: var(--subtle1Dark800);
+				--bg-image-subtle-2: var(--subtle2Dark800);
+				--bg-image-footer: var(--footerDark800);
+			}
+
+			@media (min-width: 50em) {
+				:root {
+					--bg-scale: 1;
+					--bg-image-main: var(--mainLight1440);
+				}
+				:root.theme-dark {
+					--bg-image-main: var(--mainDark1440);
+				}
+
+				:root.loaded {
+					--bg-image-subtle-1: var(--subtle1Light1440);
+					--bg-image-subtle-2: var(--subtle2Light1440);
+					--bg-image-footer: var(--footerLight1440);
+				}
+				:root.loaded.theme-dark {
+					--bg-image-subtle-1: var(--subtle1Dark1440);
+					--bg-image-subtle-2: var(--subtle2Dark1440);
+					--bg-image-footer: var(--footerDark1440);
+				}
+			}
+
+			.backgrounds {
+				min-height: 100vh;
+				background-color: #ffffff;
+				color: #000000;
+			}
+			.has-nav-offset {
+				padding-top: clamp(4.5rem, 7vw, 6rem);
+			}
+			@media (forced-colors: active) {
+				/* Deactivate custom backgrounds for high contrast users. */
+				.backgrounds {
+					background: none;
+					background-blend-mode: none;
+					--bg-gradient-size: none;
+				}
+			}
+		</style>
+	</body>
+</html>
