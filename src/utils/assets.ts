@@ -3,13 +3,13 @@ import placeholdersData from '../data/placeholders.json';
 
 const PLACEHOLDERS = placeholdersData as Record<string, string>;
 
-// Clean base URL from environment (falls back to R2 CDN)
-const rawBase = import.meta.env.PUBLIC_ASSETS_URL || 'https://pub-f2c6b9ebd0204e4ab7f918bf404e647a.r2.dev';
-const BASE_URL = rawBase.replace(/\/+$/, '');
+// Clean base URL from environment (falls back to local site path if empty)
+const rawBase = import.meta.env.PUBLIC_ASSETS_URL || '';
+const CDN_BASE = rawBase.replace(/\/+$/, '');
+const SITE_BASE = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
 
 /**
- * Resolves an asset path to the Cloudflare R2 CDN URL.
- * Falls back to local asset path if PUBLIC_ASSETS_URL is empty.
+ * Resolves an asset path to the local site URL (or CDN if PUBLIC_ASSETS_URL is explicitly set).
  */
 export function r2(path: string): string {
   if (!path) return '';
@@ -17,8 +17,8 @@ export function r2(path: string): string {
   if (/^https?:\/\//i.test(path)) return path;
   
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  if (!BASE_URL) return cleanPath;
-  return `${BASE_URL}${cleanPath}`;
+  if (CDN_BASE) return `${CDN_BASE}${cleanPath}`;
+  return `${SITE_BASE}${cleanPath}`;
 }
 
 /**

@@ -27,16 +27,3 @@ pnpm-debug.log*
 .temp*
 scratch/
 
-# Cloudflare R2 assets (media served via CDN)
-public/assets/
-public/webp/
-webp/
-project/
-*.mp4
-*.webm
-*.mov
-*.avi
-
-# Keep essential site assets
-!public/favicon.svg
-!public/favicon.ico
