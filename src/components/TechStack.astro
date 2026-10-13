@@ -1,0 +1,302 @@
+---
+// ponytail: architectural tech stack grid matching Telha Clarke editorial typography & hairline border aesthetic
+interface StackCategory {
+	index: string;
+	title: string;
+	description: string;
+	skills: { name: string; note?: string }[];
+}
+
+const categories: StackCategory[] = [
+	{
+		index: '01',
+		title: 'Product Design & UI/UX',
+		description: 'End-to-end design craft from user journey mapping to design systems.',
+		skills: [
+			{ name: 'Figma', note: 'UI/UX Lead & Design Systems' },
+			{ name: 'Wireframing', note: 'User Flow Architecture' },
+			{ name: 'Spatial Prototyping', note: 'Interactive Web Motion' },
+			{ name: 'Design Systems', note: 'Tokens, Components & Variants' },
+		],
+	},
+	{
+		index: '02',
+		title: 'Frontend & Creative Web',
+		description: 'High-performance web applications with sub-second FCP and 60 FPS motion.',
+		skills: [
+			{ name: 'Next.js & React 19', note: 'SSG, SSR & App Router' },
+			{ name: 'TypeScript', note: 'Strict Type Safety' },
+			{ name: 'Astro', note: 'Content-driven Platforms' },
+			{ name: 'GSAP & Lenis', note: 'Scroll-driven Physics & Motion' },
+			{ name: 'Tailwind CSS', note: 'Modern Utility Styling' },
+		],
+	},
+	{
+		index: '03',
+		title: 'Backend & Microservices',
+		description: 'Distributed services, transaction integrity, and low-latency internal transport.',
+		skills: [
+			{ name: 'NestJS', note: 'TCP Monorepo Microservices' },
+			{ name: 'Node.js & Express', note: 'REST APIs & WebSockets' },
+			{ name: 'Laravel', note: 'Fullstack MVC Framework' },
+			{ name: 'MySQL', note: 'ACID Transactions & Schemas' },
+		],
+	},
+	{
+		index: '04',
+		title: 'Mobile, Cloud & Payments',
+		description: 'Native mobile clients, zero-egress object storage, and payment integrations.',
+		skills: [
+			{ name: 'Flutter', note: 'Cross-platform Mobile (iOS/Android)' },
+			{ name: 'Cloudflare R2', note: 'Zero-egress Edge Media' },
+			{ name: 'Midtrans API', note: 'QRIS, Virtual Account & SSE' },
+			{ name: 'Git & Docker', note: 'Version Control & Containers' },
+		],
+	},
+];
+---
+
+<section class="telha-stack-section" id="stack" aria-label="Tech Stack & Tools">
+	<!-- Architectural Header Bar -->
+	<div class="stack-header-bar">
+		<div class="header-left">
+			<span class="header-num">02</span>
+			<h2 class="header-title">Tech Stack</h2>
+		</div>
+		<div class="header-center">
+			<span class="header-subtitle">Core Tooling & Engineering</span>
+		</div>
+		<div class="header-right">
+			<span class="header-timeline">26'</span>
+		</div>
+	</div>
+
+	<!-- 4-Column Architectural Grid -->
+	<div class="stack-grid">
+		{
+			categories.map((cat) => (
+				<div class="stack-card">
+					<div class="card-top">
+						<span class="card-index">/{cat.index}</span>
+						<h3 class="card-title">{cat.title}</h3>
+						<p class="card-description">{cat.description}</p>
+					</div>
+
+					<ul class="skills-list">
+						{cat.skills.map((skill) => (
+							<li class="skill-item">
+								<span class="skill-bullet" aria-hidden="true" />
+								<div class="skill-info">
+									<span class="skill-name">{skill.name}</span>
+									{skill.note && <span class="skill-note">{skill.note}</span>}
+								</div>
+							</li>
+						))}
+					</ul>
+				</div>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.telha-stack-section {
+		position: relative;
+		width: 100%;
+		background-color: #ffffff;
+		color: #000000;
+		box-sizing: border-box;
+		padding: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 1.4vw, 1.666rem) clamp(4rem, 8vw, 8rem);
+		border-top: 1px solid #ececec;
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	}
+
+	/* Header bar */
+	.stack-header-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		width: 100%;
+		padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+		font-size: clamp(0.875rem, 0.95vw, 1rem);
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		box-sizing: border-box;
+	}
+
+	.header-left {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		flex: 1;
+	}
+
+	.header-num {
+		color: #8e8e8e;
+		font-weight: 400;
+	}
+
+	.header-title {
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: 500;
+		margin: 0;
+		text-transform: uppercase;
+		letter-spacing: inherit;
+		color: #000000;
+	}
+
+	.header-center {
+		flex: 1;
+		display: flex;
+		justify-content: center;
+	}
+
+	.header-subtitle {
+		color: #8e8e8e;
+		font-weight: 400;
+		font-size: 0.8125rem;
+		letter-spacing: 0.05em;
+	}
+
+	.header-right {
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+		font-weight: 400;
+		color: #000000;
+	}
+
+	/* 4-Column Grid */
+	.stack-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		border-top: 1px solid #111111;
+		border-left: 1px solid #111111;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.stack-card {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		padding: clamp(1.75rem, 2.5vw, 2.5rem);
+		border-right: 1px solid #111111;
+		border-bottom: 1px solid #111111;
+		background: #ffffff;
+		transition: background-color 0.25s ease;
+	}
+
+	.stack-card:hover {
+		background-color: #fafafa;
+	}
+
+	.card-top {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.card-index {
+		font-size: 0.75rem;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		color: #8e8e8e;
+		letter-spacing: 0.08em;
+	}
+
+	.card-title {
+		font-size: clamp(1rem, 1.25vw, 1.35rem);
+		font-weight: 500;
+		line-height: 1.25;
+		margin: 0;
+		letter-spacing: -0.01em;
+		color: #000000;
+	}
+
+	.card-description {
+		font-size: 0.8125rem;
+		line-height: 1.45;
+		color: #666666;
+		margin: 0;
+	}
+
+	/* Skills list */
+	.skills-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		border-top: 1px solid #f0f0f0;
+		padding-top: 1.5rem;
+	}
+
+	.skill-item {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+	}
+
+	.skill-bullet {
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background-color: #111111;
+		margin-top: 0.55rem;
+		flex-shrink: 0;
+		opacity: 0.4;
+		transition: opacity 0.2s ease, transform 0.2s ease;
+	}
+
+	.skill-item:hover .skill-bullet {
+		opacity: 1;
+		transform: scale(1.5);
+	}
+
+	.skill-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.skill-name {
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: #111111;
+		letter-spacing: -0.005em;
+	}
+
+	.skill-note {
+		font-size: 0.75rem;
+		color: #888888;
+		letter-spacing: 0.01em;
+	}
+
+	/* Responsive layout */
+	@media (max-width: 1024px) {
+		.stack-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.header-subtitle {
+			display: none;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.stack-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.stack-card {
+			padding: 1.5rem;
+		}
+
+		.skills-list {
+			gap: 0.85rem;
+		}
+	}
+</style>

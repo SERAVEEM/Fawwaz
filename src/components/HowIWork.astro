@@ -1,0 +1,354 @@
+---
+// ponytail: architectural storytelling narrative for 5-phase product lifecycle matching Telha Clarke editorial aesthetic
+interface WorkPhase {
+	index: string;
+	phase: string;
+	title: string;
+	narrative: string;
+	pillars: string[];
+	tools: string[];
+}
+
+const phases: WorkPhase[] = [
+	{
+		index: '01',
+		phase: 'DISCOVER',
+		title: 'Understand the Problem',
+		narrative:
+			'I dive deep into user realities and stakeholder goals to define root problems, discover hidden constraints, and align on clear product objectives before jumping into implementation.',
+		pillars: ['User Research', 'Requirement Engineering', 'Problem Analysis'],
+		tools: ['FigJam', 'Google Docs'],
+	},
+	{
+		index: '02',
+		phase: 'DESIGN',
+		title: 'Design the Solution',
+		narrative:
+			'I bridge product thinking with spatial interfaces, mapping out system architectures, intuitive user flows, UML diagrams, and high-fidelity component systems.',
+		pillars: ['User Flows', 'UI/UX', 'System Architecture', 'UML'],
+		tools: ['Figma', 'FigJam', 'Excalidraw'],
+	},
+	{
+		index: '03',
+		phase: 'PLAN & COLLABORATE',
+		title: 'Organize the Work',
+		narrative:
+			'I break product requirements into actionable tasks, organize sprint priorities, assign responsibilities, and track progress to keep the team aligned.',
+		pillars: ['Project Management', 'Task Breakdown', 'Sprint Planning', 'Team Collaboration'],
+		tools: ['Google WorkSpace'],
+	},
+	{
+		index: '04',
+		phase: 'BUILD',
+		title: 'Turn Ideas into Products',
+		narrative:
+			'I engineer scalable frontend experiences and resilient backend architectures with clean code, strict type safety, modular structures, and tight database schemas.',
+		pillars: ['Frontend', 'Backend', 'Database', 'API Integration'],
+		tools: ['React', 'Next.js', 'Node.js', 'MySQL', 'Git', 'Laravel', 'NestJS', 'GitHub'],
+	},
+	{
+		index: '05',
+		phase: 'SHIP & IMPROVE',
+		title: 'Test, Launch, and Iterate',
+		narrative:
+			'I validate functionality through rigorous endpoint and UI testing, orchestrate automated containerized deployments, and iterate continuously based on real user feedback.',
+		pillars: ['Testing', 'Debugging', 'Deployment', 'Feedback'],
+		tools: ['GitHub', 'LightHouse', 'Vercel', 'Railway'],
+	},
+];
+---
+
+<section class="telha-process-section" id="process" aria-label="How I Work">
+	<!-- Architectural Header Bar -->
+	<div class="process-header-bar">
+		<div class="header-left">
+			<span class="header-num">02</span>
+			<h2 class="header-title">How I Work</h2>
+		</div>
+		<div class="header-center">
+			<span class="header-subtitle">Methodology & Lifecycle</span>
+		</div>
+		<div class="header-right">
+			<span class="header-timeline">26'</span>
+		</div>
+	</div>
+
+	<!-- Editorial Vertical Flow -->
+	<div class="process-flow">
+		{
+			phases.map((item) => (
+				<article class="phase-card">
+					<!-- Phase Index & Phase Category Header -->
+					<div class="phase-meta-col">
+						<div class="phase-tag-wrap">
+							<span class="phase-index">/{item.index}</span>
+							<span class="phase-badge">{item.phase}</span>
+						</div>
+						<h3 class="phase-title">{item.title}</h3>
+					</div>
+
+					<!-- Narrative Storytelling & Pillars -->
+					<div class="phase-content-col">
+						<p class="phase-narrative">{item.narrative}</p>
+
+						<!-- Pillars -->
+						<div class="phase-pillars">
+							<span class="meta-label">FOCUS & PILLARS</span>
+							<div class="pillars-row">
+								{item.pillars.map((pillar, i) => (
+									<span class="pillar-item">
+										{pillar}
+										{i < item.pillars.length - 1 && <span class="pillar-divider" aria-hidden="true">·</span>}
+									</span>
+								))}
+							</div>
+						</div>
+
+						<!-- Tools Pills -->
+						<div class="phase-tools">
+							<span class="meta-label">TOOLS</span>
+							<div class="tools-grid">
+								{item.tools.map((tool) => (
+									<span class="tool-pill">{tool}</span>
+								))}
+							</div>
+						</div>
+					</div>
+				</article>
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.telha-process-section {
+		position: relative;
+		width: 100%;
+		background-color: #ffffff;
+		color: #000000;
+		box-sizing: border-box;
+		padding: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 1.4vw, 1.666rem) clamp(4rem, 8vw, 8rem);
+		border-top: 1px solid #ececec;
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	}
+
+	/* Header bar */
+	.process-header-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		width: 100%;
+		padding-bottom: clamp(2.5rem, 5vw, 4.5rem);
+		font-size: clamp(0.875rem, 0.95vw, 1rem);
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		box-sizing: border-box;
+	}
+
+	.header-left {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		flex: 1;
+	}
+
+	.header-num {
+		color: #8e8e8e;
+		font-weight: 400;
+	}
+
+	.header-title {
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: 500;
+		margin: 0;
+		text-transform: uppercase;
+		letter-spacing: inherit;
+		color: #000000;
+	}
+
+	.header-center {
+		flex: 1;
+		display: flex;
+		justify-content: center;
+	}
+
+	.header-subtitle {
+		color: #8e8e8e;
+		font-weight: 400;
+		font-size: 0.8125rem;
+		letter-spacing: 0.05em;
+	}
+
+	.header-right {
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+		font-weight: 400;
+		color: #000000;
+	}
+
+	/* Editorial Vertical Flow Cards */
+	.process-flow {
+		display: flex;
+		flex-direction: column;
+		border-top: 1px solid #111111;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.phase-card {
+		display: grid;
+		grid-template-columns: 280px 1fr;
+		gap: clamp(2rem, 4vw, 5rem);
+		padding: clamp(2.25rem, 4vw, 3.75rem) clamp(1rem, 2vw, 2.5rem);
+		border-bottom: 1px solid #111111;
+		background: #ffffff;
+		transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+		box-sizing: border-box;
+	}
+
+	.phase-card:hover {
+		background-color: #fafafa;
+	}
+
+	/* Meta Column (Left) */
+	.phase-meta-col {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.phase-tag-wrap {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.phase-index {
+		font-size: 0.8125rem;
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		color: #8e8e8e;
+		letter-spacing: 0.08em;
+	}
+
+	.phase-badge {
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #111111;
+	}
+
+	.phase-title {
+		font-size: clamp(1.2rem, 1.6vw, 1.75rem);
+		font-weight: 500;
+		line-height: 1.25;
+		margin: 0;
+		letter-spacing: -0.02em;
+		color: #000000;
+	}
+
+	/* Content Column (Right) */
+	.phase-content-col {
+		display: flex;
+		flex-direction: column;
+		gap: 1.75rem;
+		max-width: 820px;
+	}
+
+	.phase-narrative {
+		font-size: clamp(0.95rem, 1.1vw, 1.0625rem);
+		line-height: 1.65;
+		color: #333333;
+		margin: 0;
+		font-weight: 400;
+		letter-spacing: -0.005em;
+	}
+
+	.meta-label {
+		display: block;
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #8e8e8e;
+		margin-bottom: 0.5rem;
+	}
+
+	/* Pillars */
+	.phase-pillars {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.pillars-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.35rem 0.5rem;
+		font-size: 0.875rem;
+		color: #111111;
+		font-weight: 500;
+	}
+
+	.pillar-item {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.pillar-divider {
+		color: #8e8e8e;
+		user-select: none;
+	}
+
+	/* Tools */
+	.phase-tools {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.tools-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.tool-pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.35rem 0.75rem;
+		font-size: 0.75rem;
+		font-weight: 500;
+		color: #222222;
+		background: #ffffff;
+		border: 1px solid #dcdcdc;
+		border-radius: 999px;
+		transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+		letter-spacing: 0.01em;
+	}
+
+	.phase-card:hover .tool-pill {
+		border-color: #111111;
+	}
+
+	.tool-pill:hover {
+		background-color: #111111 !important;
+		color: #ffffff !important;
+		border-color: #111111 !important;
+	}
+
+	/* Responsive */
+	@media (max-width: 900px) {
+		.phase-card {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+			padding: 2rem 1.25rem;
+		}
+
+		.header-subtitle {
+			display: none;
+		}
+	}
+</style>

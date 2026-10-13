@@ -87,8 +87,39 @@ const bgUrls = {
 			document.addEventListener('astro:page-load', () => {
 				document.documentElement.classList.add('loaded');
 				const l = (window as any).lenis;
-				if (l) l.scrollTo(0, { immediate: true });
+				if (window.location.hash) {
+					const target = document.querySelector(window.location.hash);
+					if (target && l) {
+						setTimeout(() => l.scrollTo(target, { offset: -30, duration: 1.0 }), 80);
+					}
+				} else if (l) {
+					l.scrollTo(0, { immediate: true });
+				}
 				ScrollTrigger.refresh();
+			});
+
+			// Smooth scroll in-page anchors with Lenis
+			document.addEventListener('click', (e) => {
+				const a = (e.target as HTMLElement)?.closest('a');
+				if (!a) return;
+				const href = a.getAttribute('href');
+				if (!href) return;
+				const hashIdx = href.indexOf('#');
+				if (hashIdx === -1) return;
+				const hash = href.slice(hashIdx);
+				if (hash === '#contact') return; // Handled by ContactModal
+				const path = href.slice(0, hashIdx);
+				const curPath = window.location.pathname.replace(/\/$/, '') || '/';
+				const linkPath = path ? path.replace(/\/$/, '') || '/' : curPath;
+				if (linkPath === curPath && hash.length > 1) {
+					const target = document.querySelector(hash);
+					const l = (window as any).lenis;
+					if (target && l) {
+						e.preventDefault();
+						l.scrollTo(target, { offset: -30, duration: 1.2 });
+						history.pushState(null, '', hash);
+					}
+				}
 			});
 
 			// ponytail: respectReducedMotion: false is required because OS has reduced motion active
