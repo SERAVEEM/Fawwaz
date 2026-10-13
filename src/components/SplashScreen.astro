@@ -1,0 +1,320 @@
+---
+// ponytail: Exact 1:1 reproduction of Telha Clarke kinetic dual-layer rolling letters loader
+---
+
+<script is:inline>
+	const forceSplash = new URLSearchParams(window.location.search).has('splash');
+	if (!forceSplash && sessionStorage.getItem('seraveem_splash_v6')) {
+		document.documentElement.classList.add('splash-dismissed');
+	}
+</script>
+
+<aside id="splashScreen" class="splash-screen" aria-label="Loading introduction">
+	<!-- Top Bar: Left (Role/Studio) & Right (Loading + Counter) -->
+	<header class="splash-top-bar">
+		<div class="splash-top-left">
+			<div class="line-mask"><span class="top-line line-anim">Product Engineer</span></div>
+			<div class="line-mask"><span class="top-line line-anim">Perspective std.</span></div>
+		</div>
+
+		<div class="splash-top-right">
+			<div class="line-mask"><span class="counter-label line-anim">Loading</span></div>
+			<div class="line-mask"><span class="counter-value line-anim" id="splashCounter">0%</span></div>
+		</div>
+	</header>
+
+	<!-- Center Double-Decker Wordmark (Exact Telha Clarke Dual-Layer Letter Roll) -->
+	<main class="splash-center">
+		<div class="loader-logo-wrap" id="loaderLogo">
+			<!-- Layer 1: Initially Visible, Rolls Up and Out (-120%) -->
+			<div class="letters-row letters-top" aria-hidden="true">
+				<span class="char">F</span>
+				<span class="char">A</span>
+				<span class="char">W</span>
+				<span class="char">W</span>
+				<span class="char">A</span>
+				<span class="char">Z</span>
+				<span class="char dot">.</span>
+			</div>
+
+			<!-- Layer 2: Initially Below Mask (120%), Rolls Up into View (0%) -->
+			<div class="letters-row letters-bottom">
+				<span class="char">F</span>
+				<span class="char">A</span>
+				<span class="char">W</span>
+				<span class="char">W</span>
+				<span class="char">A</span>
+				<span class="char">Z</span>
+				<span class="char dot">.</span>
+			</div>
+		</div>
+	</main>
+</aside>
+
+<style>
+	:global(html.splash-dismissed) #splashScreen {
+		display: none !important;
+	}
+
+	.splash-screen {
+		position: fixed;
+		inset: 0;
+		width: 100vw;
+		height: 100vh;
+		height: 100dvh;
+		background-color: #000000;
+		color: #ffffff;
+		z-index: 99999;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		pointer-events: auto;
+		user-select: none;
+		overflow: hidden;
+		box-sizing: border-box;
+		padding: clamp(0.75rem, 1.25vw, 1.25rem) clamp(1rem, 2vw, 2.25rem);
+	}
+
+	/* Top Bar Line Masks */
+	.splash-top-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		width: 100%;
+		font-family: 'Inter', sans-serif;
+	}
+
+	.line-mask {
+		overflow: hidden;
+		display: block;
+	}
+
+	.line-anim {
+		display: inline-block;
+		will-change: transform;
+	}
+
+	.splash-top-left {
+		display: flex;
+		flex-direction: column;
+		gap: 0.1rem;
+	}
+
+	.splash-top-left .top-line {
+		font-size: clamp(0.78rem, 1vw, 0.95rem);
+		font-weight: 500;
+		line-height: 1.25;
+		color: #ffffff;
+		letter-spacing: -0.01em;
+	}
+
+	.splash-top-right {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		text-align: right;
+		gap: 0.1rem;
+	}
+
+	.splash-top-right .counter-label,
+	.splash-top-right .counter-value {
+		font-size: clamp(0.78rem, 1vw, 0.95rem);
+		font-weight: 500;
+		line-height: 1.25;
+		color: #ffffff;
+		letter-spacing: -0.01em;
+	}
+
+	.splash-top-right .counter-value {
+		font-variant-numeric: tabular-nums;
+	}
+
+	/* Center Dual-Layer Kinetic Letter Roll */
+	.splash-center {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+	}
+
+	.loader-logo-wrap {
+		position: relative;
+		overflow: hidden;
+		display: inline-block;
+		line-height: 0.88;
+		padding: 0.08em 0;
+		will-change: transform;
+	}
+
+	.letters-row {
+		display: flex;
+		align-items: baseline;
+		justify-content: center;
+		font-family: 'Inter', sans-serif;
+		font-size: clamp(4rem, 16vw, 14rem);
+		font-weight: 900;
+		letter-spacing: -0.04em;
+		color: #ffffff;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	.letters-row.letters-bottom {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.char {
+		display: inline-block;
+		will-change: transform;
+		backface-visibility: hidden;
+		transform: translateZ(0);
+	}
+
+	.char.dot {
+		margin-left: -0.02em;
+	}
+
+	@media (max-width: 640px) {
+		.splash-screen {
+			padding: 0.85rem 1rem;
+		}
+	}
+</style>
+
+<script>
+	import { gsap } from 'gsap';
+
+	function initSplashScreen() {
+		const splashEl = document.getElementById('splashScreen');
+		const counterEl = document.getElementById('splashCounter');
+		const logoWrap = document.getElementById('loaderLogo');
+		if (!splashEl || !counterEl || !logoWrap) return;
+
+		const forceSplash = new URLSearchParams(window.location.search).has('splash');
+
+		if (!forceSplash && sessionStorage.getItem('seraveem_splash_v6')) {
+			document.documentElement.classList.add('splash-dismissed');
+			splashEl.remove();
+			return;
+		}
+
+		if ((window as any).lenis) {
+			(window as any).lenis.stop();
+		}
+		document.body.style.overflow = 'hidden';
+
+		const topChars = splashEl.querySelectorAll('.letters-top .char');
+		const bottomChars = splashEl.querySelectorAll('.letters-bottom .char');
+		const topLines = splashEl.querySelectorAll('.line-anim');
+		const counter = { val: 0 };
+
+		// Set initial states matching Telha Clarke
+		// lettersTop is visible at 0%, lettersBottom waits below at 120%
+		gsap.set(topChars, { yPercent: 0 });
+		gsap.set(bottomChars, { yPercent: 120 });
+		gsap.set(topLines, { yPercent: 100 });
+
+		const tl = gsap.timeline({
+			delay: 0.1,
+			onComplete: () => {
+				sessionStorage.setItem('seraveem_splash_v6', 'true');
+				document.documentElement.classList.add('splash-dismissed');
+				if ((window as any).lenis) {
+					(window as any).lenis.start();
+				}
+				document.body.style.overflow = '';
+				splashEl.remove();
+			},
+		});
+
+		// 1. Top bar lines slide up into view (Product Engineer, Loading...)
+		tl.to(topLines, {
+			yPercent: 0,
+			duration: 0.8,
+			ease: 'expo.out',
+			stagger: 0.05,
+		}, 0);
+
+		// 2. Dual-Layer Letter Roll: lettersTop rolls up (-120%), lettersBottom rolls in from below (0%)
+		// Exactly matching Telha Clarke's ease ("expo.out") and stagger (.0475)
+		tl.to(
+			topChars,
+			{
+				yPercent: -120,
+				duration: 1.6,
+				ease: 'expo.out',
+				stagger: 0.048,
+			},
+			0.15
+		);
+
+		tl.to(
+			bottomChars,
+			{
+				yPercent: 0,
+				duration: 1.6,
+				ease: 'expo.out',
+				stagger: 0.048,
+			},
+			0.15
+		);
+
+		// 3. Counter ticks 0% -> 100% in parallel
+		tl.to(
+			counter,
+			{
+				val: 100,
+				duration: 1.6,
+				ease: 'power2.inOut',
+				onUpdate: () => {
+					counterEl.textContent = `${Math.floor(counter.val)}%`;
+				},
+			},
+			0.15
+		);
+
+		// 4. Exit Transition (Matching Telha Clarke):
+		// - Top lines roll up out of their masks
+		tl.to(
+			topLines,
+			{
+				yPercent: -100,
+				duration: 0.5,
+				ease: 'power3.inOut',
+				stagger: 0.03,
+			},
+			'+=0.1'
+		);
+
+		// - Wordmark translates upward towards the header
+		tl.to(
+			logoWrap,
+			{
+				yPercent: -80,
+				opacity: 0,
+				duration: 0.7,
+				ease: 'power4.inOut',
+			},
+			'<0.05'
+		);
+
+		// - Black curtain wipes up to reveal the white homepage
+		tl.to(
+			splashEl,
+			{
+				yPercent: -100,
+				duration: 0.75,
+				ease: 'power4.inOut',
+			},
+			'<0.1'
+		);
+	}
+
+	initSplashScreen();
+	document.addEventListener('astro:page-load', initSplashScreen);
+</script>

@@ -15,7 +15,8 @@ const isArchive =
 	currentPath === `${base}/work`;
 const isStudio = currentPath === `${base}/studio`;
 const isJourney = currentPath === `${base}/journey`;
-const cvUrl = "https://drive.google.com/file/d/1hrYy7ffCdxw7ZI9NkANJG0C5otBPFBL5/view?usp=sharing";
+const cvUrl =
+	"https://drive.google.com/file/d/1hrYy7ffCdxw7ZI9NkANJG0C5otBPFBL5/view?usp=sharing";
 ---
 
 <header
@@ -54,10 +55,7 @@ const cvUrl = "https://drive.google.com/file/d/1hrYy7ffCdxw7ZI9NkANJG0C5otBPFBL5
 			href={`${base}/studio`}
 			class:list={["nav-link", { active: isStudio }]}>Studio</a
 		>
-		<a
-			href={`${base}/#process`}
-			class="nav-link">Process</a
-		>
+		<a href={`${base}/#process`} class="nav-link">Process</a>
 		<a
 			href="#contact"
 			class="nav-link contact-pill"
@@ -110,10 +108,7 @@ const cvUrl = "https://drive.google.com/file/d/1hrYy7ffCdxw7ZI9NkANJG0C5otBPFBL5
 			href={`${base}/studio`}
 			class:list={["mobile-nav-link", { active: isStudio }]}>Studio</a
 		>
-		<a
-			href={`${base}/#process`}
-			class="mobile-nav-link">Process</a
-		>
+		<a href={`${base}/#process`} class="mobile-nav-link">Process</a>
 		<a
 			href={cvUrl}
 			target="_blank"

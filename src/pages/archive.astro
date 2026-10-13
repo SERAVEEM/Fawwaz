@@ -46,7 +46,7 @@ export const archiveProjects: ArchiveProject[] = [
 	{
 		id: 'larasana',
 		title: 'LARASANA',
-		client: 'LARASANA / BINUS',
+		client: 'LARASANA / BINUS · CS FESTIVAL FINALIST',
 		role: 'PM, UI/UX Lead, Product Engineer',
 		year: '2026',
 		index: '/002',
@@ -55,8 +55,16 @@ export const archiveProjects: ArchiveProject[] = [
 		type: 'project',
 		aspectRatio: '16 / 10',
 		description:
-			'Direct-to-Customer (D2C) luxury fashion platform uplifting 15,000+ Sasak weavers in Lombok into the global luxury market while eliminating predatory middlemen. Engineered as a decoupled NestJS microservices monorepo communicating via native TCP transport (3–7ms internal latency, 170–225MB RAM). Implements physical-to-digital QR Story Passports, MySQL ACID transaction isolation guaranteeing 60% artisan royalties, a Strategy Pattern Dynamic Shipping Resolver (Biteship, RajaOngkir, EasyPost), real-time SSE payment streaming via Midtrans, and 60 FPS editorial motion powered by React 19 and Lenis.',
-		tags: ['Figma', 'Microservices', 'React 19 & NestJS', 'ACID Transactions', 'Midtrans SSE', 'Lenis Physics'],
+			'Computer Science Festival Finalist. Direct-to-Customer (D2C) luxury fashion platform uplifting 15,000+ Sasak weavers in Lombok into the global luxury market while eliminating predatory middlemen. Engineered as a decoupled NestJS microservices monorepo communicating via native TCP transport (3–7ms internal latency, 170–225MB RAM). Implements physical-to-digital QR Story Passports, MySQL ACID transaction isolation guaranteeing 60% artisan royalties, a Strategy Pattern Dynamic Shipping Resolver (Biteship, RajaOngkir, EasyPost), real-time SSE payment streaming via Midtrans with 3s fallback polling, and 60 FPS editorial motion powered by React 19 and Lenis.',
+		tags: [
+			'🏆 Finalist CS Festival',
+			'React 19 & NestJS',
+			'TCP Microservices',
+			'Midtrans SSE',
+			'Strategy Pattern',
+			'Lenis 60 FPS',
+			'Cloudflare R2 Tunnel',
+		],
 		github: 'https://github.com/SERAVEEM/Larasana-React-nest',
 		live: 'https://larasana-iota.vercel.app/',
 		liveNote: 'Note: The backend is currently offline as backend hosting has concluded.',
@@ -147,7 +155,7 @@ export const archiveProjects: ArchiveProject[] = [
 		index: '/008',
 		image: r2('/webp/gramedia-pesta-literasi.webp'),
 		modalImage: r2('/webp/gramedia-pesta-literasi.webp'),
-		type: 'skill',
+		type: 'project',
 		aspectRatio: '16 / 9',
 		description:
 			'Represented the NGO Duduk Baca as the primary cross-functional liaison with Gramedia for Pesta Literasi Indonesia, leading partner alignment, stage operations, and on-site event execution.\n\nStrategic Partner Alignment: Spearheaded direct, face-to-face coordination with Gramedia’s event division to synchronize program rundowns, technical expectations, and cross-organizational deliverables.\n\nStage & Spatial Design: Coordinated stage requirements, audience seating layout, and crowd traffic flow to optimize attendee engagement and venue capacity.\n\nTalent & Logistics Management: Handled speaker hospitality and technical requirements, oversaw on-time program pacing, and directed backstage logistics, including catering and essential event supplies.',
@@ -286,12 +294,6 @@ export const archiveProjects: ArchiveProject[] = [
 						<span class="modal-year" id="modalYear">2026</span>
 					</div>
 
-					<!-- Detailed Explanation -->
-					<div class="modal-section">
-						<span class="modal-label">OVERVIEW</span>
-						<p class="modal-description" id="modalDescription">Overview text...</p>
-					</div>
-
 					<!-- Tags / Highlights -->
 					<div class="modal-section" id="modalTagsSection">
 						<span class="modal-label">HIGHLIGHTS & STACK</span>
@@ -306,6 +308,17 @@ export const archiveProjects: ArchiveProject[] = [
 								href="#"
 								target="_blank"
 								rel="noopener noreferrer"
+								class="modal-action-btn btn-visit"
+								id="modalVisitBtn"
+							>
+								<span>VISIT PROJECT</span>
+								<span class="action-glyph">↗</span>
+							</a>
+
+							<a
+								href="#"
+								target="_blank"
+								rel="noopener noreferrer"
 								class="modal-action-btn btn-github"
 								id="modalGithubBtn"
 							>
@@ -315,18 +328,13 @@ export const archiveProjects: ArchiveProject[] = [
 								<span>GITHUB</span>
 								<span class="action-glyph">↗</span>
 							</a>
-
-							<a
-								href="#"
-								target="_blank"
-								rel="noopener noreferrer"
-								class="modal-action-btn btn-visit"
-								id="modalVisitBtn"
-							>
-								<span>VISIT PROJECT</span>
-								<span class="action-glyph">↗</span>
-							</a>
 						</div>
+					</div>
+
+					<!-- Detailed Explanation -->
+					<div class="modal-section modal-section-overview">
+						<span class="modal-label">OVERVIEW</span>
+						<p class="modal-description" id="modalDescription">Overview text...</p>
 					</div>
 				</div>
 			</div>
@@ -481,9 +489,10 @@ export const archiveProjects: ArchiveProject[] = [
 				tagsList.innerHTML = '';
 				if (item.tags && item.tags.length > 0) {
 					tagsSection.style.display = 'block';
-					item.tags.forEach((tag) => {
+					item.tags.forEach((tag: string) => {
 						const pill = document.createElement('span');
-						pill.className = 'modal-tag-pill';
+						const isFeatured = tag.includes('Finalist') || tag.includes('🏆');
+						pill.className = `modal-tag-pill${isFeatured ? ' tag-featured' : ''}`;
 						pill.textContent = tag;
 						tagsList.appendChild(pill);
 					});
@@ -619,7 +628,7 @@ export const archiveProjects: ArchiveProject[] = [
 		const searchParams = new URLSearchParams(window.location.search);
 		const requestedProject = searchParams.get('project') || window.location.hash.replace('#', '');
 		if (requestedProject) {
-			const projectIdx = projectsData.findIndex((p) => p.id === requestedProject);
+			const projectIdx = projectsData.findIndex((p: { id: string }) => p.id === requestedProject);
 			if (projectIdx !== -1) {
 				setTimeout(() => openModal(projectIdx), 150);
 			}
@@ -1167,12 +1176,23 @@ export const archiveProjects: ArchiveProject[] = [
 		color: #e0e0e0;
 	}
 
+	:global(.modal-tag-pill.tag-featured) {
+		background-color: rgba(245, 158, 11, 0.12);
+		border-color: rgba(245, 158, 11, 0.45);
+		color: #fbbf24;
+		font-weight: 600;
+	}
+
 	/* Action Buttons Row */
 	.modal-actions-wrap {
 		display: flex;
 		flex-direction: column;
 		gap: 12px;
-		padding-top: 10px;
+		padding-top: 2px;
+	}
+
+	.modal-section-overview {
+		padding-top: 18px;
 		border-top: 1px solid rgba(255, 255, 255, 0.08);
 	}
 
