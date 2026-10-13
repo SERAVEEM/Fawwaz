@@ -1,31 +1,68 @@
 ---
 // ponytail: unified responsive Fawwaz navbar across all pages with light/dark theming
 interface Props {
-	theme?: 'light' | 'dark';
+	theme?: "light" | "dark";
 	showLogo?: boolean;
 }
 
-const { theme = 'light', showLogo = true } = Astro.props;
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const { theme = "light", showLogo = true } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isArchive = currentPath === `${base}/archive` || currentPath.startsWith(`${base}/archive/`) || currentPath === `${base}/work`;
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isArchive =
+	currentPath === `${base}/archive` ||
+	currentPath.startsWith(`${base}/archive/`) ||
+	currentPath === `${base}/work`;
 const isStudio = currentPath === `${base}/studio`;
 const isJourney = currentPath === `${base}/journey`;
+const cvUrl = "https://drive.google.com/file/d/1hrYy7ffCdxw7ZI9NkANJG0C5otBPFBL5/view?usp=sharing";
 ---
 
-<header class={`site-header theme-${theme} ${!showLogo ? 'no-logo' : ''}`} transition:name="site-header" aria-label="Main Navigation">
-	{showLogo ? (
-		<a href={base || '/'} class="brand-logo" aria-label="Fawwaz Home">FAWWAZ.</a>
-	) : (
-		<span class="nav-spacer" aria-hidden="true"></span>
-	)}
+<header
+	class={`site-header theme-${theme} ${!showLogo ? "no-logo" : ""}`}
+	transition:name="site-header"
+	aria-label="Main Navigation"
+>
+	{
+		showLogo ? (
+			<a href={base || "/"} class="brand-logo" aria-label="Fawwaz Home">
+				FAWWAZ.
+			</a>
+		) : (
+			<span class="nav-spacer" aria-hidden="true" />
+		)
+	}
+
+	<div class="nav-center">
+		<a
+			href={cvUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="cv-pill-btn"
+			aria-label="Get My CV (opens in a new tab)"
+		>
+			Get My CV
+		</a>
+	</div>
 
 	<nav class="desktop-nav" aria-label="Main Navigation">
-		<a href={`${base}/archive`} class:list={['nav-link', { active: isArchive }]}>Archive</a>
-		<a href={`${base}/studio`} class:list={['nav-link', { active: isStudio }]}>Studio</a>
-		<a href={`${base}/journey`} class:list={['nav-link', { active: isJourney }]}>Journey</a>
-		<a href="#contact" class="nav-link contact-pill" data-open-contact-modal="true">
+		<a
+			href={`${base}/archive`}
+			class:list={["nav-link", { active: isArchive }]}>Archive</a
+		>
+		<a
+			href={`${base}/studio`}
+			class:list={["nav-link", { active: isStudio }]}>Studio</a
+		>
+		<a
+			href={`${base}/journey`}
+			class:list={["nav-link", { active: isJourney }]}>Journey</a
+		>
+		<a
+			href="#contact"
+			class="nav-link contact-pill"
+			data-open-contact-modal="true"
+		>
 			<span class="status-dot" aria-hidden="true"></span>
 			<span>Let’s Talk</span>
 		</a>
@@ -65,10 +102,32 @@ const isJourney = currentPath === `${base}/journey`;
 	</div>
 
 	<nav class="mobile-nav-links">
-		<a href={`${base}/archive`} class:list={['mobile-nav-link', { active: isArchive }]}>Archive</a>
-		<a href={`${base}/studio`} class:list={['mobile-nav-link', { active: isStudio }]}>Studio</a>
-		<a href={`${base}/journey`} class:list={['mobile-nav-link', { active: isJourney }]}>Journey</a>
-		<a href="#contact" class="mobile-nav-link contact-pill" data-open-contact-modal="true">
+		<a
+			href={`${base}/archive`}
+			class:list={["mobile-nav-link", { active: isArchive }]}>Archive</a
+		>
+		<a
+			href={`${base}/studio`}
+			class:list={["mobile-nav-link", { active: isStudio }]}>Studio</a
+		>
+		<a
+			href={`${base}/journey`}
+			class:list={["mobile-nav-link", { active: isJourney }]}>Journey</a
+		>
+		<a
+			href={cvUrl}
+			target="_blank"
+			rel="noopener noreferrer"
+			class="mobile-nav-link mobile-cv-link"
+		>
+			<span>Get My CV</span>
+			<span class="ext-arrow" aria-hidden="true">↗</span>
+		</a>
+		<a
+			href="#contact"
+			class="mobile-nav-link contact-pill"
+			data-open-contact-modal="true"
+		>
 			<span class="status-dot" aria-hidden="true"></span>
 			<span>Let’s Talk</span>
 		</a>
@@ -77,41 +136,41 @@ const isJourney = currentPath === `${base}/journey`;
 
 <script>
 	function setupNav() {
-		const menuBtn = document.getElementById('siteMobileMenuBtn');
-		const closeBtn = document.getElementById('siteMobileMenuCloseBtn');
-		const overlay = document.getElementById('siteMobileMenuOverlay');
+		const menuBtn = document.getElementById("siteMobileMenuBtn");
+		const closeBtn = document.getElementById("siteMobileMenuCloseBtn");
+		const overlay = document.getElementById("siteMobileMenuOverlay");
 		if (!menuBtn || !overlay) return;
 
-		const mobileLinks = overlay.querySelectorAll('.mobile-nav-link');
+		const mobileLinks = overlay.querySelectorAll(".mobile-nav-link");
 
 		const openMenu = () => {
-			overlay.classList.add('is-open');
-			menuBtn.setAttribute('aria-expanded', 'true');
-			document.body.style.overflow = 'hidden';
+			overlay.classList.add("is-open");
+			menuBtn.setAttribute("aria-expanded", "true");
+			document.body.style.overflow = "hidden";
 		};
 
 		const closeMenu = () => {
-			overlay.classList.remove('is-open');
-			menuBtn.setAttribute('aria-expanded', 'false');
-			document.body.style.overflow = '';
+			overlay.classList.remove("is-open");
+			menuBtn.setAttribute("aria-expanded", "false");
+			document.body.style.overflow = "";
 		};
 
 		menuBtn.onclick = openMenu;
 		if (closeBtn) closeBtn.onclick = closeMenu;
 
 		mobileLinks.forEach((link) => {
-			link.addEventListener('click', closeMenu);
+			link.addEventListener("click", closeMenu);
 		});
 
-		window.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+		window.addEventListener("keydown", (e) => {
+			if (e.key === "Escape" && overlay.classList.contains("is-open")) {
 				closeMenu();
 			}
 		});
 	}
 
 	setupNav();
-	document.addEventListener('astro:page-load', setupNav);
+	document.addEventListener("astro:page-load", setupNav);
 </script>
 
 <style>
@@ -137,7 +196,11 @@ const isJourney = currentPath === `${base}/journey`;
 	}
 
 	.brand-logo {
-		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-family:
+			"Inter",
+			system-ui,
+			-apple-system,
+			sans-serif;
 		font-weight: 900;
 		font-size: clamp(2rem, 4.72vw, 90.5px);
 		letter-spacing: -0.04em;
@@ -157,12 +220,18 @@ const isJourney = currentPath === `${base}/journey`;
 	}
 
 	.nav-link {
-		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-family:
+			"Inter",
+			system-ui,
+			-apple-system,
+			sans-serif;
 		font-weight: 700;
 		font-size: clamp(1rem, 1.25vw, 24px);
 		text-decoration: none;
 		position: relative;
-		transition: opacity 0.2s ease, color 0.2s ease;
+		transition:
+			opacity 0.2s ease,
+			color 0.2s ease;
 	}
 
 	.nav-link:hover {
@@ -170,7 +239,7 @@ const isJourney = currentPath === `${base}/journey`;
 	}
 
 	.nav-link.active::after {
-		content: '';
+		content: "";
 		position: absolute;
 		bottom: -4px;
 		left: 0;
@@ -226,7 +295,9 @@ const isJourney = currentPath === `${base}/journey`;
 		transform: translateY(-100%);
 		opacity: 0;
 		pointer-events: none;
-		transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+		transition:
+			transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+			opacity 0.25s ease;
 	}
 
 	.mobile-menu-overlay.is-open {
@@ -243,7 +314,11 @@ const isJourney = currentPath === `${base}/journey`;
 	}
 
 	.mobile-logo {
-		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-family:
+			"Inter",
+			system-ui,
+			-apple-system,
+			sans-serif;
 		font-weight: 900;
 		font-size: 2.5rem;
 		letter-spacing: -0.04em;
@@ -266,13 +341,72 @@ const isJourney = currentPath === `${base}/journey`;
 	}
 
 	.mobile-nav-link {
-		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-family:
+			"Inter",
+			system-ui,
+			-apple-system,
+			sans-serif;
 		font-weight: 700;
 		font-size: 1.75rem;
 		text-decoration: none;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
+	}
+
+	/* Nav Center CV Button */
+	.nav-center {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		pointer-events: auto;
+	}
+
+	.cv-pill-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.42rem 1.15rem;
+		border-radius: 9999px;
+		font-family:
+			"Inter",
+			system-ui,
+			-apple-system,
+			sans-serif;
+		font-size: clamp(0.85rem, 0.92vw, 15px);
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		text-decoration: none;
+		border: 1.5px solid #000000;
+		background: transparent;
+		transition:
+			background-color 0.25s ease,
+			color 0.25s ease,
+			transform 0.2s ease,
+			border-color 0.25s ease;
+		white-space: nowrap;
+	}
+
+	.cv-pill-btn:hover {
+		background-color: #000000;
+		color: #ffffff !important;
+		transform: translateY(-1px);
+	}
+
+	.mobile-cv-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+	}
+
+	.mobile-cv-link .ext-arrow {
+		font-size: 1.25rem;
+		line-height: 1;
+		opacity: 0.7;
 	}
 
 	/* Light Theme Styles */
@@ -285,6 +419,15 @@ const isJourney = currentPath === `${base}/journey`;
 	.theme-light .mobile-close-btn,
 	.theme-light .mobile-nav-link {
 		color: #000000;
+	}
+	.theme-light .cv-pill-btn {
+		color: #000000;
+		border-color: #000000;
+	}
+	.theme-light .cv-pill-btn:hover {
+		background-color: #000000;
+		color: #ffffff;
+		border-color: #000000;
 	}
 	.mobile-menu-overlay.theme-light {
 		background-color: #ffffff;
@@ -301,6 +444,15 @@ const isJourney = currentPath === `${base}/journey`;
 	}
 	.theme-dark .nav-link {
 		color: rgba(255, 255, 255, 0.75);
+	}
+	.theme-dark .cv-pill-btn {
+		color: #ffffff;
+		border-color: #ffffff;
+	}
+	.theme-dark .cv-pill-btn:hover {
+		background-color: #ffffff;
+		color: #000000;
+		border-color: #ffffff;
 	}
 	.theme-dark .nav-link:hover,
 	.theme-dark .nav-link.active {
@@ -319,7 +471,8 @@ const isJourney = currentPath === `${base}/journey`;
 
 	/* Responsive Breakpoint */
 	@media (max-width: 900px) {
-		.desktop-nav {
+		.desktop-nav,
+		.nav-center {
 			display: none;
 		}
 		.mobile-menu-btn {
