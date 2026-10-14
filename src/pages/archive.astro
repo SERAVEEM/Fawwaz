@@ -246,9 +246,6 @@ export const archiveProjects: ArchiveProject[] = [
 									/>
 								)}
 								<div class="card-halo" aria-hidden="true" />
-								{project.badge && (
-									<span class="card-badge-tag">{project.badge}</span>
-								)}
 								{project.type === 'skill' && (
 									<span class="card-skill-tag">[SKILL]</span>
 								)}
@@ -258,7 +255,15 @@ export const archiveProjects: ArchiveProject[] = [
 							<div class="card-meta">
 								<h2 class="card-title">{project.title}</h2>
 								<div class="card-info">
-									<span class="card-year">{project.year}</span>
+									<span class="card-year">
+										{project.badge && (
+											<>
+												<span class="card-badge-label">{project.badge}</span>
+												<span class="card-meta-dot" aria-hidden="true">·</span>
+											</>
+										)}
+										<span>{project.year}</span>
+									</span>
 									<span class="card-client">{project.client}</span>
 								</div>
 							</div>
@@ -903,25 +908,21 @@ export const archiveProjects: ArchiveProject[] = [
 		opacity: 1;
 	}
 
-	/* Badge & Skill tags on card (top-left of picture) */
-	.card-badge-tag,
+	/* Skill badge on card */
 	.card-skill-tag {
 		position: absolute;
-		top: 12px;
-		left: 12px;
+		top: 10px;
+		left: 10px;
 		z-index: 20;
 		font-family: 'Inter', system-ui, -apple-system, sans-serif;
 		font-size: 0.72rem;
 		font-weight: 600;
 		letter-spacing: 0.04em;
-		background-color: rgba(9, 11, 17, 0.78);
+		background-color: rgba(0, 0, 0, 0.75);
 		color: #ffffff;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		padding: 4px 8px;
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		padding: 3px 7px;
 		backdrop-filter: blur(8px);
-		-webkit-backdrop-filter: blur(8px);
-		border-radius: 2px;
-		pointer-events: none;
 	}
 
 	/* ==========================================================================
@@ -965,6 +966,9 @@ export const archiveProjects: ArchiveProject[] = [
 	}
 
 	.card-year {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
 		font-family: 'Inter', system-ui, -apple-system, sans-serif;
 		font-size: clamp(0.78rem, 0.85vw, 0.88rem);
 		font-weight: 400;
@@ -972,6 +976,16 @@ export const archiveProjects: ArchiveProject[] = [
 		text-transform: uppercase;
 		line-height: 1.2;
 		letter-spacing: -0.01em;
+	}
+
+	.card-badge-label {
+		color: var(--podium-muted);
+		font-weight: 500;
+		letter-spacing: 0.02em;
+	}
+
+	.card-meta-dot {
+		opacity: 0.5;
 	}
 
 	.card-client {
