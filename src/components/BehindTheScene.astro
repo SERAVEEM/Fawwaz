@@ -493,22 +493,7 @@ const ROWS: GridItem[][] = [
     });
   }
 
-  function setupTelhaGrid() {
-    if (document.getElementById("all-work")) {
-      initTelhaWorksGrid();
-      initProgressiveRowLoading();
-    }
-  }
-
-  // Initialize on load and Astro page transitions
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupTelhaGrid);
-  } else {
-    setupTelhaGrid();
-  }
-
-  document.addEventListener("astro:page-load", setupTelhaGrid);
-  document.addEventListener("astro:before-swap", () => {
+  function cleanupTelhaGrid() {
     if (activeTicker) {
       gsap.ticker.remove(activeTicker);
       activeTicker = null;
@@ -527,7 +512,25 @@ const ROWS: GridItem[][] = [
         st.kill();
       }
     });
-  });
+  }
+
+  function setupTelhaGrid() {
+    if (document.getElementById("all-work")) {
+      cleanupTelhaGrid();
+      initTelhaWorksGrid();
+      initProgressiveRowLoading();
+    }
+  }
+
+  // Initialize on load and Astro page transitions
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupTelhaGrid);
+  } else {
+    setupTelhaGrid();
+  }
+
+  document.addEventListener("astro:page-load", setupTelhaGrid);
+  document.addEventListener("astro:before-swap", cleanupTelhaGrid);
 </script>
 
 <style>

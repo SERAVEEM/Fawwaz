@@ -189,6 +189,8 @@
 <script>
 	import { gsap } from 'gsap';
 
+	let splashActive = false;
+
 	function initSplashScreen() {
 		const splashEl = document.getElementById('splashScreen');
 		const counterEl = document.getElementById('splashCounter');
@@ -199,9 +201,16 @@
 
 		if (!forceSplash && sessionStorage.getItem('seraveem_splash_v6')) {
 			document.documentElement.classList.add('splash-dismissed');
+			document.body.style.overflow = '';
+			if ((window as any).lenis) {
+				(window as any).lenis.start();
+			}
 			splashEl.remove();
 			return;
 		}
+
+		if (splashActive && !forceSplash) return;
+		splashActive = true;
 
 		if ((window as any).lenis) {
 			(window as any).lenis.stop();

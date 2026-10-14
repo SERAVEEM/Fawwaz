@@ -200,16 +200,30 @@ import { r2 } from '../utils/assets';
 		}
 	}
 
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', initTelhaStatement);
-	} else {
-		initTelhaStatement();
+	function cleanupTelhaStatement() {
+		ScrollTrigger.getAll().forEach((st) => {
+			const triggerEl = st.trigger as HTMLElement | null;
+			if (triggerEl && triggerEl.closest('#studio')) {
+				st.kill();
+			}
+		});
 	}
 
-	// Recalculate ScrollTrigger markers after external hero images settle
-	window.addEventListener('load', () => {
-		ScrollTrigger.refresh();
-	});
+	function setupTelhaStatement() {
+		if (document.getElementById('studio')) {
+			cleanupTelhaStatement();
+			initTelhaStatement();
+		}
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupTelhaStatement);
+	} else {
+		setupTelhaStatement();
+	}
+
+	document.addEventListener('astro:page-load', setupTelhaStatement);
+	document.addEventListener('astro:before-swap', cleanupTelhaStatement);
 </script>
 
 <style>

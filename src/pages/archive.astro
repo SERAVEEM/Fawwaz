@@ -14,6 +14,7 @@ export interface ArchiveProject {
 	modalImage?: string;
 	video?: string;
 	type: 'project' | 'skill';
+	badge?: string;
 	description: string;
 	tags?: string[];
 	github?: string;
@@ -37,26 +38,29 @@ export const archiveProjects: ArchiveProject[] = [
 		image: r2('/assets/linear/linear-logo-dark.webp'),
 		video: r2('/assets/linear/linear-walkthrough-full.webm'),
 		type: 'project',
+		badge: "Client's Work",
 		aspectRatio: '16 / 10',
 		description:
 			'Digital architecture platform engineered in collaboration with Linear Studio (halolinear.com), digitalizing portfolio archives from multi-megabyte PDFs into a visual narrative web experience. Led a 3-person team implementing Static Site Generation (SSG) in Next.js & TypeScript, decoupled Cloudflare R2 edge media streaming for sub-second FCP, typology-based spatial navigation, and dynamic architectural drawing viewers. Achieved 99 Google Lighthouse Performance and 100 SEO.',
-		tags: ['Figma', 'Next.js SSG', 'TypeScript', 'Cloudflare R2', 'Lighthouse 99', 'Editorial Motion'],
+		tags: ["Client's Work", 'Figma', 'Next.js SSG', 'TypeScript', 'Cloudflare R2', 'Lighthouse 99', 'Editorial Motion'],
 		live: 'https://halolinear.com',
 	},
 	{
 		id: 'larasana',
 		title: 'LARASANA',
-		client: 'LARASANA / BINUS · CS FESTIVAL FINALIST',
+		client: 'BINUS · CS FESTIVAL FINALIST',
 		role: 'PM, UI/UX Lead, Product Engineer',
 		year: '2026',
 		index: '/002',
 		image: r2('/webp/larasana-pics.webp'),
 		video: r2('/webp/larasana-walkthrough.webm'),
 		type: 'project',
+		badge: 'Competition',
 		aspectRatio: '16 / 10',
 		description:
 			'Computer Science Festival Finalist. Direct-to-Customer (D2C) luxury fashion platform uplifting 15,000+ Sasak weavers in Lombok into the global luxury market while eliminating predatory middlemen. Engineered as a decoupled NestJS microservices monorepo communicating via native TCP transport (3–7ms internal latency, 170–225MB RAM). Implements physical-to-digital QR Story Passports, MySQL ACID transaction isolation guaranteeing 60% artisan royalties, a Strategy Pattern Dynamic Shipping Resolver (Biteship, RajaOngkir, EasyPost), real-time SSE payment streaming via Midtrans with 3s fallback polling, and 60 FPS editorial motion powered by React 19 and Lenis.',
 		tags: [
+			'Competition',
 			'🏆 Finalist CS Festival',
 			'React 19 & NestJS',
 			'TCP Microservices',
@@ -79,10 +83,11 @@ export const archiveProjects: ArchiveProject[] = [
 		image: r2('/webp/gpl-yuk-logo.svg'),
 		modalImage: r2('/webp/gpl-yuk-showcase.webp'),
 		type: 'project',
+		badge: "Client's Work",
 		aspectRatio: '4 / 3',
 		description:
 			'Pro bono digital ecosystem engineered for social and environmental NGO GPL Yuk! to centralize volunteer management, field documentation, and public donation workflows. Features a responsive React.js and TypeScript volunteer portal for event registration and attendance tracking, backed by a structured Laravel & MySQL backend. Integrates automated Midtrans payment processing (QRIS & Virtual Account) eliminating manual bank checks, and zero-egress Cloudflare R2 object storage archiving thousands of high-resolution field photos and videos.',
-		tags: ['Figma', 'React.js', 'Laravel & MySQL', 'Midtrans API', 'Cloudflare R2', 'Non-Profit Ecosystem'],
+		tags: ["Client's Work", 'Figma', 'React.js', 'Laravel & MySQL', 'Midtrans API', 'Cloudflare R2', 'Non-Profit Ecosystem'],
 		live: 'https://www.instagram.com/gplyuk.id/',
 		liveNote: 'Note: This project is currently in active development.',
 	},
@@ -241,6 +246,9 @@ export const archiveProjects: ArchiveProject[] = [
 									/>
 								)}
 								<div class="card-halo" aria-hidden="true" />
+								{project.badge && (
+									<span class="card-badge-tag">{project.badge}</span>
+								)}
 								{project.type === 'skill' && (
 									<span class="card-skill-tag">[SKILL]</span>
 								)}
@@ -663,14 +671,16 @@ export const archiveProjects: ArchiveProject[] = [
 		}
 	}
 
-	// Clean up triggers on Astro page transitions
-	document.addEventListener('astro:before-swap', () => {
+	function cleanupPage() {
 		if (mm) {
 			mm.revert();
 			mm = null;
 		}
 		ScrollTrigger.getAll().forEach((st) => st.kill());
-	});
+	}
+
+	// Clean up triggers on Astro page transitions
+	document.addEventListener('astro:before-swap', cleanupPage);
 
 	function initHoverVideoPreviews() {
 		const cards = document.querySelectorAll('.project-card');
@@ -688,6 +698,7 @@ export const archiveProjects: ArchiveProject[] = [
 	}
 
 	function setupPage() {
+		cleanupPage();
 		initPodiumScrollDrift();
 		initModalInteractions();
 		initHoverVideoPreviews();
@@ -703,9 +714,6 @@ export const archiveProjects: ArchiveProject[] = [
 	}
 
 	document.addEventListener('astro:page-load', setupPage);
-	window.addEventListener('resize', () => {
-		ScrollTrigger.refresh();
-	});
 </script>
 
 <style>
@@ -895,21 +903,25 @@ export const archiveProjects: ArchiveProject[] = [
 		opacity: 1;
 	}
 
-	/* Skill badge on card */
+	/* Badge & Skill tags on card (top-left of picture) */
+	.card-badge-tag,
 	.card-skill-tag {
 		position: absolute;
-		top: 10px;
-		left: 10px;
+		top: 12px;
+		left: 12px;
 		z-index: 20;
 		font-family: 'Inter', system-ui, -apple-system, sans-serif;
 		font-size: 0.72rem;
 		font-weight: 600;
 		letter-spacing: 0.04em;
-		background-color: rgba(0, 0, 0, 0.75);
+		background-color: rgba(9, 11, 17, 0.78);
 		color: #ffffff;
-		border: 1px solid rgba(255, 255, 255, 0.18);
-		padding: 3px 7px;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		padding: 4px 8px;
 		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+		border-radius: 2px;
+		pointer-events: none;
 	}
 
 	/* ==========================================================================

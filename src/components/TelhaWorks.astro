@@ -258,8 +258,22 @@ const projects: WorkItem[] = [
 	}
 
 	let worksTriggersMounted = false;
+
+	function cleanupTelhaWorks() {
+		if (worksTriggersMounted) {
+			ScrollTrigger.getAll().forEach((st) => {
+				const triggerEl = st.trigger as HTMLElement | null;
+				if (triggerEl && triggerEl.closest('.telha-works-section')) {
+					st.kill();
+				}
+			});
+			worksTriggersMounted = false;
+		}
+	}
+
 	function setupTelhaWorks() {
 		if (document.getElementById('works')) {
+			cleanupTelhaWorks();
 			initTelhaWorksAnimations();
 			worksTriggersMounted = true;
 		}
@@ -272,21 +286,7 @@ const projects: WorkItem[] = [
 	}
 
 	document.addEventListener('astro:page-load', setupTelhaWorks);
-	document.addEventListener('astro:before-swap', () => {
-		if (worksTriggersMounted) {
-			ScrollTrigger.getAll().forEach((st) => {
-				const triggerEl = st.trigger as HTMLElement | null;
-				if (triggerEl && triggerEl.closest('.telha-works-section')) {
-					st.kill();
-				}
-			});
-			worksTriggersMounted = false;
-		}
-	});
-
-	window.addEventListener('resize', () => {
-		ScrollTrigger.refresh();
-	});
+	document.addEventListener('astro:before-swap', cleanupTelhaWorks);
 </script>
 
 <style>

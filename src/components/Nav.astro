@@ -166,6 +166,9 @@ const cvUrl =
 
 	setupNav();
 	document.addEventListener("astro:page-load", setupNav);
+	document.addEventListener("astro:before-swap", () => {
+		document.body.style.overflow = "";
+	});
 </script>
 
 <style>

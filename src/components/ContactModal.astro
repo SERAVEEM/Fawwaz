@@ -236,6 +236,10 @@
 	}
 
 	document.addEventListener('astro:page-load', initContactModal);
+	document.addEventListener('astro:before-swap', () => {
+		document.body.style.overflow = '';
+		if ((window as any).lenis) (window as any).lenis.start();
+	});
 </script>
 
 <style>

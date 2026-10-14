@@ -79,31 +79,29 @@ const bgUrls = {
 
 			gsap.registerPlugin(ScrollTrigger);
 
+			// Prevent mobile URL address bar collapse/expand from causing ScrollTrigger jumps
+			ScrollTrigger.config({ ignoreMobileResize: true });
+
 			// Add “loaded” class once the document has completely loaded.
 			addEventListener('load', () => document.documentElement.classList.add('loaded'));
-
-			// Reset scroll position before new page view-transition snapshot begins
-			document.addEventListener('astro:after-swap', () => {
-				window.scrollTo(0, 0);
-				const l = (window as any).lenis;
-				if (l) l.scrollTo(0, { immediate: true });
-			});
 
 			document.addEventListener('astro:page-load', () => {
 				document.documentElement.classList.add('loaded');
 				const l = (window as any).lenis;
 				if (window.location.hash) {
 					const target = document.querySelector(window.location.hash);
-					if (target && l) {
-						setTimeout(() => l.scrollTo(target, { offset: -30, duration: 1.0 }), 80);
+					if (target) {
+						if (l) {
+							setTimeout(() => l.scrollTo(target, { offset: -30, duration: 1.0 }), 80);
+						} else {
+							setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 80);
+						}
 					}
-				} else if (l) {
-					l.scrollTo(0, { immediate: true });
 				}
 				ScrollTrigger.refresh();
 			});
 
-			// Smooth scroll in-page anchors with Lenis
+			// Smooth scroll in-page anchors with Lenis or native smooth scroll
 			document.addEventListener('click', (e) => {
 				const a = (e.target as HTMLElement)?.closest('a');
 				if (!a) return;
@@ -118,18 +116,26 @@ const bgUrls = {
 				const linkPath = path ? path.replace(/\/$/, '') || '/' : curPath;
 				if (linkPath === curPath && hash.length > 1) {
 					const target = document.querySelector(hash);
-					const l = (window as any).lenis;
-					if (target && l) {
+					if (target) {
 						e.preventDefault();
-						l.scrollTo(target, { offset: -30, duration: 1.2 });
+						const l = (window as any).lenis;
+						if (l) {
+							l.scrollTo(target, { offset: -30, duration: 1.2 });
+						} else {
+							target.scrollIntoView({ behavior: 'smooth' });
+						}
 						history.pushState(null, '', hash);
 					}
 				}
 			});
 
-			// ponytail: respectReducedMotion: false is required because OS has reduced motion active
+			// ponytail: Only initialize Lenis on desktop pointer devices; mobile phones use 100% native 120Hz compositor scrolling
+			const isMobileDevice =
+				window.matchMedia('(max-width: 768px)').matches ||
+				(window.matchMedia('(pointer: coarse)').matches && !window.matchMedia('(pointer: fine)').matches);
+
 			let lenis = (window as any).lenis;
-			if (!lenis) {
+			if (!lenis && !isMobileDevice) {
 				lenis = new Lenis({
 					lerp: 0.11,
 					wheelMultiplier: 1.0,
@@ -137,7 +143,7 @@ const bgUrls = {
 					respectReducedMotion: false,
 					orientation: 'vertical',
 					gestureOrientation: 'vertical',
-					touchMultiplier: 1.2,
+					syncTouch: false,
 					autoRaf: false,
 				});
 
