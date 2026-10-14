@@ -62,7 +62,7 @@ const projects: WorkItem[] = [
 		{
 			projects.map((project, index) => (
 				<article class="works-item" data-index={index}>
-					<a href={`${base}/archive?project=${project.slug}`} class="works-item-link" aria-label={`View ${project.title}`}>
+					<a href={`${base}/archive?project=${project.slug}`} class="works-item-link">
 						<!-- Massive Bracketed Title Row -->
 						<div class="works-title-row">
 							<!-- Left Edge Tick Mark -->
@@ -337,7 +337,7 @@ const projects: WorkItem[] = [
 
 	.header-num-mobile {
 		display: none;
-		color: #8e8e8e;
+		color: #595959;
 	}
 
 	.header-center {
@@ -347,7 +347,7 @@ const projects: WorkItem[] = [
 	}
 
 	.header-num-desktop {
-		color: #8e8e8e;
+		color: #595959;
 		font-weight: 400;
 	}
 

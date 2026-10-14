@@ -5,18 +5,24 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { r2, getPlaceholder } from '../utils/assets';
 ---
 
-<BaseLayout title="About | FAWWAZ" description="About Fawwaz - Product Engineer">
+<BaseLayout
+	title="About — FAWWAZ SIDIQ NURSETO (SERAVEEM) | Product Engineer"
+	description="Learn about Fawwaz Sidiq Nurseto (SERAVEEM) — Product Engineer specializing in distributed system, and editorial creative engineering."
+>
 	<div class="stack gap-20">
 		<main class="wrapper about">
 			<Hero
 				title="About"
-				tagline="Thanks for stopping by. Read below to learn more about myself and my background."
+				tagline="Product Engineer & Creative Developer based in Indonesia. Building modular distributed systems and spatial editorial experiences."
 			>
 				<img
 					width="1553"
 					height="873"
 					src={r2('/assets/at-work.webp')}
-					alt="Fawwaz at work"
+					alt="Fawwaz Sidiq Nurseto (SERAVEEM) — Product Engineer"
+					loading="eager"
+					decoding="async"
+					fetchpriority="high"
 					style={getPlaceholder('/assets/at-work.webp') ? `background-image: url("${getPlaceholder('/assets/at-work.webp')}"); background-size: cover;` : undefined}
 				/>
 			</Hero>
@@ -25,36 +31,24 @@ import { r2, getPlaceholder } from '../utils/assets';
 				<h2 class="section-title">Background</h2>
 				<div class="content">
 					<p>
-						Lorem ipsum dolor sit amet, <a href="https://astro.build/">Astro</a> makes people happy.
-						Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Proin nibh nisl
-						condimentum id venenatis a condimentum vitae. Dapibus ultrices in iaculis nunc. Arcu
-						odio ut sem nulla pharetra diam sit amet. Diam quis enim lobortis scelerisque fermentum
-						dui faucibus in ornare.
+						I am <strong>Fawwaz Sidiq Nurseto</strong> (also known online as <strong>SERAVEEM</strong>), a Product Engineer and Creative Developer focused on architectural clarity, resilient backend services, and high-performance frontend interfaces.
 					</p>
 					<p>
-						Arcu dui vivamus arcu felis bibendum ut tristique et egestas. Eget gravida cum sociis
-						natoque penatibus. Cras fermentum odio eu feugiat pretium nibh. Proin nibh nisl
-						condimentum id venenatis. Porta nibh venenatis cras sed felis eget velit. Id diam vel
-						quam elementum pulvinar etiam non.
-					</p>
-					<p>
-						Ultrices tincidunt arcu non sodales neque sodales ut. Sed enim ut sem viverra aliquet
-						eget sit amet. Lacus luctus accumsan tortor posuere ac ut consequat semper viverra.
-						Viverra accumsan in nisl nisi scelerisque eu ultrices. In massa tempor nec feugiat nisl
-						pretium fusce.
+						Currently engineering solutions for <strong>Perspective std.</strong>, with experience directing technical workshops and people operations as HRD Manager at <strong>BNCC</strong> (Bina Nusantara Computer Club). My engineering practice bridges decoupled microservices architectures (NestJS, Prisma, MySQL) with editorial-grade motion and static site generation (Astro, Next.js, GSAP, Lenis).
 					</p>
 				</div>
 			</section>
 			<section>
 				<h2 class="section-title">Education</h2>
 				<div class="content">
-					<p>Corporis voluptates tenetur laudantium.</p>
+					<p><strong>Bina Nusantara University (BINUS)</strong> — Computer Science / Software Engineering.</p>
 				</div>
 			</section>
 			<section>
-				<h2 class="section-title">Skills</h2>
+				<h2 class="section-title">Core Competencies</h2>
 				<div class="content">
-					<p>officia unde omnis</p>
+					<p><strong>Architecture &amp; Backend:</strong> NestJS Microservices, Node.js, Express v5, Prisma ORM, MySQL, Redis, Stateless JWT Auth, REST &amp; SSE Protocols, Cloudflare R2.</p>
+					<p><strong>Frontend &amp; Creative:</strong> TypeScript, Astro, Next.js SSG, React 19, Flutter Mobile, GSAP Motion, Lenis Smooth Scroll, Figma Design Systems.</p>
 				</div>
 			</section>
 		</main>

@@ -17,12 +17,16 @@ const placeholder = getPlaceholder(portraitImage);
 		<div class="portrait-card" style={placeholder ? `background-image: url("${placeholder}"); background-size: cover;` : undefined}>
 			<img
 				src={finalSrc}
-				alt="Fawwaz - Product Engineer"
+				alt="Fawwaz Sidiq Nurseto (SERAVEEM) — Product Engineer"
 				class="portrait-img"
 				loading="eager"
 				decoding="async"
+				fetchpriority="high"
 			/>
 		</div>
+
+		<!-- Semantic Heading for Search Engines & Screen Readers -->
+		<h1 class="sr-only">Fawwaz Sidiq Nurseto (SERAVEEM) — Product Engineer for Perspective std.</h1>
 
 		<!-- Tagline Block -->
 		<div class="tagline-block">

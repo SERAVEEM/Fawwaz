@@ -13,6 +13,8 @@ import { ClientRouter } from 'astro:transitions';
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	image?: string | undefined;
+	type?: string | undefined;
 	hideNav?: boolean;
 	hideFooter?: boolean;
 	navTheme?: 'light' | 'dark';
@@ -23,6 +25,8 @@ interface Props {
 const {
 	title,
 	description,
+	image,
+	type,
 	hideNav = false,
 	hideFooter = false,
 	navTheme = 'light',
@@ -56,8 +60,9 @@ const bgUrls = {
 
 <html lang="en">
 	<head>
+		<meta charset="utf-8" />
+		<MainHead title={title} description={description} image={image} type={type} />
 		<ClientRouter />
-		<MainHead title={title} description={description} />
 	</head>
 	<body>
 		<div class:list={['stack backgrounds', { 'has-nav-offset': !hideNav && !fullBleed }]}>

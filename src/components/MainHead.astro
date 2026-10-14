@@ -1,32 +1,142 @@
 ---
+// ponytail: Comprehensive SEO, OpenGraph, Twitter Cards, Schema.org Person Knowledge Graph, and performance-optimized font preloading
 import '../styles/global.css';
 
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	image?: string | undefined;
+	type?: string | undefined;
 }
 
+const defaultTitle = 'FAWWAZ SIDIQ NURSETO (SERAVEEM) — Product Engineer';
+const defaultDescription =
+	'Official portfolio and engineering archive of Fawwaz Sidiq Nurseto (SERAVEEM) — Product Engineer specializing in microservices, distributed architectures, and high-performance digital experiences.';
+
 const {
-	title = 'Jeanine White: Personal Site',
-	description = 'The personal site of Jeanine White',
+	title = defaultTitle,
+	description = defaultDescription,
+	image,
+	type = 'website',
 } = Astro.props;
+
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://seraveem.github.io';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pathname = Astro.url.pathname.replace(/^\//, '');
+const canonicalURL = new URL(`${base}/${pathname}`.replace(/\/+/g, '/'), siteUrl).toString();
+
+const resolvedImage = image || `${base}/assets/og-preview.svg`;
+const ogImageURL = resolvedImage.startsWith('http')
+	? resolvedImage
+	: new URL(resolvedImage.replace(/\/+/g, '/'), siteUrl).toString();
+
+// Schema.org structured data (Person & WebSite Entity Graph)
+const schemaData = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'Person',
+			'@id': `${siteUrl}${base}/#person`,
+			name: 'Fawwaz Sidiq Nurseto',
+			givenName: 'Fawwaz',
+			additionalName: 'Sidiq',
+			familyName: 'Nurseto',
+			alternateName: [
+				'Fawwaz',
+				'Fawwaz Sidi',
+				'Fawwaz Nurseto',
+				'SERAVEEM',
+				'Seraveeem',
+				'Seravem',
+			],
+			jobTitle: 'Product Engineer',
+			description:
+				'Product Engineer & Creative Developer specializing in decoupled microservices, fullstack architectures, and high-performance motion design.',
+			url: `${siteUrl}${base}/`,
+			image: `${siteUrl}${base}/webp/fawwaz-bncc-portrait.webp`,
+			sameAs: [
+				'https://github.com/SERAVEEM',
+				'https://www.linkedin.com/in/fawwaz-sidiq-nurseto-b683ab438/',
+				'https://www.instagram.com/lunatic9015/',
+			],
+			email: 'mailto:fawwazsidiqnurseto@gmail.com',
+			telephone: '+6282133948400',
+			knowsAbout: [
+				'NestJS',
+				'Microservices Architecture',
+				'Astro',
+				'TypeScript',
+				'React',
+				'Prisma ORM',
+				'MySQL',
+				'System Architecture',
+			],
+		},
+		{
+			'@type': 'WebSite',
+			'@id': `${siteUrl}${base}/#website`,
+			url: `${siteUrl}${base}/`,
+			name: 'FAWWAZ SIDIQ NURSETO (SERAVEEM) — Portfolio',
+			description: defaultDescription,
+			publisher: {
+				'@id': `${siteUrl}${base}/#person`,
+			},
+		},
+	],
+};
 ---
 
+<!-- Core Meta -->
 <meta charset="utf-8" />
-<meta name="description" property="og:description" content={description} />
-<meta name="viewport" content="width=device-width" />
-<meta name="generator" content={Astro.generator} />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content="Fawwaz Sidiq Nurseto" />
+<meta
+	name="keywords"
+	content="Fawwaz, Fawwaz Sidi, Fawwaz Sidiq Nurseto, SERAVEEM, Seraveeem, Seravem, Product Engineer, Fullstack Engineer, Microservices, Perspective std, BINUS, Portfolio"
+/>
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="google-site-verification" content="googlef77ef86df9a45ee8" />
+<meta name="generator" content={Astro.generator} />
 
-<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.svg?v=2`} />
-<link rel="icon" href={`${import.meta.env.BASE_URL.replace(/\/$/, '')}/favicon.ico?v=2`} />
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- OpenGraph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content="Fawwaz Sidiq Nurseto (SERAVEEM)" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={ogImageURL} />
+<meta property="og:image:alt" content="Fawwaz Sidiq Nurseto (SERAVEEM) — Product Engineer" />
+<meta property="og:locale" content="en_US" />
+
+<!-- Twitter / X Cards -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImageURL} />
+<meta name="twitter:creator" content="@SERAVEEM" />
+
+<!-- Icons -->
+<link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg?v=2`} />
+<link rel="icon" href={`${base}/favicon.ico?v=2`} />
+
+<!-- Preconnect & Performance Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
 	href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;600;700;900&family=Public+Sans:ital,wght@0,400;0,700;1,400&family=Rubik:wght@500;600&display=swap"
 	rel="stylesheet"
 />
+
+<!-- Google Knowledge Graph Schema (JSON-LD) -->
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+
+<!-- Theme Init -->
 <script is:inline>
-	// Strict light theme per Figma design specification
+	// Strict light theme per design specification
 	document.documentElement.classList.remove('theme-dark');
 </script>

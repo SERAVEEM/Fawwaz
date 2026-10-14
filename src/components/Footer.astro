@@ -244,7 +244,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	.newsletter-submit {
 		background: none;
 		border: none;
-		padding: 0 0 0 0.5rem;
+		padding: 0.25rem 0.5rem;
+		min-width: 32px;
+		min-height: 32px;
 		cursor: pointer;
 		color: #000000;
 		display: flex;
@@ -302,11 +304,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	.back-to-top-btn {
 		background: none;
 		border: none;
-		padding: 0;
+		padding: 0.25rem 0;
+		min-height: 28px;
 		font-family: inherit;
 		font-size: 1rem;
 		font-weight: 600;
-		color: #8c8c8c;
+		color: #595959;
 		cursor: pointer;
 		transition: color 0.2s ease;
 	}

@@ -103,12 +103,37 @@ export const archiveProjects: ArchiveProject[] = [
 		live: 'https://drive.google.com/drive/folders/1qxWcadfINbDECvF6k4x7PYR4j0v8CHMw?usp=sharing',
 	},
 	{
+		id: 'jomoro-coffee',
+		title: 'MICROSERVICE SYSTEM JOMORO COFFE',
+		client: 'JOMORO COFFEE / BINUS',
+		role: 'Backend Engineer & System Architect',
+		year: '2026',
+		index: '/005',
+		image: r2('/assets/jomoro-coffee-architecture.svg'),
+		modalImage: r2('/assets/jomoro-coffee-architecture.svg'),
+		type: 'project',
+		aspectRatio: '16 / 10',
+		modalAspectRatio: '16 / 10',
+		description:
+			'Modern, modular backend microservices system engineered for Jomoro Koffee V2, built with NestJS (v11), Prisma ORM, and MySQL to reliably process high-volume online coffee orders, catalog inventory, multi-role authorization (Admin/Customer), and automated checkout.\n\nDecomposed Architecture:\n• Auth Service (Port :3001) – User registration, profile management, and stateless Passport JWT authentication.\n• Product Service (Port :3002) – Catalog browsing, category filtering, admin product CRUD, and atomic stock decrement.\n• Transaction Service (Port :3003) – Real-time customer cart sessions, order placement, price locking, and checkout.\n\nTechnical Constraints & Highlights:\n• Shared JWT secret key across services guaranteeing stateless cross-service signature validation.\n• Isolated database design with dedicated MySQL schemas (jomoro_auth, jomoro_product, jomoro_transaction) mapped via Prisma ORM.\n• Strict No-Regex validation requirement: All backend request payloads (names, email domains, password strength, product fields) are validated programmatically through string iterators and character code checks to eliminate ReDoS vulnerabilities.\n• Interactive Swagger API documentation exposed independently on each microservice.',
+		tags: [
+			'NestJS (v11)',
+			'Microservices',
+			'Prisma ORM',
+			'MySQL Isolated DBs',
+			'Stateless Passport JWT',
+			'No-Regex Validation',
+			'Swagger API',
+		],
+		github: 'https://github.com/SERAVEEM/COSC6093001---Jomoro-Coffe-BE-system-',
+	},
+	{
 		id: 'bsc-1',
 		title: 'BSC 1.0',
 		client: 'BNCC',
 		role: 'HRD Program Director & Workshop Lead',
 		year: '2026',
-		index: '/005',
+		index: '/006',
 		image: r2('/webp/bncc-skill-class-1.png'),
 		type: 'project',
 		aspectRatio: '16 / 10',
@@ -122,7 +147,7 @@ export const archiveProjects: ArchiveProject[] = [
 		client: 'BNCC',
 		role: 'HRD Program Director & Workshop Lead',
 		year: '2026',
-		index: '/006',
+		index: '/007',
 		image: r2('/webp/bncc-skill-class-2.png'),
 		type: 'project',
 		aspectRatio: '16 / 10',
@@ -136,7 +161,7 @@ export const archiveProjects: ArchiveProject[] = [
 		client: 'BNCC',
 		role: 'Human Resources Development Manager',
 		year: '2025',
-		index: '/007',
+		index: '/008',
 		image: r2('/webp/fawwaz-bncc-portrait.webp'),
 		modalImage: r2('/webp/bncc-synergy-camp.jpg'),
 		objectPosition: 'center 20%',
@@ -152,7 +177,7 @@ export const archiveProjects: ArchiveProject[] = [
 		client: 'GRAMEDIA',
 		role: 'Partnership Liaison',
 		year: '2025',
-		index: '/008',
+		index: '/009',
 		image: r2('/webp/gramedia-pesta-literasi.webp'),
 		modalImage: r2('/webp/gramedia-pesta-literasi.webp'),
 		type: 'project',
@@ -165,13 +190,16 @@ export const archiveProjects: ArchiveProject[] = [
 ---
 
 <BaseLayout
-	title="Archive — FAWWAZ | Product Engineer & Creative Developer"
-	description="Curated archive of engineering architectures, spatial design systems, and digital productions."
+	title="Archive — FAWWAZ SIDIQ NURSETO (SERAVEEM) | Product Engineer"
+	description="Curated engineering archive of microservices architectures, distributed systems, spatial design, and digital platforms by Fawwaz Sidiq Nurseto (SERAVEEM)."
 	fullBleed={true}
 	navTheme="dark"
 	hideFooter={false}
 >
 	<main class="podium-archive-main" id="archiveContainer">
+		<!-- Semantic Heading for Search Engines & Accessibility -->
+		<h1 class="sr-only">Engineering Architecture &amp; Digital Production Archive — Fawwaz Sidiq Nurseto (SERAVEEM)</h1>
+
 		<!-- Podium 1:1 Staggered Column Drift Grid -->
 		<section class="podium-grid" id="podiumGrid" aria-label="Project Archive">
 			{
@@ -1156,6 +1184,7 @@ export const archiveProjects: ArchiveProject[] = [
 		color: rgba(255, 255, 255, 0.88);
 		margin: 0;
 		letter-spacing: -0.01em;
+		white-space: pre-line;
 	}
 
 	/* Highlights / Tags */
