@@ -92,42 +92,61 @@ const bgUrls = {
 					const target = document.querySelector(window.location.hash);
 					if (target) {
 						if (l) {
-							setTimeout(() => l.scrollTo(target, { offset: -30, duration: 1.0 }), 80);
+							setTimeout(() => {
+								l.scrollTo(target, { offset: -30, duration: 1.0, onComplete: () => ScrollTrigger.refresh() });
+							}, 120);
 						} else {
-							setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 80);
+							setTimeout(() => {
+								target.scrollIntoView({ behavior: 'smooth' });
+								ScrollTrigger.refresh();
+							}, 120);
 						}
 					}
 				}
 				ScrollTrigger.refresh();
 			});
 
-			// Smooth scroll in-page anchors with Lenis or native smooth scroll
-			document.addEventListener('click', (e) => {
-				const a = (e.target as HTMLElement)?.closest('a');
-				if (!a) return;
-				const href = a.getAttribute('href');
-				if (!href) return;
-				const hashIdx = href.indexOf('#');
-				if (hashIdx === -1) return;
-				const hash = href.slice(hashIdx);
-				if (hash === '#contact') return; // Handled by ContactModal
-				const path = href.slice(0, hashIdx);
-				const curPath = window.location.pathname.replace(/\/$/, '') || '/';
-				const linkPath = path ? path.replace(/\/$/, '') || '/' : curPath;
-				if (linkPath === curPath && hash.length > 1) {
-					const target = document.querySelector(hash);
-					if (target) {
-						e.preventDefault();
-						const l = (window as any).lenis;
-						if (l) {
-							l.scrollTo(target, { offset: -30, duration: 1.2 });
-						} else {
-							target.scrollIntoView({ behavior: 'smooth' });
+			// Smooth scroll in-page anchors with Lenis or native smooth scroll (capture phase to preempt client routers)
+			document.addEventListener(
+				'click',
+				(e) => {
+					const a = (e.target as HTMLElement)?.closest('a');
+					if (!a) return;
+					const href = a.getAttribute('href');
+					if (!href) return;
+					const hashIdx = href.indexOf('#');
+					if (hashIdx === -1) return;
+					const hash = href.slice(hashIdx);
+					if (hash === '#contact') return; // Handled by ContactModal
+
+					const path = href.slice(0, hashIdx);
+					const normPath = (p: string) => (p || '').replace(/\/$/, '') || '/';
+					const curPath = normPath(window.location.pathname);
+					const linkPath = path ? normPath(path) : curPath;
+
+					if (linkPath === curPath && hash.length > 1) {
+						const target = document.querySelector(hash);
+						if (target) {
+							e.preventDefault();
+							e.stopPropagation();
+							e.stopImmediatePropagation();
+
+							const l = (window as any).lenis;
+							if (l) {
+								l.scrollTo(target, {
+									offset: -30,
+									duration: 1.2,
+									onComplete: () => ScrollTrigger.refresh(),
+								});
+							} else {
+								target.scrollIntoView({ behavior: 'smooth' });
+							}
+							history.pushState(null, '', hash);
 						}
-						history.pushState(null, '', hash);
 					}
-				}
-			});
+				},
+				{ capture: true }
+			);
 
 			// ponytail: Only initialize Lenis on desktop pointer devices; mobile phones use 100% native 120Hz compositor scrolling
 			const isMobileDevice =
