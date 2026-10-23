@@ -1,9 +1,13 @@
 ---
-import { r2 } from '../utils/assets';
+import { r2 } from "../utils/assets";
 // ponytail: 1:1 exact reproduction of Telha Clarke Studio section sticky parallax & picture reveal
 ---
 
-<section class="telha-statement-section" id="studio" aria-label="About Fawwaz & Perspective Studio">
+<section
+	class="telha-statement-section"
+	id="studio"
+	aria-label="About Fawwaz & Perspective Studio"
+>
 	<!-- Top Architectural Corner Crosshairs (Matching Telha Clarke .about corner marks) -->
 	<div class="corner-cross left-top" aria-hidden="true">
 		<div class="tick-h"></div>
@@ -22,7 +26,7 @@ import { r2 } from '../utils/assets';
 					<div class="picture-reveal-mask js-picture-mask">
 						<div class="picture-inner-media js-picture-inner">
 							<img
-								src={r2('/webp/fawwaz-bncc-portrait.webp')}
+								src={r2("/webp/fawwaz-bncc-portrait.webp")}
 								alt="Fawwaz — Product Engineer & HRD Manager"
 								class="studio-image js-studio-image"
 								loading="eager"
@@ -38,8 +42,9 @@ import { r2 } from '../utils/assets';
 		<div class="meta-col">
 			<div class="acknowledgment-wrapper scroll-fade-in">
 				<p class="acknowledgment-text">
-					Translating business goals and complex user journeys into high-conversion digital products,
-					balancing user empathy, market feasibility, and scalable execution.
+					Translating business goals and complex user journeys into
+					high-conversion digital products, balancing user empathy,
+					market feasibility, and scalable execution.
 				</p>
 			</div>
 		</div>
@@ -49,10 +54,24 @@ import { r2 } from '../utils/assets';
 			<div class="c-title">
 				<span class="offset-spacer" aria-hidden="true"></span>
 				<h2 class="offset-title">
-					<span class="line-w"><span class="line">Fawwaz is a Founder & Product</span></span>
-					<span class="line-w"><span class="line">Engineer at Perspective Studio, bridging UI/UX</span></span>
-					<span class="line-w"><span class="line">craft with high-performance web engineering</span></span>
-					<span class="line-w"><span class="line">and modular architectures.</span></span>
+					<span class="line-w"
+						><span class="line">Fawwaz is a Founder & Product</span
+						></span
+					>
+					<span class="line-w"
+						><span class="line"
+							>Engineer at Perspective Studio, bridging UI/UX</span
+						></span
+					>
+					<span class="line-w"
+						><span class="line"
+							>craft with high-performance web engineering</span
+						></span
+					>
+					<span class="line-w"
+						><span class="line">and modular architectures.</span
+						></span
+					>
 				</h2>
 			</div>
 		</div>
@@ -60,40 +79,40 @@ import { r2 } from '../utils/assets';
 </section>
 
 <script>
-	import { gsap } from 'gsap';
-	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 	gsap.registerPlugin(ScrollTrigger);
 
 	function initTelhaStatement() {
-		const section = document.getElementById('studio');
+		const section = document.getElementById("studio");
 		if (!section) return;
 
-		const pictureMask = section.querySelector('.js-picture-mask');
-		const pictureInner = section.querySelector('.js-picture-inner');
-		const studioImage = section.querySelector('.js-studio-image');
-		const lines = section.querySelectorAll('.offset-title .line');
-		const fadeElements = section.querySelectorAll('.scroll-fade-in');
+		const pictureMask = section.querySelector(".js-picture-mask");
+		const pictureInner = section.querySelector(".js-picture-inner");
+		const studioImage = section.querySelector(".js-studio-image");
+		const lines = section.querySelectorAll(".offset-title .line");
+		const fadeElements = section.querySelectorAll(".scroll-fade-in");
 
 		// 1. Picture Entrance Curtain Reveal & Scale Settle (Telha Clarke signature reveal)
 		if (pictureMask && pictureInner) {
 			gsap.fromTo(
 				pictureMask,
 				{
-					clipPath: 'inset(100% 0% 0% 0%)',
+					clipPath: "inset(100% 0% 0% 0%)",
 					autoAlpha: 0,
 				},
 				{
-					clipPath: 'inset(0% 0% 0% 0%)',
+					clipPath: "inset(0% 0% 0% 0%)",
 					autoAlpha: 1,
 					duration: 1.25,
-					ease: 'power3.inOut',
+					ease: "power3.inOut",
 					scrollTrigger: {
 						trigger: section,
-						start: 'top 85%',
-						toggleActions: 'play none none none',
+						start: "top 85%",
+						toggleActions: "play none none none",
 					},
-				}
+				},
 			);
 
 			if (studioImage) {
@@ -105,13 +124,13 @@ import { r2 } from '../utils/assets';
 					{
 						scale: 1,
 						duration: 1.5,
-						ease: 'power2.out',
+						ease: "power2.out",
 						scrollTrigger: {
 							trigger: section,
-							start: 'top 85%',
-							toggleActions: 'play none none none',
+							start: "top 85%",
+							toggleActions: "play none none none",
 						},
-					}
+					},
 				);
 			}
 
@@ -123,21 +142,21 @@ import { r2 } from '../utils/assets';
 				},
 				{
 					yPercent: 4,
-					ease: 'none',
+					ease: "none",
 					scrollTrigger: {
-						trigger: '.image-col',
-						start: 'top bottom',
-						end: 'bottom top',
+						trigger: ".image-col",
+						start: "top bottom",
+						end: "bottom top",
 						scrub: true,
 					},
-				}
+				},
 			);
 		}
 
 		// 3. Statement headline reveal (staggered lines on desktop, smooth fade-up on mobile)
 		const isMobile = window.innerWidth <= 768;
 		if (isMobile) {
-			const titleEl = section.querySelector('.offset-title');
+			const titleEl = section.querySelector(".offset-title");
 			if (titleEl) {
 				gsap.fromTo(
 					titleEl,
@@ -146,34 +165,34 @@ import { r2 } from '../utils/assets';
 						y: 0,
 						opacity: 1,
 						duration: 0.9,
-						ease: 'power2.out',
+						ease: "power2.out",
 						scrollTrigger: {
-							trigger: '.statement-col',
-							start: 'top 85%',
-							toggleActions: 'play none none none',
+							trigger: ".statement-col",
+							start: "top 85%",
+							toggleActions: "play none none none",
 						},
-					}
+					},
 				);
 			}
 		} else if (lines.length > 0) {
 			gsap.fromTo(
 				lines,
 				{
-					y: '105%',
+					y: "105%",
 					opacity: 0,
 				},
 				{
-					y: '0%',
+					y: "0%",
 					opacity: 1,
 					duration: 1.1,
-					ease: 'power3.out',
+					ease: "power3.out",
 					stagger: 0.1,
 					scrollTrigger: {
-						trigger: '.statement-col',
-						start: 'top 82%',
-						toggleActions: 'play none none none',
+						trigger: ".statement-col",
+						start: "top 82%",
+						toggleActions: "play none none none",
 					},
-				}
+				},
 			);
 		}
 
@@ -189,41 +208,38 @@ import { r2 } from '../utils/assets';
 					y: 0,
 					opacity: 1,
 					duration: 0.85,
-					ease: 'power2.out',
+					ease: "power2.out",
 					scrollTrigger: {
 						trigger: section,
-						start: 'top 85%',
-						toggleActions: 'play none none none',
+						start: "top 85%",
+						toggleActions: "play none none none",
 					},
-				}
+				},
 			);
 		}
 	}
 
-	function cleanupTelhaStatement() {
-		ScrollTrigger.getAll().forEach((st) => {
-			const triggerEl = st.trigger as HTMLElement | null;
-			if (triggerEl && triggerEl.closest('#studio')) {
-				st.kill();
-			}
-		});
-	}
+	let statementCtx: gsap.Context | null = null;
 
-	function setupTelhaStatement() {
-		if (document.getElementById('studio')) {
-			cleanupTelhaStatement();
-			initTelhaStatement();
+	function cleanupTelhaStatement() {
+		if (statementCtx) {
+			statementCtx.revert();
+			statementCtx = null;
 		}
 	}
 
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', setupTelhaStatement);
-	} else {
-		setupTelhaStatement();
+	function setupTelhaStatement() {
+		const section = document.getElementById("studio");
+		if (!section) return;
+		cleanupTelhaStatement();
+
+		statementCtx = gsap.context(() => {
+			initTelhaStatement();
+		}, section);
 	}
 
-	document.addEventListener('astro:page-load', setupTelhaStatement);
-	document.addEventListener('astro:before-swap', cleanupTelhaStatement);
+	document.addEventListener("astro:page-load", setupTelhaStatement);
+	document.addEventListener("astro:before-swap", cleanupTelhaStatement);
 </script>
 
 <style>
@@ -236,7 +252,8 @@ import { r2 } from '../utils/assets';
 		background-color: #ffffff;
 		color: #000000;
 		box-sizing: border-box;
-		padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.5rem, 2.5vw, 3rem) clamp(6rem, 12vw, 12rem);
+		padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.5rem, 2.5vw, 3rem)
+			clamp(6rem, 12vw, 12rem);
 		overflow: visible;
 	}
 
@@ -386,7 +403,11 @@ import { r2 } from '../utils/assets';
 	}
 
 	.acknowledgment-text {
-		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-family:
+			"Inter",
+			system-ui,
+			-apple-system,
+			sans-serif;
 		font-size: clamp(0.95rem, 1.1vw, 1.35rem);
 		font-weight: 400;
 		line-height: 1.18;
@@ -440,7 +461,11 @@ import { r2 } from '../utils/assets';
 	.offset-title {
 		display: inline;
 		width: 100%;
-		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-family:
+			"Inter",
+			system-ui,
+			-apple-system,
+			sans-serif;
 		font-weight: 600;
 		font-size: clamp(2.25rem, 4.6vw, 5.4rem);
 		line-height: 1.08;
@@ -479,7 +504,8 @@ import { r2 } from '../utils/assets';
 	/* Responsive Tablet & Mobile Adjustments */
 	@media (max-width: 768px) {
 		.telha-statement-section {
-			padding: clamp(4.5rem, 8vw, 6rem) clamp(1rem, 4vw, 1.5rem) clamp(4rem, 8vw, 6rem);
+			padding: clamp(4.5rem, 8vw, 6rem) clamp(1rem, 4vw, 1.5rem)
+				clamp(4rem, 8vw, 6rem);
 		}
 
 		.telha-grid {
@@ -550,4 +576,3 @@ import { r2 } from '../utils/assets';
 		}
 	}
 </style>
-

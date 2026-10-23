@@ -2,13 +2,13 @@
 // Learn about using Astro layouts:
 // https://docs.astro.build/en/basics/layouts/
 
-import 'lenis/dist/lenis.css';
-import Footer from '../components/Footer.astro';
+import "lenis/dist/lenis.css";
+import Footer from "../components/Footer.astro";
 // Component Imports
-import MainHead from '../components/MainHead.astro';
-import Nav from '../components/Nav.astro';
-import ContactModal from '../components/ContactModal.astro';
-import { ClientRouter } from 'astro:transitions';
+import MainHead from "../components/MainHead.astro";
+import Nav from "../components/Nav.astro";
+import ContactModal from "../components/ContactModal.astro";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
 	title?: string | undefined;
@@ -17,7 +17,7 @@ interface Props {
 	type?: string | undefined;
 	hideNav?: boolean;
 	hideFooter?: boolean;
-	navTheme?: 'light' | 'dark';
+	navTheme?: "light" | "dark";
 	fullBleed?: boolean;
 	showNavLogo?: boolean;
 }
@@ -29,43 +29,53 @@ const {
 	type,
 	hideNav = false,
 	hideFooter = false,
-	navTheme = 'light',
+	navTheme = "light",
 	fullBleed = false,
 	showNavLogo = true,
 } = Astro.props;
 
-import { r2 } from '../utils/assets';
+import { r2 } from "../utils/assets";
 
 const bgUrls = {
-	mainLight800: `url('${r2('/assets/backgrounds/bg-main-light-800w.webp')}')`,
-	mainCurvesLight: `url('${r2('/assets/backgrounds/bg-main-light.svg')}')`,
-	mainDark800: `url('${r2('/assets/backgrounds/bg-main-dark-800w.webp')}')`,
-	mainCurvesDark: `url('${r2('/assets/backgrounds/bg-main-dark.svg')}')`,
-	mainLight1440: `url('${r2('/assets/backgrounds/bg-main-light-1440w.webp')}')`,
-	mainDark1440: `url('${r2('/assets/backgrounds/bg-main-dark-1440w.webp')}')`,
-	subtle1Light800: `url('${r2('/assets/backgrounds/bg-subtle-1-light-800w.webp')}')`,
-	subtle2Light800: `url('${r2('/assets/backgrounds/bg-subtle-2-light-800w.webp')}')`,
-	footerLight800: `url('${r2('/assets/backgrounds/bg-footer-light-800w.webp')}')`,
-	subtle1Dark800: `url('${r2('/assets/backgrounds/bg-subtle-1-dark-800w.webp')}')`,
-	subtle2Dark800: `url('${r2('/assets/backgrounds/bg-subtle-2-dark-800w.webp')}')`,
-	footerDark800: `url('${r2('/assets/backgrounds/bg-footer-dark-800w.webp')}')`,
-	subtle1Light1440: `url('${r2('/assets/backgrounds/bg-subtle-1-light-1440w.webp')}')`,
-	subtle2Light1440: `url('${r2('/assets/backgrounds/bg-subtle-2-light-1440w.webp')}')`,
-	footerLight1440: `url('${r2('/assets/backgrounds/bg-footer-light-1440w.webp')}')`,
-	subtle1Dark1440: `url('${r2('/assets/backgrounds/bg-subtle-1-dark-1440w.webp')}')`,
-	subtle2Dark1440: `url('${r2('/assets/backgrounds/bg-subtle-2-dark-1440w.webp')}')`,
-	footerDark1440: `url('${r2('/assets/backgrounds/bg-footer-dark-1440w.webp')}')`,
+	mainLight800: `url('${r2("/assets/backgrounds/bg-main-light-800w.webp")}')`,
+	mainCurvesLight: `url('${r2("/assets/backgrounds/bg-main-light.svg")}')`,
+	mainDark800: `url('${r2("/assets/backgrounds/bg-main-dark-800w.webp")}')`,
+	mainCurvesDark: `url('${r2("/assets/backgrounds/bg-main-dark.svg")}')`,
+	mainLight1440: `url('${r2("/assets/backgrounds/bg-main-light-1440w.webp")}')`,
+	mainDark1440: `url('${r2("/assets/backgrounds/bg-main-dark-1440w.webp")}')`,
+	subtle1Light800: `url('${r2("/assets/backgrounds/bg-subtle-1-light-800w.webp")}')`,
+	subtle2Light800: `url('${r2("/assets/backgrounds/bg-subtle-2-light-800w.webp")}')`,
+	footerLight800: `url('${r2("/assets/backgrounds/bg-footer-light-800w.webp")}')`,
+	subtle1Dark800: `url('${r2("/assets/backgrounds/bg-subtle-1-dark-800w.webp")}')`,
+	subtle2Dark800: `url('${r2("/assets/backgrounds/bg-subtle-2-dark-800w.webp")}')`,
+	footerDark800: `url('${r2("/assets/backgrounds/bg-footer-dark-800w.webp")}')`,
+	subtle1Light1440: `url('${r2("/assets/backgrounds/bg-subtle-1-light-1440w.webp")}')`,
+	subtle2Light1440: `url('${r2("/assets/backgrounds/bg-subtle-2-light-1440w.webp")}')`,
+	footerLight1440: `url('${r2("/assets/backgrounds/bg-footer-light-1440w.webp")}')`,
+	subtle1Dark1440: `url('${r2("/assets/backgrounds/bg-subtle-1-dark-1440w.webp")}')`,
+	subtle2Dark1440: `url('${r2("/assets/backgrounds/bg-subtle-2-dark-1440w.webp")}')`,
+	footerDark1440: `url('${r2("/assets/backgrounds/bg-footer-dark-1440w.webp")}')`,
 };
 ---
 
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<MainHead title={title} description={description} image={image} type={type} />
+		<MainHead
+			title={title}
+			description={description}
+			image={image}
+			type={type}
+		/>
 		<ClientRouter />
 	</head>
 	<body>
-		<div class:list={['stack backgrounds', { 'has-nav-offset': !hideNav && !fullBleed }]}>
+		<div
+			class:list={[
+				"stack backgrounds",
+				{ "has-nav-offset": !hideNav && !fullBleed },
+			]}
+		>
 			{!hideNav && <Nav theme={navTheme} showLogo={showNavLogo} />}
 			<slot />
 			{!hideFooter && <Footer />}
@@ -73,9 +83,9 @@ const bgUrls = {
 		<ContactModal />
 
 		<script>
-			import Lenis from 'lenis';
-			import { gsap } from 'gsap';
-			import { ScrollTrigger } from 'gsap/ScrollTrigger';
+			import Lenis from "lenis";
+			import { gsap } from "gsap";
+			import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 			gsap.registerPlugin(ScrollTrigger);
 
@@ -83,101 +93,234 @@ const bgUrls = {
 			ScrollTrigger.config({ ignoreMobileResize: true });
 
 			// Add “loaded” class once the document has completely loaded.
-			addEventListener('load', () => document.documentElement.classList.add('loaded'));
+			addEventListener("load", () =>
+				document.documentElement.classList.add("loaded"),
+			);
 
-			document.addEventListener('astro:page-load', () => {
-				document.documentElement.classList.add('loaded');
+			// ponytail: scroll-lock helper preventing input interruptions while auto-scrolling to hash targets
+			let isScrollLocked = false;
+			const lockScroll = () => {
+				isScrollLocked = true;
+			};
+			const unlockScroll = () => {
+				isScrollLocked = false;
+			};
+
+			window.addEventListener(
+				"wheel",
+				(e) => {
+					if (isScrollLocked) e.preventDefault();
+				},
+				{ passive: false },
+			);
+
+			window.addEventListener(
+				"touchmove",
+				(e) => {
+					if (isScrollLocked) e.preventDefault();
+				},
+				{ passive: false },
+			);
+
+			window.addEventListener(
+				"keydown",
+				(e) => {
+					if (
+						isScrollLocked &&
+						[
+							"ArrowDown",
+							"ArrowUp",
+							"Space",
+							"PageDown",
+							"PageUp",
+							"Home",
+							"End",
+						].includes(e.code)
+					) {
+						e.preventDefault();
+					}
+				},
+				{ passive: false },
+			);
+
+			// ponytail: desktop fine-pointer check; mobile devices use native 120Hz compositor scrolling
+			const isMobileDevice = () =>
+				window.matchMedia("(max-width: 768px)").matches ||
+				(window.matchMedia("(pointer: coarse)").matches &&
+					!window.matchMedia("(pointer: fine)").matches);
+
+			let lenisTicker: ((time: number) => void) | null = null;
+
+			function destroyLenis() {
+				unlockScroll();
 				const l = (window as any).lenis;
-				if (window.location.hash) {
-					const target = document.querySelector(window.location.hash);
+				if (l) {
+					if (lenisTicker) {
+						gsap.ticker.remove(lenisTicker);
+						lenisTicker = null;
+					}
+					l.destroy();
+					(window as any).lenis = null;
+				}
+			}
+
+			function initLenis() {
+				destroyLenis();
+				if (isMobileDevice()) return null;
+
+				const l = new Lenis({
+					lerp: 0.11,
+					wheelMultiplier: 1.0,
+					smoothWheel: true,
+					respectReducedMotion: false,
+					orientation: "vertical",
+					gestureOrientation: "vertical",
+					syncTouch: false,
+					autoRaf: false,
+				});
+
+				(window as any).lenis = l;
+
+				// Synchronize Lenis scroll events with GSAP ScrollTrigger
+				l.on("scroll", ScrollTrigger.update);
+
+				// Synchronize RAF loop via GSAP ticker for fluid frames
+				lenisTicker = (time: number) => {
+					l.raf(time * 1000);
+				};
+				gsap.ticker.add(lenisTicker);
+				gsap.ticker.lagSmoothing(500, 33);
+
+				return l;
+			}
+
+			function scrollToElement(
+				target: HTMLElement,
+				options: { duration?: number; updateHash?: string } = {},
+			) {
+				const duration = options.duration ?? 1.4;
+				const l = (window as any).lenis;
+				lockScroll();
+				let completed = false;
+				const finish = () => {
+					if (completed) return;
+					completed = true;
+					unlockScroll();
+					ScrollTrigger.refresh();
+					if (options.updateHash) {
+						history.replaceState(null, "", options.updateHash);
+					}
+				};
+
+				if (l) {
+					l.resize();
+					l.scrollTo(target, {
+						offset: -30,
+						duration,
+						lock: true,
+						onComplete: finish,
+					});
+					setTimeout(finish, (duration + 0.6) * 1000);
+				} else {
+					target.scrollIntoView({ behavior: "smooth" });
+					setTimeout(finish, duration * 1000);
+				}
+			}
+
+			document.addEventListener("astro:page-load", () => {
+				document.documentElement.classList.add("loaded");
+				const l = initLenis();
+
+				const urlParams = new URLSearchParams(window.location.search);
+				const targetSection = urlParams.get("section");
+				const hash = window.location.hash;
+
+				if (targetSection) {
+					const target = document.getElementById(targetSection);
 					if (target) {
 						if (l) {
-							setTimeout(() => {
-								l.scrollTo(target, { offset: -30, duration: 1.0, onComplete: () => ScrollTrigger.refresh() });
-							}, 120);
+							l.scrollTo(0, { immediate: true });
 						} else {
-							setTimeout(() => {
-								target.scrollIntoView({ behavior: 'smooth' });
-								ScrollTrigger.refresh();
-							}, 120);
+							window.scrollTo(0, 0);
 						}
+						requestAnimationFrame(() => {
+							l?.resize();
+							ScrollTrigger.refresh();
+							setTimeout(() => {
+								scrollToElement(target, {
+									duration: 1.4,
+									updateHash: `#${targetSection}`,
+								});
+							}, 100);
+						});
+						return;
+					}
+				} else if (hash && hash !== "#contact") {
+					const target = document.querySelector(hash) as HTMLElement | null;
+					if (target) {
+						if (l) {
+							l.scrollTo(0, { immediate: true });
+						} else {
+							window.scrollTo(0, 0);
+						}
+						requestAnimationFrame(() => {
+							l?.resize();
+							ScrollTrigger.refresh();
+							setTimeout(() => {
+								scrollToElement(target, { duration: 1.4 });
+							}, 100);
+						});
+						return;
 					}
 				}
-				ScrollTrigger.refresh();
+
+				requestAnimationFrame(() => {
+					l?.resize();
+					ScrollTrigger.refresh();
+				});
+			});
+
+			document.addEventListener("astro:before-swap", () => {
+				destroyLenis();
+				window.scrollTo(0, 0);
 			});
 
 			// Smooth scroll in-page anchors with Lenis or native smooth scroll (capture phase to preempt client routers)
 			document.addEventListener(
-				'click',
+				"click",
 				(e) => {
-					const a = (e.target as HTMLElement)?.closest('a');
+					const a = (e.target as HTMLElement)?.closest("a");
 					if (!a) return;
-					const href = a.getAttribute('href');
+					const href = a.getAttribute("href");
 					if (!href) return;
-					const hashIdx = href.indexOf('#');
+					const hashIdx = href.indexOf("#");
 					if (hashIdx === -1) return;
 					const hash = href.slice(hashIdx);
-					if (hash === '#contact') return; // Handled by ContactModal
+					if (hash === "#contact") return; // Handled by ContactModal
 
 					const path = href.slice(0, hashIdx);
-					const normPath = (p: string) => (p || '').replace(/\/$/, '') || '/';
+					const normPath = (p: string) =>
+						(p || "").replace(/\/$/, "") || "/";
 					const curPath = normPath(window.location.pathname);
 					const linkPath = path ? normPath(path) : curPath;
 
 					if (linkPath === curPath && hash.length > 1) {
-						const target = document.querySelector(hash);
+						const target = document.querySelector(hash) as HTMLElement | null;
 						if (target) {
 							e.preventDefault();
 							e.stopPropagation();
 							e.stopImmediatePropagation();
 
-							const l = (window as any).lenis;
-							if (l) {
-								l.scrollTo(target, {
-									offset: -30,
-									duration: 1.2,
-									onComplete: () => ScrollTrigger.refresh(),
-								});
-							} else {
-								target.scrollIntoView({ behavior: 'smooth' });
-							}
-							history.pushState(null, '', hash);
+							scrollToElement(target, { duration: 1.2, updateHash: hash });
 						}
 					}
 				},
-				{ capture: true }
+				{ capture: true },
 			);
 
-			// ponytail: Only initialize Lenis on desktop pointer devices; mobile phones use 100% native 120Hz compositor scrolling
-			const isMobileDevice =
-				window.matchMedia('(max-width: 768px)').matches ||
-				(window.matchMedia('(pointer: coarse)').matches && !window.matchMedia('(pointer: fine)').matches);
-
-			let lenis = (window as any).lenis;
-			if (!lenis && !isMobileDevice) {
-				lenis = new Lenis({
-					lerp: 0.11,
-					wheelMultiplier: 1.0,
-					smoothWheel: true,
-					respectReducedMotion: false,
-					orientation: 'vertical',
-					gestureOrientation: 'vertical',
-					syncTouch: false,
-					autoRaf: false,
-				});
-
-				(window as any).lenis = lenis;
-
-				// Synchronize Lenis scroll events with GSAP ScrollTrigger
-				lenis.on('scroll', ScrollTrigger.update);
-
-				// Synchronize RAF loop via GSAP ticker for 60/120fps fluid frames
-				gsap.ticker.add((time) => {
-					lenis.raf(time * 1000);
-				});
-
-				// Gracefully absorb frame drops without jarring visual skips
-				gsap.ticker.lagSmoothing(500, 33);
+			// Initial boot
+			if (!(window as any).lenis && !isMobileDevice()) {
+				initLenis();
 			}
 		</script>
 		<style define:vars={{ ...bgUrls }}>
@@ -192,7 +335,9 @@ const bgUrls = {
 				--bg-blend-mode: darken;
 				--bg-image-aspect-ratio: 2.25;
 				--bg-scale: 1.68;
-				--bg-aspect-ratio: calc(var(--bg-image-aspect-ratio) / var(--bg-scale));
+				--bg-aspect-ratio: calc(
+					var(--bg-image-aspect-ratio) / var(--bg-scale)
+				);
 				--bg-gradient-size: calc(var(--bg-scale) * 100%);
 			}
 

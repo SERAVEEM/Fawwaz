@@ -257,32 +257,23 @@ const projects: WorkItem[] = [
 		ScrollTrigger.refresh();
 	}
 
-	let worksTriggersMounted = false;
+	let worksCtx: gsap.Context | null = null;
 
 	function cleanupTelhaWorks() {
-		if (worksTriggersMounted) {
-			ScrollTrigger.getAll().forEach((st) => {
-				const triggerEl = st.trigger as HTMLElement | null;
-				if (triggerEl && triggerEl.closest('.telha-works-section')) {
-					st.kill();
-				}
-			});
-			worksTriggersMounted = false;
+		if (worksCtx) {
+			worksCtx.revert();
+			worksCtx = null;
 		}
 	}
 
 	function setupTelhaWorks() {
-		if (document.getElementById('works')) {
-			cleanupTelhaWorks();
-			initTelhaWorksAnimations();
-			worksTriggersMounted = true;
-		}
-	}
+		const section = document.getElementById('works');
+		if (!section) return;
+		cleanupTelhaWorks();
 
-	if (document.readyState === 'complete' || document.readyState === 'interactive') {
-		setupTelhaWorks();
-	} else {
-		window.addEventListener('DOMContentLoaded', setupTelhaWorks);
+		worksCtx = gsap.context(() => {
+			initTelhaWorksAnimations();
+		}, section);
 	}
 
 	document.addEventListener('astro:page-load', setupTelhaWorks);

@@ -506,6 +506,10 @@ const ROWS: GridItem[][] = [
       rowObserver.disconnect();
       rowObserver = null;
     }
+    if (gridCtx) {
+      gridCtx.revert();
+      gridCtx = null;
+    }
     ScrollTrigger.getAll().forEach((st) => {
       const triggerEl = st.trigger as HTMLElement | null;
       if (triggerEl && triggerEl.closest("#all-work")) {
@@ -514,19 +518,16 @@ const ROWS: GridItem[][] = [
     });
   }
 
+  let gridCtx: gsap.Context | null = null;
+
   function setupTelhaGrid() {
-    if (document.getElementById("all-work")) {
-      cleanupTelhaGrid();
+    const section = document.getElementById("all-work");
+    if (!section) return;
+    cleanupTelhaGrid();
+    gridCtx = gsap.context(() => {
       initTelhaWorksGrid();
       initProgressiveRowLoading();
-    }
-  }
-
-  // Initialize on load and Astro page transitions
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupTelhaGrid);
-  } else {
-    setupTelhaGrid();
+    }, section);
   }
 
   document.addEventListener("astro:page-load", setupTelhaGrid);

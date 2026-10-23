@@ -9,6 +9,8 @@ const { theme = "light", showLogo = true } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isHome = currentPath === `${base}` || currentPath === `${base}/` || currentPath === "/";
+const processHref = isHome ? "#process" : `${base}/?section=process`;
 const isArchive =
 	currentPath === `${base}/archive` ||
 	currentPath.startsWith(`${base}/archive/`) ||
@@ -55,7 +57,7 @@ const cvUrl =
 			href={`${base}/studio`}
 			class:list={["nav-link", { active: isStudio }]}>Studio</a
 		>
-		<a href={`${base}/#process`} class="nav-link">Process</a>
+		<a href={processHref} class="nav-link">Process</a>
 		<a
 			href="#contact"
 			class="nav-link contact-pill"
@@ -108,7 +110,7 @@ const cvUrl =
 			href={`${base}/studio`}
 			class:list={["mobile-nav-link", { active: isStudio }]}>Studio</a
 		>
-		<a href={`${base}/#process`} class="mobile-nav-link">Process</a>
+		<a href={processHref} class="mobile-nav-link">Process</a>
 		<a
 			href={cvUrl}
 			target="_blank"

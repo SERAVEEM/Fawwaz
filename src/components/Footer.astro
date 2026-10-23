@@ -2,6 +2,10 @@
 // ponytail: 1:1 architectural footer customized for Fawwaz portfolio
 const currentYear = new Date().getFullYear();
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isHome = currentPath === `${base}` || currentPath === `${base}/` || currentPath === '/';
+const processHref = isHome ? '#process' : `${base}/?section=process`;
+const studioHref = isHome ? '#studio' : `${base}/?section=studio`;
 ---
 
 <footer class="telha-footer" aria-label="Site Footer">
@@ -42,8 +46,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 			<div class="footer-col col-nav">
 				<nav class="nav-links" aria-label="Footer Navigation">
 					<a href={`${base}/archive`} class="nav-item">Archive</a>
-					<a href={`${base}/#studio`} class="nav-item">Studio</a>
-					<a href={`${base}/#process`} class="nav-item">Process</a>
+					<a href={studioHref} class="nav-item">Studio</a>
+					<a href={processHref} class="nav-item">Process</a>
 					<a href="#contact" class="nav-item" data-open-contact-modal="true">Let’s Talk</a>
 				</nav>
 
