@@ -828,7 +828,9 @@ export const archiveProjects: ArchiveProject[] = [
 	.card-button {
 		display: flex;
 		flex-direction: column;
+		align-items: stretch;
 		width: 100%;
+		box-sizing: border-box;
 		background: transparent;
 		border: none;
 		padding: 0;
@@ -929,10 +931,12 @@ export const archiveProjects: ArchiveProject[] = [
 	   CARD TYPOGRAPHY & METADATA (Portfolio Native Inter Typography Style)
 	   ========================================================================== */
 	.card-meta {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		width: 100%;
+		box-sizing: border-box;
 		gap: 16px;
-		align-items: start;
 		margin-top: 14px;
 		padding-top: 2px;
 	}
@@ -944,6 +948,8 @@ export const archiveProjects: ArchiveProject[] = [
 	}
 
 	.card-title {
+		flex: 1 1 auto;
+		min-width: 0;
 		font-family: 'Inter', system-ui, -apple-system, sans-serif;
 		font-size: clamp(1.2rem, 1.55vw, 1.7rem);
 		font-weight: 600;
@@ -953,6 +959,7 @@ export const archiveProjects: ArchiveProject[] = [
 		color: #ffffff;
 		margin: 0;
 		padding: 0;
+		text-align: left;
 		word-break: break-word;
 	}
 
@@ -963,6 +970,7 @@ export const archiveProjects: ArchiveProject[] = [
 		text-align: right;
 		gap: 2px;
 		flex-shrink: 0;
+		margin-left: auto;
 	}
 
 	.card-year {
