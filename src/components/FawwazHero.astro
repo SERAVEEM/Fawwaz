@@ -9,30 +9,39 @@ interface Props {
 const { portraitImage = '/assets/hero/image-137.webp' } = Astro.props;
 const finalSrc = r2(portraitImage);
 const placeholder = getPlaceholder(portraitImage);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <section class="fawwaz-hero" aria-label="Hero Introduction">
 	<div class="hero-container">
-		<!-- Central Portrait Photo -->
-		<div class="portrait-card" style={placeholder ? `background-image: url("${placeholder}"); background-size: cover;` : undefined}>
-			<img
-				src={finalSrc}
-				alt="Fawwaz Sidiq Nurseto (SERAVEEM) — Product Engineer"
-				class="portrait-img"
-				loading="eager"
-				decoding="async"
-				fetchpriority="high"
-			/>
+		<!-- Central Portrait Photo with Anchor Wrap -->
+		<div class="portrait-card-wrap">
+			<div class="portrait-card" style={placeholder ? `background-image: url("${placeholder}"); background-size: cover;` : undefined}>
+				<img
+					src={finalSrc}
+					alt="Fawwaz Sidiq Nurseto (SERAVEEM) — Founder & Lead"
+					class="portrait-img"
+					loading="eager"
+					decoding="async"
+					fetchpriority="high"
+				/>
+			</div>
+
+			<!-- Portfolio Link to Archive -->
+			<a href={`${base}/archive`} class="hero-portfolio-link" aria-label="View Portfolio Archive">
+				<span class="status-dot" aria-hidden="true"></span>
+				<span class="portfolio-text">Portfolio</span>
+			</a>
 		</div>
 
 		<!-- Semantic Heading for Search Engines & Screen Readers -->
-		<h1 class="sr-only">Fawwaz Sidiq Nurseto (SERAVEEM) — Product Engineer for Perspective std.</h1>
+		<h1 class="sr-only">Fawwaz Sidiq Nurseto (SERAVEEM) — Founder & Lead of Perspective std.</h1>
 
 		<!-- Tagline Block -->
 		<div class="tagline-block">
 			<div class="tagline-header">
 				<span class="status-dot" aria-hidden="true"></span>
-				<span class="tagline-role">Product Engineer for</span>
+				<span class="tagline-role">Founder & Lead of</span>
 			</div>
 			<div class="tagline-company-wrap">
 				<span class="tagline-company">Perspective std.</span>
@@ -67,6 +76,11 @@ const placeholder = getPlaceholder(portraitImage);
 	}
 
 	/* Central Portrait */
+	.portrait-card-wrap {
+		position: relative;
+		display: inline-flex;
+	}
+
 	.portrait-card {
 		width: clamp(200px, 14.84vw, 285px);
 		aspect-ratio: 285 / 508.08;
@@ -85,16 +99,23 @@ const placeholder = getPlaceholder(portraitImage);
 	/* Tagline */
 	.tagline-block {
 		margin-top: clamp(0.75rem, 1.2vw, 1.25rem);
-		display: flex;
+		display: inline-flex;
 		flex-direction: column;
-		align-items: center;
+		align-items: flex-start;
 		color: #000000;
 	}
 
 	.tagline-header {
+		position: relative;
 		display: inline-flex;
 		align-items: center;
-		gap: 8px;
+	}
+
+	.tagline-header .status-dot {
+		position: absolute;
+		right: calc(100% + 8px);
+		top: 50%;
+		transform: translateY(-50%);
 	}
 
 	.status-dot {
@@ -118,7 +139,7 @@ const placeholder = getPlaceholder(portraitImage);
 	.tagline-company-wrap {
 		display: inline-flex;
 		flex-direction: column;
-		align-items: center;
+		align-items: flex-start;
 		margin-top: 2px;
 	}
 
@@ -136,5 +157,48 @@ const placeholder = getPlaceholder(portraitImage);
 		height: 1px;
 		background-color: #000000;
 		margin-top: 1px;
+	}
+
+	
+	/* Portfolio CTA (Minimalist vertical matching tagline & nav) */
+	.hero-portfolio-link {
+		position: absolute;
+		left: calc(100% + clamp(0.75rem, 1.8vw, 1.75rem));
+		top: 50%;
+		transform: translateY(-50%);
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		writing-mode: vertical-rl;
+		text-orientation: mixed;
+		text-decoration: none;
+		z-index: 5;
+		cursor: pointer;
+		white-space: nowrap;
+		transition: transform 0.2s ease, opacity 0.2s ease;
+	}
+
+	.portfolio-text {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-weight: 500;
+		font-size: clamp(0.95rem, 1.1vw, 20px);
+		line-height: 1.2;
+		color: #000000;
+		letter-spacing: -0.01em;
+		transition: color 0.2s ease;
+	}
+
+	.hero-portfolio-link:hover {
+		transform: translateY(calc(-50% - 2px));
+	}
+
+	.hero-portfolio-link:hover .portfolio-text {
+		color: #fb4242;
+	}
+
+	@media (max-width: 768px) {
+		.hero-portfolio-link {
+			left: calc(100% + 0.65rem);
+		}
 	}
 </style>
