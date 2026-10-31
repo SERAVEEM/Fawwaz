@@ -9,7 +9,10 @@ const { theme = "light", showLogo = true } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
-const isHome = currentPath === `${base}` || currentPath === `${base}/` || currentPath === "/";
+const isHome =
+	currentPath === `${base}` ||
+	currentPath === `${base}/` ||
+	currentPath === "/";
 const processHref = isHome ? "#process" : `${base}/?section=process`;
 const isArchive =
 	currentPath === `${base}/archive` ||
@@ -18,7 +21,7 @@ const isArchive =
 const isStudio = currentPath === `${base}/studio`;
 const isJourney = currentPath === `${base}/journey`;
 const cvUrl =
-	"https://drive.google.com/file/d/1hrYy7ffCdxw7ZI9NkANJG0C5otBPFBL5/view?usp=sharing";
+	"https://drive.google.com/drive/folders/1229G4-XDNrZ9wabA8oDABNbmJ5I7kQNa?usp=sharing";
 ---
 
 <header
