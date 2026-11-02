@@ -681,7 +681,6 @@ export const archiveProjects: ArchiveProject[] = [
 			mm.revert();
 			mm = null;
 		}
-		ScrollTrigger.getAll().forEach((st) => st.kill());
 	}
 
 	// Clean up triggers on Astro page transitions
@@ -703,6 +702,7 @@ export const archiveProjects: ArchiveProject[] = [
 	}
 
 	function setupPage() {
+		if (!document.getElementById('podiumGrid')) return;
 		cleanupPage();
 		initPodiumScrollDrift();
 		initModalInteractions();
@@ -710,12 +710,6 @@ export const archiveProjects: ArchiveProject[] = [
 		requestAnimationFrame(() => {
 			ScrollTrigger.refresh();
 		});
-	}
-
-	if (document.readyState === 'complete' || document.readyState === 'interactive') {
-		setupPage();
-	} else {
-		window.addEventListener('DOMContentLoaded', setupPage);
 	}
 
 	document.addEventListener('astro:page-load', setupPage);

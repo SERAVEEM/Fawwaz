@@ -277,7 +277,25 @@ const bgUrls = {
 				requestAnimationFrame(() => {
 					l?.resize();
 					ScrollTrigger.refresh();
+					setTimeout(() => {
+						l?.resize();
+						ScrollTrigger.refresh();
+					}, 150);
 				});
+
+				if (document.fonts?.ready) {
+					document.fonts.ready.then(() => {
+						ScrollTrigger.refresh();
+					});
+				}
+			});
+
+			document.addEventListener("astro:before-preparation", () => {
+				const l = (window as any).lenis;
+				if (l) {
+					l.scrollTo(0, { immediate: true });
+				}
+				ScrollTrigger.clearScrollMemory();
 			});
 
 			document.addEventListener("astro:before-swap", () => {

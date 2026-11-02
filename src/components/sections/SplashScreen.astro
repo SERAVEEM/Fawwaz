@@ -2,7 +2,7 @@
 // ponytail: Exact 1:1 reproduction of Telha Clarke kinetic dual-layer rolling letters loader
 ---
 
-<script is:inline>
+<script is:inline data-astro-rerun>
 	const forceSplash = new URLSearchParams(window.location.search).has('splash');
 	if (!forceSplash && sessionStorage.getItem('seraveem_splash_v6')) {
 		document.documentElement.classList.add('splash-dismissed');

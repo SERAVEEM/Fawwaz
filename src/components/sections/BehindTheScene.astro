@@ -319,11 +319,13 @@ const ROWS: GridItem[][] = [
 
   function initTelhaWorksGrid() {
     const section = document.getElementById("all-work");
-    const button = document.querySelector(".works-grid-button");
-    const items = document.querySelectorAll(".works-grid-item");
-    const scrollImages = document.querySelectorAll(".js-scroll-parallax");
+    if (!section) return;
 
-    if (!section || !button || scrollImages.length === 0) return;
+    const button = section.querySelector(".works-grid-button");
+    const items = section.querySelectorAll(".works-grid-item");
+    const scrollImages = section.querySelectorAll(".js-scroll-parallax");
+
+    if (!button || scrollImages.length === 0) return;
 
     let isInView = false;
     const mouse = {

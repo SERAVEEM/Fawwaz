@@ -138,8 +138,11 @@ const projects: WorkItem[] = [
 	gsap.registerPlugin(ScrollTrigger);
 
 	function initTelhaWorksAnimations() {
+		const section = document.getElementById('works');
+		if (!section) return;
+
 		// Header fade reveal
-		const headerBar = document.querySelector('.works-header-bar');
+		const headerBar = section.querySelector('.works-header-bar');
 		if (headerBar) {
 			gsap.fromTo(
 				headerBar,
@@ -160,7 +163,7 @@ const projects: WorkItem[] = [
 
 		// Responsive check: full scrub animation on desktop/tablet, clean static layout on small mobile
 		const isMobile = window.innerWidth <= 768;
-		const workItems = document.querySelectorAll('.works-item');
+		const workItems = section.querySelectorAll('.works-item');
 
 		workItems.forEach((item) => {
 			const bracketLeft = item.querySelector('.bracket-left');

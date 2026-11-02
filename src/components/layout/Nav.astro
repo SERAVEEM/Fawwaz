@@ -1,5 +1,4 @@
 ---
-// ponytail: unified responsive Fawwaz navbar across all pages with light/dark theming
 interface Props {
 	theme?: "light" | "dark";
 	showLogo?: boolean;
@@ -162,14 +161,13 @@ const cvUrl =
 			link.addEventListener("click", closeMenu);
 		});
 
-		window.addEventListener("keydown", (e) => {
+		window.onkeydown = (e) => {
 			if (e.key === "Escape" && overlay.classList.contains("is-open")) {
 				closeMenu();
 			}
-		});
+		};
 	}
 
-	setupNav();
 	document.addEventListener("astro:page-load", setupNav);
 	document.addEventListener("astro:before-swap", () => {
 		document.body.style.overflow = "";

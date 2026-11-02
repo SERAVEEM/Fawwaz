@@ -91,6 +91,8 @@ import { r2 } from "../../utils/assets";
 		const pictureMask = section.querySelector(".js-picture-mask");
 		const pictureInner = section.querySelector(".js-picture-inner");
 		const studioImage = section.querySelector(".js-studio-image");
+		const imageCol = section.querySelector(".image-col");
+		const statementCol = section.querySelector(".statement-col");
 		const lines = section.querySelectorAll(".offset-title .line");
 		const fadeElements = section.querySelectorAll(".scroll-fade-in");
 
@@ -144,7 +146,7 @@ import { r2 } from "../../utils/assets";
 					yPercent: 4,
 					ease: "none",
 					scrollTrigger: {
-						trigger: ".image-col",
+						trigger: imageCol || section,
 						start: "top bottom",
 						end: "bottom top",
 						scrub: true,
@@ -167,7 +169,7 @@ import { r2 } from "../../utils/assets";
 						duration: 0.9,
 						ease: "power2.out",
 						scrollTrigger: {
-							trigger: ".statement-col",
+							trigger: statementCol || section,
 							start: "top 85%",
 							toggleActions: "play none none none",
 						},
@@ -188,7 +190,7 @@ import { r2 } from "../../utils/assets";
 					ease: "power3.out",
 					stagger: 0.1,
 					scrollTrigger: {
-						trigger: ".statement-col",
+						trigger: statementCol || section,
 						start: "top 82%",
 						toggleActions: "play none none none",
 					},
