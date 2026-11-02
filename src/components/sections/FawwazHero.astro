@@ -49,6 +49,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 			</div>
 		</div>
 	</div>
+
+	<!-- Scroll Down Indicator -->
+	<a href="#studio" class="scroll-down-indicator" aria-label="Scroll down to next section">
+		<span class="scroll-text">[scroll down]</span>
+		<svg class="scroll-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+			<path d="M7 1V13M7 13L2 8M7 13L12 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>
+	</a>
 </section>
 
 <style>
@@ -200,5 +208,55 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 		.hero-portfolio-link {
 			left: calc(100% + 0.65rem);
 		}
+	}
+
+	/* Scroll Down Indicator */
+	.scroll-down-indicator {
+		position: absolute;
+		bottom: clamp(1.25rem, 3vh, 2.25rem);
+		left: 50%;
+		transform: translateX(-50%);
+		display: inline-flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 6px;
+		text-decoration: none;
+		cursor: pointer;
+		z-index: 5;
+		transition: opacity 0.2s ease;
+	}
+
+	.scroll-text {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		font-size: clamp(0.75rem, 0.85vw, 0.88rem);
+		font-weight: 400;
+		letter-spacing: 0.02em;
+		color: #555555;
+		transition: color 0.2s ease;
+	}
+
+	.scroll-arrow {
+		width: 14px;
+		height: 14px;
+		color: #000000;
+		animation: scroll-bounce 1.8s ease-in-out infinite;
+		transition: color 0.2s ease;
+	}
+
+	@keyframes scroll-bounce {
+		0%, 100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(6px);
+		}
+	}
+
+	.scroll-down-indicator:hover .scroll-text {
+		color: #000000;
+	}
+
+	.scroll-down-indicator:hover .scroll-arrow {
+		color: #fb4242;
 	}
 </style>
