@@ -53,7 +53,8 @@ const cvUrl =
 	<nav class="desktop-nav" aria-label="Main Navigation">
 		<a
 			href={`${base}/archive`}
-			class:list={["nav-link", { active: isArchive }]}>Archive</a
+			class:list={["nav-link", { active: isArchive }]}
+			data-nav-experience="true">Experience</a
 		>
 		<a
 			href={`${base}/studio`}
@@ -106,7 +107,7 @@ const cvUrl =
 	<nav class="mobile-nav-links">
 		<a
 			href={`${base}/archive`}
-			class:list={["mobile-nav-link", { active: isArchive }]}>Archive</a
+			class:list={["mobile-nav-link", { active: isArchive }]}>Experience</a
 		>
 		<a
 			href={`${base}/studio`}

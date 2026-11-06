@@ -191,9 +191,38 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 		font-weight: 500;
 		font-size: clamp(0.95rem, 1.1vw, 20px);
 		line-height: 1.2;
-		color: #000000;
 		letter-spacing: -0.01em;
-		transition: color 0.2s ease;
+		background: linear-gradient(
+			180deg,
+			#000000 0%,
+			#000000 40%,
+			#fb4242 50%,
+			#ff7844 54%,
+			#000000 64%,
+			#000000 100%
+		);
+		background-size: 100% 300%;
+		background-position: 0 100%;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		display: inline-block;
+	}
+
+	:global(html.splash-dismissed) .portfolio-text {
+		animation: text-orange-vertical-sweep 4.5s ease-in-out infinite;
+	}
+
+	@keyframes text-orange-vertical-sweep {
+		0% {
+			background-position: 0 100%;
+		}
+		55% {
+			background-position: 0 0%;
+		}
+		100% {
+			background-position: 0 0%;
+		}
 	}
 
 	.hero-portfolio-link:hover {
@@ -201,7 +230,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 	}
 
 	.hero-portfolio-link:hover .portfolio-text {
-		color: #fb4242;
+		-webkit-text-fill-color: #fb4242;
 	}
 
 	@media (max-width: 768px) {
